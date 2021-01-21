@@ -7,9 +7,10 @@ public class NPC : MonoBehaviour
 
     // The elements at each index in each of these lists should coorespond to each other  
     // example dialogs[0] is only active if quests[0] is at questPhase[0]
-	public DialogOption[] dialogs;
+	public Interactable[] interactables;
 	public List<QuestName> quests;
-	public int[] questPhase;
+	public int[] startQuestPhase;
+    public int[] endQuestPhase;
     
 
     // When activeOption is negative, nothing is active
@@ -18,12 +19,16 @@ public class NPC : MonoBehaviour
 
     void Start()
     {
-        foreach ( DialogOption opt in dialogs ) opt.enabled = false;
-        questActive = new bool[questPhase.Length];
-        EventManager.instance.onQuestProgressed += _check_dialog_options;
-        for ( int i =0; i < questPhase.Length; i++ )
-            if ( questPhase[i] == 0 )
-                questActive[0] = true;
+        foreach ( Interactable option in interactables ) option.enabled = false;
+        questActive = new bool[startQuestPhase.Length];
+        EventManager.instance.onQuestProgressed += _check_interactable_options;
+        for ( int i =0; i < startQuestPhase.Length; i++ )
+        {
+            if ( startQuestPhase[i] == 0 )
+                questActive[i] = true;
+            // if ( interactables[i].progressesQuestToPhase != -1 )
+            //     interactables[i].enabled = true;
+        }
     }
 
     void Update()
@@ -34,31 +39,31 @@ public class NPC : MonoBehaviour
             int heighestRank = 99999;
             for ( int i = 0; i < questActive.Length; i++ )
             {
-                if ( questActive[i] && dialogs[i].rank < heighestRank )
+                if ( questActive[i] && interactables[i].rank < heighestRank )
                 {
-                    heighestRank = dialogs[i].rank;
+                    heighestRank = interactables[i].rank;
                     activeOption = i;
                 }
             }
 
         }
-        else if (!dialogs[activeOption].enabled)
-            dialogs[activeOption].enabled = true;
+        else if (!interactables[activeOption].enabled)
+            interactables[activeOption].enabled = true;
 
     }
 
-    private void _check_dialog_options(QuestName quest, int phase)
+    private void _check_interactable_options(QuestName quest, int phase)
     {
         if ( activeOption >= 0 && quest == quests[activeOption] )
         {
             questActive[activeOption] = false;
-            dialogs[activeOption].enabled = false;
+            interactables[activeOption].enabled = false;
             activeOption = -1;
         }
 
-        for ( int i = 0; i < dialogs.Length; i++)
+        for ( int i = 0; i < interactables.Length; i++)
         {
-            if ( quests[i] == quest && questPhase[i] == phase )
+            if ( quests[i] == quest && ( startQuestPhase[i] <= phase && endQuestPhase[i] >= phase ) )
                 questActive[i] = true;
         }
     }

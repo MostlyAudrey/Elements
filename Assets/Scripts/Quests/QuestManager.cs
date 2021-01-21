@@ -16,15 +16,13 @@ public class QuestManager : MonoBehaviour
     public static void ProgressQuest( QuestName quest )
     {
         QuestManager.quests[quest].currentPhase++;
-        if (QuestManager.quests[quest].currentPhase < QuestManager.quests[quest].totalPhases)
-            EventManager.instance.QuestProgressed( quest, quests[quest].currentPhase );
+        EventManager.instance.QuestProgressed( quest, quests[quest].currentPhase );
     }
 
     public static void ProgressQuestToPhase( QuestName quest, int phase )
     {
         QuestManager.quests[quest].currentPhase = phase;
-        if (QuestManager.quests[quest].currentPhase < QuestManager.quests[quest].totalPhases)
-            EventManager.instance.QuestProgressed( quest, quests[quest].currentPhase );
+        EventManager.instance.QuestProgressed( quest, quests[quest].currentPhase );
     }
 
     public static int CheckQuestPhase( QuestName quest )
@@ -35,7 +33,7 @@ public class QuestManager : MonoBehaviour
     private void _instantiate_quests()
     {
         // All quests have to be added to QuestName and then added here
-        QuestManager.quests.Add( QuestName.IntroductionQuest, new Quest( QuestName.IntroductionQuest, 2 ) );
+        QuestManager.quests.Add( QuestName.IntroductionQuest, new Quest( QuestName.IntroductionQuest, 4 ) );
     }
 
 }

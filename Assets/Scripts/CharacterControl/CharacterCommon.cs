@@ -56,4 +56,65 @@ public class CharacterCommon {
 
         return ret;
     }
+
+
+    public static GameObject CheckForNearestPickupableItem(
+        Transform charPos,       
+        float rayDepth //how far down from charPos will we look for ground?
+    ) 
+    {
+        List<GameObject> items = CheckForNearestItems( charPos, rayDepth );
+        GameObject pickup_item = null;
+        foreach( GameObject item in items ){
+            if ( item.CompareTag("pickupable") )
+            {
+                pickup_item = item;
+            }
+        }
+        return pickup_item;
+    }
+
+    public static List<GameObject> CheckForNearestItems(
+        Transform charPos,       
+        float rayDepth //how far down from charPos will we look for ground?
+    ) 
+    {
+        List<GameObject> items = new List<GameObject>();
+
+        Ray ray = new Ray( charPos.position + ( Vector3.up * .1f ), charPos.forward );
+
+        // int layerMask = 1 << LayerMask.NameToLayer("Default");
+
+
+        RaycastHit[] hits = Physics.RaycastAll(ray, rayDepth);
+
+        RaycastHit itemHit = new RaycastHit();
+
+        foreach(RaycastHit hit in hits)
+        {
+            // Renderer rend = hit.transform.GetComponent<Renderer>();
+
+            // if (rend)
+            // {
+            //     // Change the material of all hit colliders
+            //     // to use a transparent shader.
+            //     rend.material.shader = Shader.Find("Transparent/Diffuse");
+            //     Color tempColor = rend.material.color;
+            //     tempColor.a = 0.3F;
+            //     rend.material.color = tempColor;
+            // }
+
+            if ( !items.Contains(hit.collider.gameObject) )
+            {           
+                items.Add(hit.collider.gameObject);
+            }
+
+            Helper.DrawRay(ray, rayDepth, true, hit, Color.magenta, Color.green);
+
+        }
+
+        
+
+        return items;
+    }
 }

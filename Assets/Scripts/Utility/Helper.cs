@@ -6,11 +6,9 @@ using UnityEngine;
 namespace Utility {
     public class Helper {
 
-
-
         public static void DrawRay(Ray ray, float rayLength, bool hitFound, RaycastHit hit, Color rayColor, Color hitColor) {
             
-            Debug.DrawLine(ray.origin, ray.origin + ray.direction * rayLength, rayColor); 
+            Debug.DrawLine(ray.origin, ray.origin + ray.direction * rayLength, rayColor, 1f); 
                        
             if (hitFound)
             {

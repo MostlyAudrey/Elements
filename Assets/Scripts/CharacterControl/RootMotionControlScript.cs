@@ -27,7 +27,13 @@ public class RootMotionControlScript : MonoBehaviour
 	public float rootTurnSpeed = 1f;
     public float fallSpeed = 1f;
 
+    public float pickupSpeed = 1f;
+
+    public GameObject pickedUpItem;
+
 	public GameObject buttonObject;
+
+    public GameObject HoldSpot;
 
     public bool isGrounded;
 
@@ -69,17 +75,38 @@ public class RootMotionControlScript : MonoBehaviour
         rbody.sleepThreshold = 0f;
     }
     
-    public bool debounceInteractButton = false;
+    private bool debounceInteractButton = false;
+    private bool debounceActionButton = false;
+
     void Update()
     {
         // // Event-based inputs need to be handled in Update()
 
-        if(cinput.Interact && !debounceInteractButton)
+        if(cinput.Interact && !debounceInteractButton )
         {
             EventManager.instance.ActionButtonPressed();
             debounceInteractButton = true; 
-        } else if (!cinput.Interact && debounceInteractButton)
+        } 
+        else if (!cinput.Interact && debounceInteractButton)
             debounceInteractButton = false;
+
+        if ( cinput.Action && !debounceActionButton)
+        {
+            if ( pickedUpItem ) _putdown_item();
+            else 
+            {
+                GameObject target = CharacterCommon.CheckForNearestPickupableItem(transform, 100f);
+                if (target) _pickup_item(target);
+            }
+            debounceActionButton = true; 
+        }
+        else if (!cinput.Action && debounceActionButton)
+            debounceActionButton = false;
+
+        if ( pickedUpItem && pickedUpItem.transform.position != HoldSpot.transform.position )
+        {
+            pickedUpItem.transform.position += (HoldSpot.transform.position - pickedUpItem.transform.position) * (Time.deltaTime * pickupSpeed);
+        }
 		anim.speed = animationSpeed;
     }
 
@@ -112,11 +139,6 @@ public class RootMotionControlScript : MonoBehaviour
 
     }
 
-
-
-
-
-
     //This is a physics callback
     void OnCollisionStay(Collision collision)
     {
@@ -136,8 +158,6 @@ public class RootMotionControlScript : MonoBehaviour
         }
 						
     }
-
-   
 
     void OnAnimatorMove()
     {
@@ -186,4 +206,18 @@ public class RootMotionControlScript : MonoBehaviour
 			}
 		}
 	}
+
+    private void _pickup_item(GameObject target)
+    {
+        pickedUpItem = target;
+        pickedUpItem.GetComponent<Rigidbody>().isKinematic = true;
+        pickedUpItem.transform.parent = transform;
+    }
+
+    private void _putdown_item()
+    {
+        pickedUpItem.GetComponent<Rigidbody>().isKinematic = false;
+        pickedUpItem.transform.parent = null;
+        pickedUpItem = null;
+    }
 }
