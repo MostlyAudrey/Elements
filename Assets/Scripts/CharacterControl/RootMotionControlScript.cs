@@ -77,6 +77,7 @@ public class RootMotionControlScript : MonoBehaviour
     
     private bool debounceInteractButton = false;
     private bool debounceActionButton = false;
+    private bool itemInPosition = false;
 
     void Update()
     {
@@ -103,10 +104,14 @@ public class RootMotionControlScript : MonoBehaviour
         else if (!cinput.Action && debounceActionButton)
             debounceActionButton = false;
 
-        if ( pickedUpItem && pickedUpItem.transform.position != HoldSpot.transform.position )
+        if ( pickedUpItem )
         {
-            pickedUpItem.transform.position += (HoldSpot.transform.position - pickedUpItem.transform.position) * (Time.deltaTime * pickupSpeed);
-        }
+            if ( !itemInPosition && pickedUpItem.transform.position == HoldSpot.transform.position ) itemInPosition = true;
+
+            if ( !itemInPosition ) pickedUpItem.transform.position += (HoldSpot.transform.position - pickedUpItem.transform.position) * (Time.deltaTime * pickupSpeed);
+            else pickedUpItem.transform.position = HoldSpot.transform.position;
+        } 
+
 		anim.speed = animationSpeed;
     }
 
@@ -212,6 +217,7 @@ public class RootMotionControlScript : MonoBehaviour
         pickedUpItem = target;
         pickedUpItem.GetComponent<Rigidbody>().isKinematic = true;
         pickedUpItem.transform.parent = transform;
+        itemInPosition = false;
     }
 
     private void _putdown_item()
@@ -219,5 +225,6 @@ public class RootMotionControlScript : MonoBehaviour
         pickedUpItem.GetComponent<Rigidbody>().isKinematic = false;
         pickedUpItem.transform.parent = null;
         pickedUpItem = null;
+        itemInPosition = false;
     }
 }
