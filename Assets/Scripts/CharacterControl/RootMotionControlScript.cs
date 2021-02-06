@@ -240,6 +240,8 @@ public class RootMotionControlScript : MonoBehaviour
 
     private void _attack()
     {
-        
+        Debug.Log("Attack");
+        anim.SetBool("holding sword", true);
+        anim.SetTrigger("attack");
     }
 }
