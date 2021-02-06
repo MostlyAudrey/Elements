@@ -26,13 +26,6 @@ public class DialogOption : Interactable
         {
             _startTalking();
         }
-        Debug.Log("start");
-    }
-
-    void Awake()
-    {
-        Debug.Log("awake");
-        
     }
 
     // Update is called once per frame
