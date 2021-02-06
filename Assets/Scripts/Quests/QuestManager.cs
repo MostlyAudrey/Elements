@@ -30,6 +30,11 @@ public class QuestManager : MonoBehaviour
         return QuestManager.quests[quest].currentPhase;
     }
 
+    public static Dictionary<QuestName, Quest> GetQuests()
+    {
+        return quests;
+    }
+
     private void _instantiate_quests()
     {
         // All quests have to be added to QuestName and then added here
