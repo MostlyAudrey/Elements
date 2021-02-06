@@ -18985,7 +18985,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4625151964636756, guid: d19c36dc5f97d444fa54380cf09bd828, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.47
+      value: 0.548
       objectReference: {fileID: 0}
     - target: {fileID: 4625151964636756, guid: d19c36dc5f97d444fa54380cf09bd828, type: 3}
       propertyPath: m_LocalPosition.z
@@ -19012,6 +19012,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 4930c6ffa5b9b9f4098249a43abf8506, type: 2}
+    - target: {fileID: 64238594025490038, guid: d19c36dc5f97d444fa54380cf09bd828,
+        type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d19c36dc5f97d444fa54380cf09bd828, type: 3}
 --- !u!4 &509461783 stripped
@@ -36801,6 +36806,28 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 939056740}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &944391117 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1906384758145082, guid: d19c36dc5f97d444fa54380cf09bd828,
+    type: 3}
+  m_PrefabInstance: {fileID: 509461782}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &944391121
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 944391117}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &945264351
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -63353,7 +63380,7 @@ PrefabInstance:
     - target: {fileID: 6614251060411691263, guid: 2301c2a49b3caba2fb80157ed7a8897b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.09
+      value: -5.11
       objectReference: {fileID: 0}
     - target: {fileID: 6614251060411691263, guid: 2301c2a49b3caba2fb80157ed7a8897b,
         type: 3}
@@ -63405,6 +63432,11 @@ PrefabInstance:
       propertyPath: path
       value: 
       objectReference: {fileID: 1915375521}
+    - target: {fileID: 6930124709196849020, guid: 2301c2a49b3caba2fb80157ed7a8897b,
+        type: 3}
+      propertyPath: is_hostile
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6930124709196849020, guid: 2301c2a49b3caba2fb80157ed7a8897b,
         type: 3}
       propertyPath: spawn_delay

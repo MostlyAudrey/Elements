@@ -1,5 +1,7 @@
 public enum QuestName
 {
     None,
-    IntroductionQuest
+    IntroductionQuest,
+    FunSideQuest,
+    PartyQuest
 }
