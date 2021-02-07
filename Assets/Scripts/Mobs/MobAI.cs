@@ -66,13 +66,9 @@ public class MobAI : MonoBehaviour
 	{ 
 		GameObject player = GameObject.FindGameObjectWithTag("Player");
 
-		if (PlayerInRadius() || PlayerInSight())
-		{
+		if (is_hostile && (PlayerInRadius() || PlayerInSight())) {
+			Debug.Log("Engaging!");
 			animator.SetBool("holding sword", true);
-			is_hostile = true;
-		}
-
-		if (is_hostile) {
 			if (aiState == AIState.Patrol) {
 				aiState = AIState.InterceptTarget;
 			}
@@ -113,7 +109,6 @@ public class MobAI : MonoBehaviour
 					aiState = AIState.Patrol;
 					animator.SetBool("holding sword", false);
 					animator.ResetTrigger("attack");
-					is_hostile = false;
                 }
 			} catch {
 				Debug.Log ( "Next Waypoint cannot be set due to array indexing issue or array is of length 0 " );
