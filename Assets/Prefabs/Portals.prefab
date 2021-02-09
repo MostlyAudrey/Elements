@@ -169,7 +169,7 @@ GameObject:
   - component: {fileID: 4952838704916443066}
   - component: {fileID: 4952838704916443065}
   m_Layer: 0
-  m_Name: WinterPortals
+  m_Name: Portals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -183,7 +183,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4952838704916443067}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -161.8, y: 328.02264, z: -171.8}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4952838705830665408}
@@ -512,6 +512,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4952838705346190933}
     m_Modifications:
+    - target: {fileID: 127166, guid: 9034af8f0f660e0469964bb5c38c5efe, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 448776, guid: 9034af8f0f660e0469964bb5c38c5efe, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -571,6 +575,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4952838705830665408}
     m_Modifications:
+    - target: {fileID: 127166, guid: 9034af8f0f660e0469964bb5c38c5efe, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 448776, guid: 9034af8f0f660e0469964bb5c38c5efe, type: 3}
       propertyPath: m_RootOrder
       value: 2
