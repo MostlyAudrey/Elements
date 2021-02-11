@@ -28,7 +28,6 @@ public class Interactable : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Start");
         target = GameObject.FindGameObjectWithTag("Player");
         anim = GetComponent<Animator>();
         anim.applyRootMotion = false;

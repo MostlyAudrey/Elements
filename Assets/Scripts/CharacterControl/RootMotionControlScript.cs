@@ -77,6 +77,7 @@ public class RootMotionControlScript : MonoBehaviour
     
     private bool debounceInteractButton = false;
     private bool debounceActionButton = false;
+    private bool debounceAttackButton = false;
     private bool itemInPosition = false;
 
     void Update()
@@ -90,6 +91,15 @@ public class RootMotionControlScript : MonoBehaviour
         } 
         else if (!cinput.Interact && debounceInteractButton)
             debounceInteractButton = false;
+
+        if(cinput.Attack && !debounceAttackButton )
+        {
+            _attack();
+            debounceAttackButton = true; 
+        } 
+        else if (!cinput.Attack && debounceAttackButton)
+            debounceAttackButton = false;
+
 
         if ( cinput.Action && !debounceActionButton)
         {
@@ -226,5 +236,12 @@ public class RootMotionControlScript : MonoBehaviour
         pickedUpItem.transform.parent = null;
         pickedUpItem = null;
         itemInPosition = false;
+    }
+
+    private void _attack()
+    {
+        Debug.Log("Attack");
+        anim.SetBool("holding sword", true);
+        anim.SetTrigger("attack");
     }
 }

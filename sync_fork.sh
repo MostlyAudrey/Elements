@@ -1,4 +1,8 @@
-git remote add upstream https://git@github.com/MostlyAudrey/UnnamedGolfGame.git
+git remote add upstream https://git@github.com/MostlyAudrey/Elements.git
+git stash
 git fetch upstream
-git checkout master
-git merge upstream/master
+git checkout main
+git merge upstream/main
+git pull
+git push
+git stash pop

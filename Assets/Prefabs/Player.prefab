@@ -270,9 +270,11 @@ MonoBehaviour:
   rootMovementSpeed: 100
   rootTurnSpeed: 1
   fallSpeed: 1
+  pickupSpeed: 1
+  pickedUpItem: {fileID: 0}
   buttonObject: {fileID: 0}
+  HoldSpot: {fileID: 0}
   isGrounded: 0
-  debounceInteractButton: 0
 --- !u!114 &4475046668266933530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1799,13 +1801,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8536167675589671378}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 150, z: 0}
+  m_LocalRotation: {x: 0.059225097, y: -0, z: -0, w: 0.9982447}
+  m_LocalPosition: {x: 0, y: 211.99998, z: -178}
   m_LocalScale: {x: 100, y: 300, z: 100}
   m_Children: []
   m_Father: {fileID: 4929697919326842258}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 6.7910004, y: 0, z: 0}
 --- !u!20 &5563865301744206373
 Camera:
   m_ObjectHideFlags: 0
@@ -1864,7 +1866,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8536167675589671378}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cffa903c9285e384c8a5928faed4097e, type: 3}
   m_Name: 
