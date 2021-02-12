@@ -280,5 +280,6 @@ public class RootMotionControlScript : MonoBehaviour
     {
         swordInHand.SetActive(false);
         sheathedSword.SetActive(true);
+    }
 
 }
