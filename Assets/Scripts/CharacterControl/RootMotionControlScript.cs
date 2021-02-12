@@ -83,6 +83,7 @@ public class RootMotionControlScript : MonoBehaviour
     private bool debounceInteractButton = false;
     private bool debounceActionButton = false;
     private bool debounceAttackButton = false;
+    private bool debounceJumpButton = false;
     private bool itemInPosition = false;
 
     void Update()
@@ -104,6 +105,15 @@ public class RootMotionControlScript : MonoBehaviour
         } 
         else if (!cinput.Attack && debounceAttackButton)
             debounceAttackButton = false;
+
+        
+        if(cinput.Jump && !debounceJumpButton )
+        {
+            _jump();
+            debounceJumpButton = true; 
+        } 
+        else if (!cinput.Jump && debounceJumpButton)
+            debounceJumpButton = false;
 
 
         if ( cinput.Action && !debounceActionButton)
@@ -193,7 +203,7 @@ public class RootMotionControlScript : MonoBehaviour
         else
         {
             //Simple trick to keep model from climbing other rigidbodies that aren't the ground  - Time.deltaTime * fallSpeed
-            newRootPosition = new Vector3(anim.rootPosition.x, this.transform.position.y, anim.rootPosition.z);
+            newRootPosition = new Vector3(anim.rootPosition.x, this.transform.position.y - (Time.deltaTime * fallSpeed), anim.rootPosition.z);
         }
 
         //use rotational root motion as is
@@ -254,6 +264,12 @@ public class RootMotionControlScript : MonoBehaviour
         anim.SetTrigger("attack");
     }
 
+    private void _jump()
+    {
+        Debug.Log("Jump");
+        anim.SetTrigger("jump");
+    }
+
     private void _unsheath()
     {
         swordInHand.SetActive(true);
@@ -264,5 +280,5 @@ public class RootMotionControlScript : MonoBehaviour
     {
         swordInHand.SetActive(false);
         sheathedSword.SetActive(true);
-    }
+
 }
