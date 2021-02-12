@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator), typeof(Rigidbody), typeof(CapsuleCollider))]
-[RequireComponent(typeof(AudioSource))]
 public class Interactable : MonoBehaviour
 {
     //only 1 dialog option can be displayed at one time, the lower the rank the higher its priority
