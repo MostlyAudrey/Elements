@@ -35,9 +35,13 @@ public class RootMotionControlScript : MonoBehaviour
 
     public GameObject HoldSpot;
 
+    public GameObject swordInHand;
+
+    public GameObject sheathedSword;
+
     public bool isGrounded;
 
- 
+    private bool inAttackStance;
 
     void Awake()
     {
@@ -62,6 +66,7 @@ public class RootMotionControlScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        _sheath();
 		//example of how to get access to certain limbs
         // leftFoot = this.transform.Find("Root/Hips/UpperLeg_L/LowerLeg_L/Ankle_L");
         // rightFoot = this.transform.Find("Root/Hips/UpperLeg_R/LowerLeg_R/Ankle_R");
@@ -240,8 +245,24 @@ public class RootMotionControlScript : MonoBehaviour
 
     private void _attack()
     {
+        if (!inAttackStance)
+        {
+            anim.SetBool("holding sword", true);
+            _unsheath();
+        }
         Debug.Log("Attack");
-        anim.SetBool("holding sword", true);
         anim.SetTrigger("attack");
+    }
+
+    private void _unsheath()
+    {
+        swordInHand.SetActive(true);
+        sheathedSword.SetActive(false);
+    }
+
+    private void _sheath()
+    {
+        swordInHand.SetActive(false);
+        sheathedSword.SetActive(true);
     }
 }
