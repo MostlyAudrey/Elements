@@ -179,7 +179,7 @@ public class RootMotionControlScript : MonoBehaviour
     //This is a physics callback
     void OnCollisionEnter(Collision collision)
     {
-
+        Debug.Log(collision);
         if (collision.transform.gameObject.tag == "ground")
         {
       
@@ -203,7 +203,7 @@ public class RootMotionControlScript : MonoBehaviour
         else
         {
             //Simple trick to keep model from climbing other rigidbodies that aren't the ground  - Time.deltaTime * fallSpeed
-            newRootPosition = new Vector3(anim.rootPosition.x, this.transform.position.y - (Time.deltaTime * fallSpeed), anim.rootPosition.z);
+            newRootPosition = new Vector3(anim.rootPosition.x, this.transform.position.y, anim.rootPosition.z);
         }
 
         //use rotational root motion as is
@@ -260,13 +260,11 @@ public class RootMotionControlScript : MonoBehaviour
             anim.SetBool("holding sword", true);
             _unsheath();
         }
-        Debug.Log("Attack");
         anim.SetTrigger("attack");
     }
 
     private void _jump()
     {
-        Debug.Log("Jump");
         anim.SetTrigger("jump");
     }
 
