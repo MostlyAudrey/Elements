@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.AI;
 using System.Runtime.Versioning;
+using System.ComponentModel.Design;
 
 [RequireComponent(typeof(UnityEngine.AI.NavMeshAgent))]
 
@@ -18,7 +19,11 @@ public class MobAI : MonoBehaviour
 	public GameObject path;
 	public GameObject[] waypoints;
 	public GameObject target;
-	public GameObject sword;
+
+	public GameObject swordInHand;
+	public GameObject sheathedSword;
+	private bool inAttackStance;
+	private static UnityEngine.Object[] viking_weapons;
 
 	private int currWaypoint = -1;
 	private NavMeshAgent navMeshAgent;
@@ -47,6 +52,18 @@ public class MobAI : MonoBehaviour
 	}
 
 	void Start() {
+		viking_weapons = Resources.LoadAll("Weapons");
+		Transform hand = transform.Find("Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R");
+		Debug.Log(hand);
+		swordInHand = Instantiate(viking_weapons[0], hand, false) as GameObject;
+		swordInHand.transform.localPosition = new Vector3(0.068f, 0.03f, 0.0f);
+		swordInHand.transform.localRotation = Quaternion.Euler(-90.0f, 0f, -15f);
+		Transform spine = transform.Find("Root/Hips/Spine_01/Spine_02/Spine_03");
+		Debug.Log(spine);
+		sheathedSword = Instantiate(viking_weapons[0], spine, false) as GameObject;
+		sheathedSword.transform.localPosition = new Vector3(-0.172f, 0.175f, -0.282f);
+		sheathedSword.transform.localRotation = Quaternion.Euler(-90f, 0f, -138.887f);
+		_sheath();
 		if (path)
 		{
 			waypoints = new GameObject[path.transform.childCount];
@@ -73,17 +90,8 @@ public class MobAI : MonoBehaviour
 
 		if (is_hostile && (PlayerInRadius() || PlayerInSight())) {
 			Debug.Log("Engaging!");
+			_unsheath();
 			animator.SetBool("holding sword", true);
-
-			// instantiate the sword in the world at position and rotation relative to the AI's hand bone.
-			Vector3 swordPosition = new Vector3(10.1649f, 4.3323f, -1.0806f);
-			Vector3 swordRotation = new Vector3(-67.477f, -152.49f, -230.78f);
-
-
-			// set the sword at the correct position and rotation
-			// sword.transform.parent = (transform.Find("Hand_R")).transform;
-			// sword.transform.localPosition = swordPosition;
-			// sword.transform.localEulerAngles = swordRotation;
 
 			if (aiState == AIState.Patrol) {
 				aiState = AIState.InterceptTarget;
@@ -124,6 +132,7 @@ public class MobAI : MonoBehaviour
 				{
 					aiState = AIState.Patrol;
 					animator.SetBool("holding sword", false);
+					_sheath();
 					animator.ResetTrigger("attack");
 				}
 			} catch {
@@ -184,6 +193,12 @@ public class MobAI : MonoBehaviour
 
 	void attack()
 	{
+		if (!inAttackStance)
+		{
+			animator.SetBool("holding sword", true);
+			_unsheath();
+		}
+		Debug.Log("Enemy attacking...");
 		animator.SetTrigger("attack");
 		// reduce the player's health by ___.
 	}
@@ -202,6 +217,19 @@ public class MobAI : MonoBehaviour
 			animator.SetTrigger("Dead");
         }
     }
+
+	private void _unsheath()
+	{
+		
+		swordInHand.SetActive(true);
+		sheathedSword.SetActive(false);
+	}
+
+	private void _sheath()
+	{
+		swordInHand.SetActive(false);
+		sheathedSword.SetActive(true);
+	}
 }
 
 public enum AIState
