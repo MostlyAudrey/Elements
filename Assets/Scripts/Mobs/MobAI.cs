@@ -127,7 +127,7 @@ public class MobAI : MonoBehaviour
 		{
 			try
 			{
-				navMeshAgent.stoppingDistance = 3.5f;   // stops near the player
+				navMeshAgent.stoppingDistance = 5f;   // stops near the player
 				navMeshAgent.SetDestination(target.transform.position + velocityReporter.velocity);
 
 				float distance = Vector3.Distance(transform.position, player.transform.position);
