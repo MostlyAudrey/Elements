@@ -116,7 +116,7 @@ public class MobAI : MonoBehaviour
 				// also add logic for determining the distance at which the mob attacks (if it is ranged or close)
 				if (distance <= 4f)
 				{
-					attack();
+					_attack();
 				}
 
 				// if player moves too far away, put sword away if it is out, and go back to patrolling
@@ -135,6 +135,21 @@ public class MobAI : MonoBehaviour
 		}
 		prevVelocity = navMeshAgent.velocity;
 	}
+
+	public void TakeDamage(int damage)
+    {
+		Debug.Log("Hit!");
+		animator.SetTrigger("hit");
+		health -= damage;
+        
+		if (health <= 0)
+        {
+			isDead = true;
+			animator.SetTrigger("Dead");
+			_die();
+        }
+    }
+	
 	void OnTriggerEnter(Collider other) {
 		if (other.gameObject.tag == "target") {
 			aiState = AIState.Patrol;
@@ -182,26 +197,15 @@ public class MobAI : MonoBehaviour
 			return false;
 	}
 
-	void attack()
+	void _attack()
 	{
 		animator.SetTrigger("attack");
 		// reduce the player's health by ___.
 	}
-
-	void OnCollisionEnter(Collision collision)
-    {
-		Debug.Log("Hit!");
-		if (collision.transform.gameObject.tag == "Player_Weapon")
-        {
-			animator.SetTrigger("hit");
-			health -= 50;
-        }
-		if (health <= 0)
-        {
-			isDead = true;
-			animator.SetTrigger("Dead");
-        }
-    }
+	
+	void _die()
+	{
+	}
 }
 
 public enum AIState
