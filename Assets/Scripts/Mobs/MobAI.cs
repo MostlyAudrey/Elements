@@ -42,16 +42,21 @@ public class MobAI : MonoBehaviour
 
 	public AIState aiState;
 
-	private void setNextWaypoint() {
-		try {
+	private void setNextWaypoint()
+	{
+		try
+		{
 			currWaypoint = (currWaypoint + 1) % waypoints.Length;
 			navMeshAgent.SetDestination(waypoints[currWaypoint].transform.position);
-		} catch {
+		}
+		catch
+		{
 			//Debug.Log ( "Next Waypoint cannot be set due to array indexing issue or array is of length 0 " );
 		}
 	}
 
-	void Start() {
+	void Start()
+	{
 		viking_weapons = Resources.LoadAll("Weapons");
 		Transform hand = transform.Find("Root/Hips/Spine_01/Spine_02/Spine_03/Clavicle_R/Shoulder_R/Elbow_R/Hand_R");
 		Debug.Log(hand);
@@ -88,12 +93,14 @@ public class MobAI : MonoBehaviour
 	{
 		GameObject player = GameObject.FindGameObjectWithTag("Player");
 
-		if (is_hostile && (PlayerInRadius() || PlayerInSight())) {
+		if (is_hostile && (PlayerInRadius() || PlayerInSight()))
+		{
 			Debug.Log("Engaging!");
 			_unsheath();
 			animator.SetBool("holding sword", true);
 
-			if (aiState == AIState.Patrol) {
+			if (aiState == AIState.Patrol)
+			{
 				aiState = AIState.InterceptTarget;
 			}
 		}
@@ -107,14 +114,19 @@ public class MobAI : MonoBehaviour
 			}
 		}
 
-		if (aiState == AIState.Patrol) {
-			if (navMeshAgent.remainingDistance < .5 && !navMeshAgent.pathPending) {
+		if (aiState == AIState.Patrol)
+		{
+			if (navMeshAgent.remainingDistance < .5 && !navMeshAgent.pathPending)
+			{
 				setNextWaypoint();
 			}
 			animator.SetFloat("vely", navMeshAgent.velocity.magnitude / navMeshAgent.speed);
 			animator.SetFloat("velx", (prevVelocity.x - navMeshAgent.velocity.x) / navMeshAgent.speed);
-		} else if (aiState == AIState.InterceptTarget) {
-			try {
+		}
+		else if (aiState == AIState.InterceptTarget)
+		{
+			try
+			{
 				navMeshAgent.stoppingDistance = 3.5f;   // stops near the player
 				navMeshAgent.SetDestination(target.transform.position + velocityReporter.velocity);
 
@@ -124,7 +136,7 @@ public class MobAI : MonoBehaviour
 				// also add logic for determining the distance at which the mob attacks (if it is ranged or close)
 				if (distance <= 4f)
 				{
-					attack();
+					_attack();
 				}
 
 				// if player moves too far away, put sword away if it is out, and go back to patrolling
@@ -135,17 +147,38 @@ public class MobAI : MonoBehaviour
 					_sheath();
 					animator.ResetTrigger("attack");
 				}
-			} catch {
+			}
+			catch
+			{
 				Debug.Log("Next Waypoint cannot be set due to array indexing issue or array is of length 0 ");
 			}
 			animator.SetFloat("vely", navMeshAgent.velocity.magnitude / navMeshAgent.speed);
-		} else if (aiState == AIState.Wait) {
+		}
+		else if (aiState == AIState.Wait)
+		{
 			animator.SetFloat("vely", 0);
 		}
 		prevVelocity = navMeshAgent.velocity;
 	}
-	void OnTriggerEnter(Collider other) {
-		if (other.gameObject.tag == "target") {
+
+	public void TakeDamage(int damage)
+	{
+		Debug.Log("Hit!");
+		animator.SetTrigger("hit");
+		health -= damage;
+
+		if (health <= 0)
+		{
+			isDead = true;
+			animator.SetTrigger("Dead");
+			_die();
+		}
+	}
+
+	void OnTriggerEnter(Collider other)
+	{
+		if (other.gameObject.tag == "target")
+		{
 			aiState = AIState.Patrol;
 		}
 	}
@@ -191,7 +224,7 @@ public class MobAI : MonoBehaviour
 			return false;
 	}
 
-	void attack()
+	void _attack()
 	{
 		if (!inAttackStance)
 		{
@@ -204,23 +237,24 @@ public class MobAI : MonoBehaviour
 	}
 
 	void OnCollisionEnter(Collision collision)
-    {
+	{
 		Debug.Log("Hit!");
 		if (collision.transform.gameObject.tag == "Player_Weapon")
-        {
+		{
 			animator.SetTrigger("hit");
 			health -= 50;
-        }
+		}
 		if (health <= 0)
-        {
+		{
+			_die();
 			isDead = true;
 			animator.SetTrigger("Dead");
-        }
-    }
+		}
+	}
 
 	private void _unsheath()
 	{
-		
+
 		swordInHand.SetActive(true);
 		sheathedSword.SetActive(false);
 	}
@@ -229,6 +263,11 @@ public class MobAI : MonoBehaviour
 	{
 		swordInHand.SetActive(false);
 		sheathedSword.SetActive(true);
+	}
+
+	void _die()
+	{
+
 	}
 }
 
