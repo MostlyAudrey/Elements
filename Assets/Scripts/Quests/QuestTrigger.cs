@@ -14,6 +14,8 @@ using UnityEngine;
 public abstract class QuestTrigger : MonoBehaviour
 {
     public QuestName quest;             // Associated Quest.
+    public int activatePhase;           // Phase at which this trigger will become active.
+    public int deactivatePhase;         // Phase at which this trigger will become inactive.
 
     // If set to anything other than -1 the interactable will be active until the Quest is in a greater phase
     public int nextPhase = -1;               // The next phase once the trigger conditions are met.
@@ -37,11 +39,23 @@ public abstract class QuestTrigger : MonoBehaviour
     // Ideally, the 'trigger owner' will fire advance quest when certain conditions are met.
     public virtual void AdvanceQuest()
     {
+        // If inactive, refuse to advance the quest.
+        if (!IsActive())
+        {
+            return;
+        }
+
         Debug.Log("AdvanceQuest");
         if (quest != QuestName.None)
             if (nextPhase < 0) // Less than zero will indicate a simple increment in quest phase.
                 QuestManager.ProgressQuest(quest);
             else
                 QuestManager.ProgressQuestToPhase(quest, nextPhase);
+    }
+
+    public virtual bool IsActive()
+    {
+        int currentPhase = QuestManager.CheckQuestPhase(quest);
+        return (currentPhase >= activatePhase) && (currentPhase < deactivatePhase);
     }
 }
