@@ -11,7 +11,6 @@ public class NPC : MonoBehaviour
 	public List<QuestName> quests;
 	public int[] startQuestPhase;
     public int[] endQuestPhase;
-    
 
     // When activeOption is negative, nothing is active
     private int activeOption = -1;
