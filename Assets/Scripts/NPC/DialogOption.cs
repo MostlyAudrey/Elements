@@ -87,7 +87,7 @@ public class DialogOption : Interactable
 
     void _finishTalking()
     {
-        Debug.Log("Here 2: " + progressesQuest);
+        Debug.Log("Here 2: " + nextPhase);
         AdvanceQuest();
         _stopTalking();
     }

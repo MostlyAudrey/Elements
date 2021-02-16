@@ -267,7 +267,7 @@ public class MobAI : MonoBehaviour
 
 	void _die()
 	{
-
+		EventManager.instance.DeathEvent(this);
 	}
 }
 
