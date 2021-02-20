@@ -39,11 +39,6 @@ public abstract class QuestTrigger : MonoBehaviour
     // Ideally, the 'trigger owner' will fire advance quest when certain conditions are met.
     public virtual void AdvanceQuest()
     {
-        // If inactive, refuse to advance the quest.
-        if (!IsActive())
-        {
-            return;
-        }
 
         Debug.Log("AdvanceQuest");
         if (quest != QuestName.None)
@@ -51,11 +46,5 @@ public abstract class QuestTrigger : MonoBehaviour
                 QuestManager.ProgressQuest(quest);
             else
                 QuestManager.ProgressQuestToPhase(quest, nextPhase);
-    }
-
-    public virtual bool IsActive()
-    {
-        int currentPhase = QuestManager.CheckQuestPhase(quest);
-        return (currentPhase >= activatePhase) && (currentPhase < deactivatePhase);
     }
 }
