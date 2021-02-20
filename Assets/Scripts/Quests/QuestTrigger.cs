@@ -14,8 +14,6 @@ using UnityEngine;
 public abstract class QuestTrigger : MonoBehaviour
 {
     public QuestName quest;             // Associated Quest.
-    public int activatePhase;           // Phase at which this trigger will become active.
-    public int deactivatePhase;         // Phase at which this trigger will become inactive.
 
     // If set to anything other than -1 the interactable will be active until the Quest is in a greater phase
     public int nextPhase = -1;               // The next phase once the trigger conditions are met.
