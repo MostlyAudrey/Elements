@@ -9,8 +9,6 @@ public class NPC : MonoBehaviour
     // example dialogs[0] is only active if quests[0] is at questPhase[0]
 	public Interactable[] interactables;
 	public List<QuestName> quests;
-	public int[] startQuestPhase;
-    public int[] endQuestPhase;
 
     /* At which phase in the quest the corresponding interactable should be active
     *  Each index refers to a quest.

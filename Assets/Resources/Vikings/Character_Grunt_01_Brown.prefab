@@ -1757,6 +1757,7 @@ GameObject:
   - component: {fileID: 7566250928147693317}
   - component: {fileID: -1086706710898861425}
   - component: {fileID: 4288661470879513754}
+  - component: {fileID: 4518213966037364278}
   m_Layer: 0
   m_Name: Character_Grunt_01_Brown
   m_TagString: Untagged
@@ -1879,6 +1880,18 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: 1
   OverrideMaxDistance: 20
+--- !u!114 &4518213966037364278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 147178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 827ec767567334843995953e335ca7dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &151412
 GameObject:
   m_ObjectHideFlags: 0

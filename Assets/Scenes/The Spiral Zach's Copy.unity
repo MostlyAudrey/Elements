@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4445643, g: 0.49407077, b: 0.5733456, a: 1}
+  m_IndirectSpecularColor: {r: 0.44456464, g: 0.49407113, b: 0.5733463, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -32791,15 +32791,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 565c064e1485297ca8ffee10a49b44e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rank: 0
+  quest: 0
+  nextPhase: -1
+  triggerOwner: {fileID: 0}
   buttonHint: {fileID: 1822825794}
   showButtonHint: 1
+  showingHint: 0
+  rank: 0
   buttonHintRadius: 15
   getPlayerAttention: 1
   getPlayerAttentionRadius: 25
   startImmediately: 0
-  progressesQuest: 1
-  progressesQuestToPhase: -1
   textBreakTime: 1
   messageText:
   - Please go find my son
@@ -32821,15 +32823,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 565c064e1485297ca8ffee10a49b44e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rank: 2
+  quest: 0
+  nextPhase: -1
+  triggerOwner: {fileID: 0}
   buttonHint: {fileID: 1822825794}
   showButtonHint: 1
+  showingHint: 0
+  rank: 2
   buttonHintRadius: 5
   getPlayerAttention: 1
   getPlayerAttentionRadius: 15
   startImmediately: 0
-  progressesQuest: 1
-  progressesQuestToPhase: -1
   textBreakTime: 1
   messageText:
   - Thank you for finding my son
@@ -39118,6 +39122,24 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1003068969}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1003534813 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4934571390747675948, guid: e69d3c016bf2aef2da7bb66b7f6b3dc1,
+    type: 3}
+  m_PrefabInstance: {fileID: 2111462773}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1003534822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003534813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 827ec767567334843995953e335ca7dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1003900527 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8536167675589671378, guid: e69d3c016bf2aef2da7bb66b7f6b3dc1,
@@ -41816,15 +41838,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 565c064e1485297ca8ffee10a49b44e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rank: 0
+  quest: 0
+  nextPhase: -1
+  triggerOwner: {fileID: 0}
   buttonHint: {fileID: 1344614676}
   showButtonHint: 1
+  showingHint: 0
+  rank: 0
   buttonHintRadius: 15
   getPlayerAttention: 1
   getPlayerAttentionRadius: 25
   startImmediately: 0
-  progressesQuest: 1
-  progressesQuestToPhase: -1
   textBreakTime: 1
   messageText:
   - I can't return to my father without my axe
@@ -41901,15 +41925,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 565c064e1485297ca8ffee10a49b44e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rank: 0
+  quest: 0
+  nextPhase: -1
+  triggerOwner: {fileID: 0}
   buttonHint: {fileID: 1344614676}
   showButtonHint: 0
+  showingHint: 0
+  rank: 0
   buttonHintRadius: 15
   getPlayerAttention: 0
   getPlayerAttentionRadius: 30
   startImmediately: 1
-  progressesQuest: 1
-  progressesQuestToPhase: -1
   textBreakTime: 1
   messageText:
   - Thank you for finding my axe
@@ -41931,15 +41957,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111fb2123b4fce3eabda762067a6da42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rank: 1
+  quest: 0
+  nextPhase: -1
+  triggerOwner: {fileID: 0}
   buttonHint: {fileID: 1344614676}
   showButtonHint: 1
+  showingHint: 0
+  rank: 1
   buttonHintRadius: 15
   getPlayerAttention: 0
   getPlayerAttentionRadius: 30
   startImmediately: 0
-  progressesQuest: 1
-  progressesQuestToPhase: 3
   itemToBeReturned: {fileID: 907366517}
   pickupRadius: 5
 --- !u!1001 &1061125740

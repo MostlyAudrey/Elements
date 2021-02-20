@@ -524,6 +524,7 @@ GameObject:
   - component: {fileID: 868798733270421852}
   - component: {fileID: 1162261567772166692}
   - component: {fileID: 6146271321102500065}
+  - component: {fileID: -658535578546036446}
   m_Layer: 0
   m_Name: Character_Warrior_01_Brown
   m_TagString: Untagged
@@ -646,6 +647,18 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: 1
   OverrideMaxDistance: 20
+--- !u!114 &-658535578546036446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 827ec767567334843995953e335ca7dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &126554
 GameObject:
   m_ObjectHideFlags: 0
