@@ -11,21 +11,33 @@ public class NPC : MonoBehaviour
 	public List<QuestName> quests;
 	public int[] startQuestPhase;
     public int[] endQuestPhase;
-    
 
-    // When activeOption is negative, nothing is active
+    /* At which phase in the quest the corresponding interactable should be active
+    *  Each index refers to a quest.
+    */
+    public int[] startQuestPhase;
+
+    /* At which point in the quest the corresponding interactable should be deactivated.
+    *  Each index refers to a quest.
+    */
+    public int[] endQuestPhase;
+   
+    // Which interactable is active
+    // When activeOption is negative, nothing is active 
     private int activeOption = -1;
-    private bool[] questActive;
+
+    // Which quests are currently active, and which are not.
+    private bool[] activeInteractables;
 
     void Start()
     {
         foreach ( Interactable option in interactables ) option.enabled = false;
-        questActive = new bool[startQuestPhase.Length];
+        activeInteractables = new bool[startQuestPhase.Length];
         EventManager.instance.onQuestProgressed += _check_interactable_options;
         for ( int i =0; i < startQuestPhase.Length; i++ )
         {
             if ( startQuestPhase[i] == 0 )
-                questActive[i] = true;
+                activeInteractables[i] = true;
             // if ( interactables[i].progressesQuestToPhase != -1 )
             //     interactables[i].enabled = true;
         }
@@ -37,34 +49,51 @@ public class NPC : MonoBehaviour
         if ( activeOption < 0 )
         {
             int heighestRank = 99999;
-            for ( int i = 0; i < questActive.Length; i++ )
+            // For all quests, determine...
+            for ( int i = 0; i < activeInteractables.Length; i++ )
             {
-                if ( questActive[i] && interactables[i].rank < heighestRank )
+                // if the quest is active, and the rank of the interactables is less (higher priority?) than the highest rank.
+                if ( activeInteractables[i] && interactables[i].rank < heighestRank )
                 {
+                    // Set the new 'highest rank' (lowest priority?) to the corresponding interactable.
                     heighestRank = interactables[i].rank;
+
+                    // Set the 'active quest' to that one.
                     activeOption = i;
                 }
             }
 
         }
+
+        // If something is active, check if the interactables are disabled.
         else if (!interactables[activeOption].enabled)
+            // if so, enable them.
             interactables[activeOption].enabled = true;
 
     }
 
+    /*  Seems to check what to enable for a particular quest in a given phase. 
+     *  Seems like quest is actually more of a 'type' than a unique identifier.
+     */
     private void _check_interactable_options(QuestName quest, int phase)
     {
+        // If there is an active queset, and this is that quest...
         if ( activeOption >= 0 && quest == quests[activeOption] )
         {
-            questActive[activeOption] = false;
-            interactables[activeOption].enabled = false;
-            activeOption = -1;
+            activeInteractables[activeOption] = false;              // disable it.
+            interactables[activeOption].enabled = false;    // disable the corresponding interactables.
+            activeOption = -1;                              // set the active quest to 'none'
         }
 
+        // for all interactables...
         for ( int i = 0; i < interactables.Length; i++)
         {
-            if ( quests[i] == quest && ( startQuestPhase[i] <= phase && endQuestPhase[i] >= phase ) )
-                questActive[i] = true;
+            // if the corresponding quest type is the particular quest type , and it is within the range of where the interactable should be online...
+            if (quests[i] == quest && (startQuestPhase[i] <= phase && endQuestPhase[i] >= phase))
+            {
+                // Set that quest to an active quest.
+                activeInteractables[i] = true;
+            }
         }
     }
 

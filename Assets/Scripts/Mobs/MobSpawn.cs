@@ -47,5 +47,4 @@ public abstract class MobSpawn : MonoBehaviour
 	{
 		if (this.is_hostile != is_hostile) this.setHostile();
 	}
-   
 }

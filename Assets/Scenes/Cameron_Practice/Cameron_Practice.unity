@@ -302,7 +302,7 @@ PrefabInstance:
     - target: {fileID: 1276830474738391799, guid: e69d3c016bf2aef2da7bb66b7f6b3dc1,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2144198304268589811, guid: e69d3c016bf2aef2da7bb66b7f6b3dc1,
         type: 3}
@@ -402,7 +402,7 @@ PrefabInstance:
     - target: {fileID: 4933416676725070812, guid: e69d3c016bf2aef2da7bb66b7f6b3dc1,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4933640595036078916, guid: e69d3c016bf2aef2da7bb66b7f6b3dc1,
         type: 3}
@@ -596,11 +596,13 @@ MonoBehaviour:
   path: {fileID: 0}
   waypoints: []
   target: {fileID: 0}
+  swordInHand: {fileID: 0}
+  sheathedSword: {fileID: 0}
   animationSpeed: 1
   rootMovementSpeed: 1
   rootTurnSpeed: 1
   fallSpeed: 1
-  is_hostile: 0
+  is_hostile: 1
   health: 100
   isDead: 0
   aiState: 0
