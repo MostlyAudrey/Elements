@@ -17,7 +17,6 @@ public abstract class QuestTrigger : MonoBehaviour
 
     // If set to anything other than -1 the interactable will be active until the Quest is in a greater phase
     public int nextPhase = -1;               // The next phase once the trigger conditions are met.
-    public MonoBehaviour triggerOwner;  // Associated object for the trigger.
 
     public GameObject buttonHint;       // A corresponding game object that 'holds a hint' related to the completion of the quest.
     public bool showButtonHint;         // Will the corresponding hint be shown?
@@ -38,6 +37,7 @@ public abstract class QuestTrigger : MonoBehaviour
     // Ideally, the 'trigger owner' will fire advance quest when certain conditions are met.
     public virtual void AdvanceQuest()
     {
+
         Debug.Log("AdvanceQuest");
         if (quest != QuestName.None)
             if (nextPhase < 0) // Less than zero will indicate a simple increment in quest phase.
