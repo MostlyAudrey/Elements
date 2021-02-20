@@ -161,12 +161,13 @@ public class RootMotionControlScript : MonoBehaviour
         //Therefore, an additional raycast approach is used to check for close ground
         if (CharacterCommon.CheckGroundNear(this.transform.position, jumpableGroundNormalMaxAngle, 1.5f, 1f, out closeToJumpableGround))
             isGrounded = true;
+        
+        if (CharacterCommon.CheckGroundNear(this.transform.position, jumpableGroundNormalMaxAngle, 2f, 1f, out closeToJumpableGround))
+            anim.SetBool("isFalling", !isGrounded);
                                                     
        
         anim.SetFloat("velx", inputTurn);	
         anim.SetFloat("vely", inputForward);
-        anim.SetBool("isFalling", !isGrounded);
-
     }
 
     //This is a physics callback
@@ -203,7 +204,7 @@ public class RootMotionControlScript : MonoBehaviour
         else
         {
             //Simple trick to keep model from climbing other rigidbodies that aren't the ground  - Time.deltaTime * fallSpeed
-            newRootPosition = new Vector3(anim.rootPosition.x, this.transform.position.y, anim.rootPosition.z);
+            newRootPosition = new Vector3(anim.rootPosition.x, this.transform.position.y - Time.deltaTime * fallSpeed, anim.rootPosition.z);
         }
 
         //use rotational root motion as is
