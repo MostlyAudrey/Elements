@@ -9,6 +9,9 @@ TagManager:
   - Collide
   - ground
   - pickupable
+  - Player_Weapon
+  - walls
+  - Enemy
   layers:
   - Default
   - TransparentFX

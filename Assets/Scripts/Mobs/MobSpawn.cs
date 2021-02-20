@@ -36,10 +36,10 @@ public abstract class MobSpawn : MonoBehaviour
 
 	public void setHostile()
 	{
-		this.is_hostile = this.is_hostile;
+		this.is_hostile = !this.is_hostile;
 		foreach (GameObject mob in spawned_mobs)
 		{
-			mob.GetComponent<MobAI>().is_hostile = is_hostile;
+			mob.GetComponent<MobAI>().is_hostile = this.is_hostile;
 		}
 	}
 
@@ -47,5 +47,4 @@ public abstract class MobSpawn : MonoBehaviour
 	{
 		if (this.is_hostile != is_hostile) this.setHostile();
 	}
-   
 }

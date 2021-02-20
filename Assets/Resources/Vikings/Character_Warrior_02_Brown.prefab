@@ -1993,6 +1993,7 @@ GameObject:
   - component: {fileID: 4205467358619621906}
   - component: {fileID: 2163023903165930091}
   - component: {fileID: 3124186385885001699}
+  - component: {fileID: 8175264174563150419}
   m_Layer: 0
   m_Name: Character_Warrior_02_Brown
   m_TagString: Untagged
@@ -2092,6 +2093,29 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 122
   m_CollisionDetection: 0
+--- !u!114 &8175264174563150419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  Event: event:/Character/Player Footsteps
+  PlayEvent: 0
+  StopEvent: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &162054
 GameObject:
   m_ObjectHideFlags: 0

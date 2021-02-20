@@ -35,9 +35,13 @@ public class RootMotionControlScript : MonoBehaviour
 
     public GameObject HoldSpot;
 
+    public GameObject swordInHand;
+
+    public GameObject sheathedSword;
+
     public bool isGrounded;
 
- 
+    private bool inAttackStance;
 
     void Awake()
     {
@@ -62,6 +66,7 @@ public class RootMotionControlScript : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        _sheath();
 		//example of how to get access to certain limbs
         // leftFoot = this.transform.Find("Root/Hips/UpperLeg_L/LowerLeg_L/Ankle_L");
         // rightFoot = this.transform.Find("Root/Hips/UpperLeg_R/LowerLeg_R/Ankle_R");
@@ -77,6 +82,8 @@ public class RootMotionControlScript : MonoBehaviour
     
     private bool debounceInteractButton = false;
     private bool debounceActionButton = false;
+    private bool debounceAttackButton = false;
+    private bool debounceJumpButton = false;
     private bool itemInPosition = false;
 
     void Update()
@@ -90,6 +97,24 @@ public class RootMotionControlScript : MonoBehaviour
         } 
         else if (!cinput.Interact && debounceInteractButton)
             debounceInteractButton = false;
+
+        if(cinput.Attack && !debounceAttackButton )
+        {
+            _attack();
+            debounceAttackButton = true; 
+        } 
+        else if (!cinput.Attack && debounceAttackButton)
+            debounceAttackButton = false;
+
+        
+        if(cinput.Jump && !debounceJumpButton )
+        {
+            _jump();
+            debounceJumpButton = true; 
+        } 
+        else if (!cinput.Jump && debounceJumpButton)
+            debounceJumpButton = false;
+
 
         if ( cinput.Action && !debounceActionButton)
         {
@@ -154,7 +179,7 @@ public class RootMotionControlScript : MonoBehaviour
     //This is a physics callback
     void OnCollisionEnter(Collision collision)
     {
-
+        Debug.Log(collision);
         if (collision.transform.gameObject.tag == "ground")
         {
       
@@ -227,4 +252,32 @@ public class RootMotionControlScript : MonoBehaviour
         pickedUpItem = null;
         itemInPosition = false;
     }
+
+    private void _attack()
+    {
+        if (!inAttackStance)
+        {
+            anim.SetBool("holding sword", true);
+            _unsheath();
+        }
+        anim.SetTrigger("attack");
+    }
+
+    private void _jump()
+    {
+        anim.SetTrigger("jump");
+    }
+
+    private void _unsheath()
+    {
+        swordInHand.SetActive(true);
+        sheathedSword.SetActive(false);
+    }
+
+    private void _sheath()
+    {
+        swordInHand.SetActive(false);
+        sheathedSword.SetActive(true);
+    }
+
 }

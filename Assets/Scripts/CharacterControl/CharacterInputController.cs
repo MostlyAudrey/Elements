@@ -33,6 +33,18 @@ public class CharacterInputController : MonoBehaviour {
         private set;
     }
 
+    public bool Attack
+    {
+        get;
+        private set;
+    }
+
+    public bool Jump
+    {
+        get;
+        private set;
+    }
+
 	public bool FollowTarget
 	{
 		get;
@@ -82,8 +94,9 @@ public class CharacterInputController : MonoBehaviour {
 
 
         //Capture "fire" button for action event
-        Action = Input.GetButtonDown("Fire1");
-
+        Attack   = Input.GetButtonDown("Fire1");
+        Action   = Input.GetKeyDown(KeyCode.Q);
+        Jump     = Input.GetKeyDown(KeyCode.Space);
         Interact = Input.GetKey(KeyCode.X);
 
 	}

@@ -58,6 +58,16 @@ public class EventManager : MonoBehaviour
 		if ( onQuestProgressed != null ) onQuestProgressed(quest, phase);
 	}
 
+
+	/* Events regarding the tracking of mob lifes. 
+	 * DeathEvent - Event fired when a mob dies. Passes the mob data to the listener so they can determine if that mob is of interest.
+	 */
+
+	public event Action<MobAI> onDeath;
+	public void DeathEvent(MobAI mob)
+    {
+		if (onDeath != null) onDeath(mob);
+    }
 	// public event Action<QuestName> onProgressQuest;
 
 	// public void ProgressQuest(QuestName quest)

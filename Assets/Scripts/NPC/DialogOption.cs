@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public class DialogOption : Interactable
 {
@@ -8,6 +9,8 @@ public class DialogOption : Interactable
     public float textBreakTime = 1f;
 	public string[] messageText;
     public AudioClip[] audioClips;
+    public int[] audioIndices;
+    public string eventPath;
 
     private int currAudioClip = -1;
 
@@ -15,24 +18,19 @@ public class DialogOption : Interactable
     private bool playingAudio = false;
     private float talkPauseTimer = 0f;
 
-    private AudioSource audioPlayer;
+    // private AudioSource audioPlayer;
+    private FMOD.Studio.EventInstance eventInstance;
 
 	void Start()
 	{
-        audioPlayer = GetComponent<AudioSource>();
+        // audioPlayer = GetComponent<AudioSource>();
+        eventInstance = RuntimeManager.CreateInstance(eventPath);
         anim = GetComponent<Animator>();
 
         if ( startImmediately )
         {
             _startTalking();
         }
-        Debug.Log("start");
-    }
-
-    void Awake()
-    {
-        Debug.Log("awake");
-        
     }
 
     // Update is called once per frame
@@ -56,7 +54,9 @@ public class DialogOption : Interactable
             EventManager.instance.onActionButtonPressed -= _startTalking;
             _stopWaving();
         }
-        if ( playingAudio && !audioPlayer.isPlaying)
+        FMOD.Studio.PLAYBACK_STATE audioState;
+        eventInstance.getPlaybackState(out audioState);
+        if ( playingAudio && audioState == FMOD.Studio.PLAYBACK_STATE.STOPPED)//!audioPlayer.isPlaying)
         {
             if ( talkPauseTimer >= textBreakTime )
                 _playNextAudioClip();
@@ -87,7 +87,7 @@ public class DialogOption : Interactable
 
     void _finishTalking()
     {
-        Debug.Log("Here 2: " + progressesQuest);
+        Debug.Log("Here 2: " + nextPhase);
         AdvanceQuest();
         _stopTalking();
     }
@@ -105,18 +105,22 @@ public class DialogOption : Interactable
         currAudioClip += 1;
         if ( currAudioClip  == audioClips.Length )
         {
-            audioPlayer.clip = null;
+            // audioPlayer.clip = null;
             currAudioClip = -1;
             playingAudio = false;
-            audioPlayer.Stop();
+            // audioPlayer.Stop();
+            eventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             Debug.Log("Here");
             _finishTalking();
         }
         else
         {
             playingAudio = true;
-            audioPlayer.clip = audioClips[currAudioClip];
-            audioPlayer.Play();
+            // audioPlayer.clip = audioClips[currAudioClip];
+            // audioPlayer.Play();
+            
+            eventInstance.setParameterByName("Dialogue Option", audioIndices[currAudioClip]);
+            eventInstance.start();
         }
     }
     

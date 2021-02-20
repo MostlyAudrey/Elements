@@ -1,7 +1,19 @@
 public enum QuestName
 {
     None,
-    IntroductionQuest,
-    FunSideQuest,
-    PartyQuest
+    PerformDiagnostics,
+    GettingALayOfTheLand,
+    CarlTheJarl,
+    ForGlory,
+    AnIdiotsLuggage,
+    GoldenHandcuffs,
+    ButThisIsMyBirthCertificate,
+    InternLunchHour,
+    CalculatorCatastrophe,
+    ThisIsPureSnow,
+    TheGreatWolf,
+    BjornAndMoose,
+    ForbiddenLovers,
+    ForTheUnion,
+    TheEnd
 }
