@@ -2775,6 +2775,7 @@ GameObject:
   - component: {fileID: 2908355106812478737}
   - component: {fileID: 2166974648395205888}
   - component: {fileID: -6997041291586267565}
+  - component: {fileID: 2345172696697662416}
   m_Layer: 0
   m_Name: Character_Warrior_01_Black
   m_TagString: Untagged
@@ -2897,6 +2898,18 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: 1
   OverrideMaxDistance: 20
+--- !u!114 &2345172696697662416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 182532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 827ec767567334843995953e335ca7dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &184004
 GameObject:
   m_ObjectHideFlags: 0
