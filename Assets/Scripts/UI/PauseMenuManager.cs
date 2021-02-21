@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class PauseMenuManager : MonoBehaviour
 {
     [Tooltip("Root GameObject used to toggle menu activation")]
     public GameObject menuRoot;
+
+    public QuestListDisplay m_QuestListDisplay;
 
     void Start()
     {
@@ -33,16 +34,7 @@ public class PauseMenuManager : MonoBehaviour
             Cursor.visible = true;
             Time.timeScale = 0f; // Pauses game time
 
-            // Refresh quest interface
-            QuestListManager questListManager = GetComponentInChildren<QuestListManager>();
-            if (questListManager != null)
-            {
-                questListManager.RefreshOngoingQuests();
-            }
-            else
-            {
-                Debug.Log("Not able to find quest list manager!");
-            }
+            m_QuestListDisplay.OpenDisplay();
                
             EventSystem.current.SetSelectedGameObject(null);
         }
@@ -51,6 +43,8 @@ public class PauseMenuManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             Time.timeScale = 1f; // Resumes game time
+
+            m_QuestListDisplay.CloseDisplay();
         }
     }
 }

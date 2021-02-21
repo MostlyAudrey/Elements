@@ -52,6 +52,21 @@ public class QuestManager : MonoBehaviour
         return quests;
     }
 
+    public static List<Quest> GetAvailableQuests()
+    {
+        List<Quest> availableQuests = new List<Quest>();
+        foreach (KeyValuePair<QuestName, Quest> entry in quests)
+        {
+            Quest curr = entry.Value;
+            if (curr.currentPhase >= 0 && curr.currentPhase <= curr.totalPhases)
+            {
+                availableQuests.Add(curr);
+            }
+        }
+
+        return availableQuests;
+    }
+
     private void _instantiate_quests()
     {
         // All quests have to be added to QuestName and then added here
