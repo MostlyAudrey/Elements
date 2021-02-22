@@ -7,13 +7,14 @@ public abstract class QuestPhaseListener : MonoBehaviour
     public QuestName quest;             // Associated Quest.
     public int phase_to_listen_for = 0;
 
-    void Start()
+    void Awake()
     {
         EventManager.instance.onQuestProgressed += questPhaseUpdateListener;
     }
 
     // This function will listen to every quest advancement
     private void questPhaseUpdateListener(QuestName quest, int phase){
+        Debug.Log("Heard quest phase update");
         if (this.quest == quest && this.phase_to_listen_for == phase)
             this._action();
     }

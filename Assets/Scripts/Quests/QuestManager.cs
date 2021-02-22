@@ -89,7 +89,6 @@ public class QuestManager : MonoBehaviour
                 new List<QuestName>{ QuestName.PerformDiagnostics },
                 3 ) 
         );
-
     }
 
 }

@@ -2,13 +2,18 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class PortalActivator : QuestPhaseListener
+public class PortalActivator : QuestPhaseListener
 {
-    void _action()
+    public override void _action()
     {
-        foreach (teleport teleporter in GetComponentsInChildren<teleport>() )
+        foreach ( Transform child in transform.GetComponentsInChildren<Transform>(true) )
         {
-            teleporter.gameObject.SetActive(true);
+            if (child.name == "teleporter" || child.name == "screen")
+            {
+                child.gameObject.SetActive(true);
+            }
         }
+        gameObject.GetComponent<portalSetup>().enabled = true;
+
     }
 }
