@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class PauseMenuManager : MonoBehaviour
+public class PauseMenu : MonoBehaviour
 {
     [Tooltip("Root GameObject used to toggle menu activation")]
     public GameObject menuRoot;
