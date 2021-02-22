@@ -16,11 +16,12 @@ public class Weapon : MonoBehaviour
     // Update is called once per frame
     private void OnTriggerEnter(Collider other)
     {
-        Debug.log("Collider = " + other.tag);
-        if ( parentAnimator.GetCurrentAnimatorStateInfo(0).IsName("Attack") && other.CompareTag("Breakable") && (other.GetType() == typeof(BoxCollider)))
+        Debug.Log("trigger on");
+        if ( parentAnimator.GetCurrentAnimatorStateInfo(0).IsName("Attack") && other.CompareTag("Breakable"))
         {
-            breakable_box box = other.transform.gameObject.GetComponent<breakable_box>();
-            box.TakeDamage(damage);
+            Debug.Log("break box");
+            Breakable breakable = other.transform.gameObject.GetComponent<Breakable>();
+            breakable.TakeDamage(damage);
         }
 
         if ( parentAnimator.GetCurrentAnimatorStateInfo(0).IsName("Attack") && other.CompareTag("Enemy") && (other.GetType() == typeof(CapsuleCollider)))

@@ -28,6 +28,7 @@ public class RootMotionControlScript : MonoBehaviour
     public float fallSpeed = 1f;
 
     public float pickupSpeed = 1f;
+    public float stepDown = 0.3f;
 
     public GameObject pickedUpItem;
 
@@ -159,11 +160,11 @@ public class RootMotionControlScript : MonoBehaviour
         //onCollisionStay() doesn't always work for checking if the character is grounded from a playability perspective
         //Uneven terrain can cause the player to become technically airborne, but so close the player thinks they're touching ground.
         //Therefore, an additional raycast approach is used to check for close ground
-        if (CharacterCommon.CheckGroundNear(this.transform.position, jumpableGroundNormalMaxAngle, 1.5f, 1f, out closeToJumpableGround))
+        // anim.SetBool("isFalling", !CharacterCommon.CheckGroundNear(this.transform.position, jumpableGroundNormalMaxAngle, 1f, 1f, out closeToJumpableGround));
+        if (CharacterCommon.CheckGroundNear(this.transform.position, jumpableGroundNormalMaxAngle, .2f, 1f, out closeToJumpableGround))
+        {
             isGrounded = true;
-        
-        if (CharacterCommon.CheckGroundNear(this.transform.position, jumpableGroundNormalMaxAngle, 2f, 1f, out closeToJumpableGround))
-            anim.SetBool("isFalling", !isGrounded);
+        }
                                                     
        
         anim.SetFloat("velx", inputTurn);	
@@ -204,7 +205,7 @@ public class RootMotionControlScript : MonoBehaviour
         else
         {
             //Simple trick to keep model from climbing other rigidbodies that aren't the ground  - Time.deltaTime * fallSpeed
-            newRootPosition = new Vector3(anim.rootPosition.x, this.transform.position.y - Time.deltaTime * fallSpeed, anim.rootPosition.z);
+            newRootPosition = anim.rootPosition + ( Vector3.down * Time.deltaTime * stepDown ); //new Vector3(anim.rootPosition.x, this.transform.position.y, anim.rootPosition.z);
         }
 
         //use rotational root motion as is

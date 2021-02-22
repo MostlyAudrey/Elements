@@ -239,7 +239,7 @@ public class MobAI : MonoBehaviour
 	void OnCollisionEnter(Collision collision)
 	{
 		Debug.Log("Hit!");
-		if (collision.transform.gameObject.tag == "Player_Weapon")
+		if (collision.gameObject.tag == "Player_Weapon")
 		{
 			animator.SetTrigger("hit");
 			health -= 50;
