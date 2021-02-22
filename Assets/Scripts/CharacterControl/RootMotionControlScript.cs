@@ -26,6 +26,7 @@ public class RootMotionControlScript : MonoBehaviour
 	public float rootMovementSpeed = 1f;
 	public float rootTurnSpeed = 1f;
     public float fallSpeed = 1f;
+    public float buttonRadius = 5f;
 
     public float pickupSpeed = 1f;
     public float stepDown = 0.3f;
@@ -93,7 +94,9 @@ public class RootMotionControlScript : MonoBehaviour
 
         if(cinput.Interact && !debounceInteractButton )
         {
+            _sheath();
             EventManager.instance.ActionButtonPressed();
+            _checkForButton();
             debounceInteractButton = true; 
         } 
         else if (!cinput.Interact && debounceInteractButton)
@@ -228,9 +231,9 @@ public class RootMotionControlScript : MonoBehaviour
 				float buttonWeight = anim.GetFloat ("buttonClose");
 				if (buttonObject) {
 					anim.SetLookAtWeight (buttonWeight);
-					anim.SetLookAtPosition (buttonObject.transform.position);
+					anim.SetLookAtPosition (buttonObject.transform.position + Vector3.down);
 					anim.SetIKPositionWeight (AvatarIKGoal.RightHand, buttonWeight);
-					anim.SetIKPosition (AvatarIKGoal.RightHand, buttonObject.transform.position);
+					anim.SetIKPosition (AvatarIKGoal.RightHand, buttonObject.transform.position + Vector3.down);
 				}
 			} else {
 				anim.SetIKPositionWeight (AvatarIKGoal.RightHand, 0);
@@ -258,10 +261,7 @@ public class RootMotionControlScript : MonoBehaviour
     private void _attack()
     {
         if (!inAttackStance)
-        {
-            anim.SetBool("holding sword", true);
             _unsheath();
-        }
         anim.SetTrigger("attack");
     }
 
@@ -272,14 +272,32 @@ public class RootMotionControlScript : MonoBehaviour
 
     private void _unsheath()
     {
+        inAttackStance = true;
+        anim.SetBool("holding sword", true);
         swordInHand.SetActive(true);
         sheathedSword.SetActive(false);
     }
 
     private void _sheath()
     {
+        inAttackStance = false;
+        anim.SetBool("holding sword", false);
         swordInHand.SetActive(false);
         sheathedSword.SetActive(true);
+    }
+
+    private void _checkForButton()
+    {
+        foreach( Collider collision in Physics.OverlapSphere(transform.position, buttonRadius) )
+        {      
+            if ( collision.gameObject.tag == "Button" )
+            {
+                buttonObject = collision.gameObject;
+                this.anim.SetTrigger("buttonPress");
+                return;
+            }
+        }
+
     }
 
 }

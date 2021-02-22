@@ -16,10 +16,8 @@ public class Weapon : MonoBehaviour
     // Update is called once per frame
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("trigger on");
         if ( parentAnimator.GetCurrentAnimatorStateInfo(0).IsName("Attack") && other.CompareTag("Breakable"))
         {
-            Debug.Log("break box");
             Breakable breakable = other.transform.gameObject.GetComponent<Breakable>();
             breakable.TakeDamage(damage);
         }
