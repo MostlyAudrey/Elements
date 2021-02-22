@@ -88,8 +88,6 @@ public class CharacterCommon {
 
         RaycastHit[] hits = Physics.RaycastAll(ray, rayDepth);
 
-        RaycastHit itemHit = new RaycastHit();
-
         foreach(RaycastHit hit in hits)
         {
             // Renderer rend = hit.transform.GetComponent<Renderer>();

@@ -22,7 +22,7 @@ public class QuestTriggerManager : MonoBehaviour
    
     // Which interactable is active
     // When activeOption is negative, nothing is active 
-    private int activeOption = -1;
+    // private int activeOption = -1;
 
     // Which quests are currently active, and which are not.
     private bool[] activeTriggers;
@@ -73,7 +73,6 @@ public class QuestTriggerManager : MonoBehaviour
      */
     void _check_trigger_options(QuestName quest, int phase)
     {
-        Debug.Log("quest update " + quest + " to phase " + phase);
         // // If there is an active queset, and this is that quest...
         // if ( activeOption >= 0 && quest == quests[activeOption] )
         // {

@@ -184,7 +184,6 @@ public class RootMotionControlScript : MonoBehaviour
     //This is a physics callback
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision);
         if (collision.transform.gameObject.tag == "ground")
         {
       

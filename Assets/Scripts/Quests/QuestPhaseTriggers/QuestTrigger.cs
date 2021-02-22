@@ -41,8 +41,6 @@ public abstract class QuestTrigger : MonoBehaviour
     // Ideally, the 'trigger owner' will fire advance quest when certain conditions are met.
     public virtual void AdvanceQuest()
     {
-
-        Debug.Log("AdvanceQuest");
         if (nextPhase < 0) // Less than zero will indicate a simple increment in quest phase.
             QuestManager.ProgressQuest(quest);
         else

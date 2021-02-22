@@ -14,7 +14,6 @@ public abstract class QuestPhaseListener : MonoBehaviour
 
     // This function will listen to every quest advancement
     private void questPhaseUpdateListener(QuestName quest, int phase){
-        Debug.Log("Heard quest phase update");
         if (this.quest == quest && this.phase_to_listen_for == phase)
             this._action();
     }
