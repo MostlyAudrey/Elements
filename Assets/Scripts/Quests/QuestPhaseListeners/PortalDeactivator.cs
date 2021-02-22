@@ -6,7 +6,7 @@ public abstract class PortalDeactivator : QuestPhaseListener
 {
     void _action()
     {
-        foreach ( Teleport teleporter in GetComponentsInChildren<Teleport>() )
+        foreach ( teleport teleporter in GetComponentsInChildren<teleport>() )
         {
             teleporter.gameObject.SetActive(false);
         }

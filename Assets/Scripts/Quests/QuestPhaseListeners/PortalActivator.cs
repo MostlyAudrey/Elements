@@ -6,7 +6,7 @@ public abstract class PortalActivator : QuestPhaseListener
 {
     void _action()
     {
-        foreach ( Teleport teleporter in GetComponentsInChildren<Teleport>() )
+        foreach (teleport teleporter in GetComponentsInChildren<teleport>() )
         {
             teleporter.gameObject.SetActive(true);
         }
