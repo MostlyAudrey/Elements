@@ -13713,11 +13713,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa08922bdbd9d7513b93397b522b3088, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quest: 0
+  quest: 1
   nextPhase: -1
   buttonHint: {fileID: 1358100446}
   showButtonHint: 1
   showingHint: 0
+--- !u!114 &609579745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 609579740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39f6d6b4b3f78c86bbe5f6145f04ac9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggers:
+  - {fileID: 609579742}
+  quests: 01000000
+  startQuestPhase: 00000000
+  endQuestPhase: 00000000
 --- !u!1001 &609999525
 PrefabInstance:
   m_ObjectHideFlags: 0

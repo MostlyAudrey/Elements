@@ -29,9 +29,9 @@ public class QuestTriggerManager : MonoBehaviour
 
     void Start()
     {
-        // foreach ( QuestTrigger trigger in triggers ) trigger.enabled = false;
-        // activeTriggers = new bool[triggers.Count];
-        // EventManager.instance.onQuestProgressed += _check_trigger_options;
+        foreach ( QuestTrigger trigger in triggers ) trigger.enabled = false;
+        //activeTriggers = new bool[triggers.Count];
+        EventManager.instance.onQuestProgressed += _check_trigger_options;
         // for ( int i =0; i < triggers.Count; i++ )
         // {
         //     if ( startQuestPhase[i] == 0 )
@@ -68,28 +68,35 @@ public class QuestTriggerManager : MonoBehaviour
 
     }
 
-    /*  Seems to check what to enable for a particular quest in a given phase. 
-     *  Seems like quest is actually more of a 'type' than a unique identifier.
+    /*  This is called every time a quest advances
+     *  This function checks to see if any of the triggers it manages should turn on or off because of this quest advancement
      */
-    // void _check_trigger_options(QuestName quest, int phase)
-    // {
-    //     // If there is an active queset, and this is that quest...
-    //     if ( activeOption >= 0 && quest == quests[activeOption] )
-    //     {
-    //         activeInteractables[activeOption] = false;              // disable it.
-    //         interactables[activeOption].enabled = false;    // disable the corresponding interactables.
-    //         activeOption = -1;                              // set the active quest to 'none'
-    //     }
+    void _check_trigger_options(QuestName quest, int phase)
+    {
+        Debug.Log("quest update " + quest + " to phase " + phase);
+        // // If there is an active queset, and this is that quest...
+        // if ( activeOption >= 0 && quest == quests[activeOption] )
+        // {
+        //     activeInteractables[activeOption] = false;              // disable it.
+        //     interactables[activeOption].enabled = false;    // disable the corresponding interactables.
+        //     activeOption = -1;                              // set the active quest to 'none'
+        // }
 
-    //     // for all interactables...
-    //     for ( int i = 0; i < interactables.Length; i++)
-    //     {
-    //         // if the corresponding quest type is the particular quest type , and it is within the range of where the interactable should be online...
-    //         if (quests[i] == quest && (startQuestPhase[i] <= phase && endQuestPhase[i] >= phase))
-    //         {
-    //             // Set that quest to an active quest.
-    //             activeInteractables[i] = true;
-    //         }
-    //     }
-    // }
+        // for all interactables...
+        for ( int i = 0; i < triggers.Count; i++)
+        {
+            // if the corresponding quest type is the particular quest type , and it is within the range of where the interactable should be online...
+            if (quests[i] == quest && (startQuestPhase[i] <= phase && endQuestPhase[i] >= phase))
+            {
+                // Set that quest to an active quest.
+                triggers[i].enableTrigger();
+                triggers[i].enabled = true;
+            }
+            else
+            {
+                triggers[i].disableTrigger();
+                triggers[i].enabled = false;
+            }
+        }
+    }
 }

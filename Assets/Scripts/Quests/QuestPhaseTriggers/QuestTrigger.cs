@@ -18,6 +18,13 @@ public abstract class QuestTrigger : MonoBehaviour
     public GameObject buttonHint;       // A corresponding game object that 'holds a hint' related to the completion of the quest.
     public bool showButtonHint;         // Will the corresponding hint be shown?
     public bool showingHint;            // Is it currently being shown?
+
+    public virtual void enableTrigger(){}
+
+    public virtual void disableTrigger()
+    {
+        _hideButtonHint();
+    }
     protected virtual void _displayButtonHint()
     {
         showingHint = true;
@@ -36,10 +43,9 @@ public abstract class QuestTrigger : MonoBehaviour
     {
 
         Debug.Log("AdvanceQuest");
-        if (quest != QuestName.None)
-            if (nextPhase < 0) // Less than zero will indicate a simple increment in quest phase.
-                QuestManager.ProgressQuest(quest);
-            else
-                QuestManager.ProgressQuestToPhase(quest, nextPhase);
+        if (nextPhase < 0) // Less than zero will indicate a simple increment in quest phase.
+            QuestManager.ProgressQuest(quest);
+        else
+            QuestManager.ProgressQuestToPhase(quest, nextPhase);
     }
 }

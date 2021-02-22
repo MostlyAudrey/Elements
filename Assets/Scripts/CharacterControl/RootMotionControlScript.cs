@@ -229,11 +229,12 @@ public class RootMotionControlScript : MonoBehaviour
 
 			if (astate.IsName ("ButtonPress")) {
 				float buttonWeight = anim.GetFloat ("buttonClose");
+                // Debug.Log(buttonObject.transform.position);
 				if (buttonObject) {
 					anim.SetLookAtWeight (buttonWeight);
-					anim.SetLookAtPosition (buttonObject.transform.position + Vector3.down);
+					anim.SetLookAtPosition (buttonObject.transform.position + (Vector3.down * 1.35f));
 					anim.SetIKPositionWeight (AvatarIKGoal.RightHand, buttonWeight);
-					anim.SetIKPosition (AvatarIKGoal.RightHand, buttonObject.transform.position + Vector3.down);
+					anim.SetIKPosition (AvatarIKGoal.RightHand, buttonObject.transform.position + (Vector3.down * 1.35f));
 				}
 			} else {
 				anim.SetIKPositionWeight (AvatarIKGoal.RightHand, 0);
@@ -298,6 +299,11 @@ public class RootMotionControlScript : MonoBehaviour
             }
         }
 
+    }
+
+    public void buttonPushed()
+    {
+        buttonObject.GetComponent<ButtonPressTrigger>().pushButton();
     }
 
 }

@@ -11,11 +11,28 @@ using UnityEngine;
 class ButtonPressTrigger : QuestTrigger
 {
     //Assumes collisions will occur during a player press.
-    void OnCollisionEnter(Collision other)
+    // void OnCollisionEnter(Collision other)
+    // {
+    //     if (other.gameObject.tag == "Player")
+    //     {
+    //     	Debug.Log("Hit Player");
+    //         AdvanceQuest();
+    //     }
+    // }
+
+    public override void enableTrigger()
     {
-        if (other.gameObject.tag == "Player")
-        {
-            AdvanceQuest();
-        }
+        gameObject.tag = "Button";
+    }
+
+    public override void disableTrigger()
+    {
+        gameObject.tag = "Untagged";
+        _hideButtonHint();
+    }
+
+    public void pushButton()
+    {
+        AdvanceQuest();
     }
 }
