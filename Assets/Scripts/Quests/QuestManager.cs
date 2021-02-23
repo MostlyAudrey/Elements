@@ -75,13 +75,13 @@ public class QuestManager : MonoBehaviour
             new Quest( 
                 QuestName.PerformDiagnostics,
                 new List<QuestName>{},
-                new List<( string hint, Texture2D image )> {
+                new List<( string hint, string image )> {
                     ( "Automatic", null ),
                     ( "Turn on the first portal by hitting the button", "Images/test.jpg" ),
                     ( "Go through the newly active portal and collect your weapon", "Images/test.jpg" ),
                     ( "Return through the portal and destroy the box containing your tools", "Images/test.jpg" ),
                     ( "Use your tools to fix the generator" , "Images/test.jpg" )
-                };) 
+                }) 
         );
 
         QuestManager.quests.Add( 
@@ -94,7 +94,7 @@ public class QuestManager : MonoBehaviour
                     ( "Talk to the Bank Manager at Morgan's Panley", "Images/test.jpg" ),
                     ( "Talk to the Shogun of Bakufu", "Images/test.jpg" ),
                     ( "Talk to the Chief of Fimbultoft", "Images/test.jpg" ),
-                }; )
+                })
         );
 
         QuestManager.quests.Add( 
@@ -104,7 +104,7 @@ public class QuestManager : MonoBehaviour
                 new List<QuestName>{ QuestName.PerformDiagnostics },
                 new List<( string hint, string image )> {
                     ( "Automatic", null ),
-                }; ) 
+                }) 
         );
 
         QuestManager.quests.Add( 
@@ -114,7 +114,7 @@ public class QuestManager : MonoBehaviour
                 new List<QuestName>{ QuestName.PerformDiagnostics },
                 new List<( string hint, string image )> {
                     ( "Automatic", null ),
-                }; )
+                })
         );
 
         QuestManager.quests.Add( 
@@ -124,7 +124,7 @@ public class QuestManager : MonoBehaviour
                 new List<QuestName>{ QuestName.PerformDiagnostics },
                 new List<( string hint, string image )> {
                     ( "Automatic", null ),
-                }; ) 
+                }) 
         );
     }
 
