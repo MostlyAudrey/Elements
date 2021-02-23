@@ -25,7 +25,7 @@ public class Quest
         if (this.currentPhase == 0) EventManager.instance.QuestProgressed( name, 0 );
     }
 
-    public ( string hint, string image ) getPhase()
+    public ( string hint, string image ) getPhaseHint()
     {
         return phaseHints[currentPhase];
     }
