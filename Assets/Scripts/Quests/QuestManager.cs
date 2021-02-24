@@ -103,7 +103,7 @@ public class QuestManager : MonoBehaviour
                 QuestName.CarlTheJarl,
                 new List<QuestName>{ QuestName.PerformDiagnostics },
                 new List<( string hint, string image )> {
-                    ( "Talk to the Chief of Fimbultoft", "Images/test.jpg" )
+                    ( "Automatic", null ),
                 }) 
         );
 
@@ -113,7 +113,7 @@ public class QuestManager : MonoBehaviour
                 QuestName.ForGlory, 
                 new List<QuestName>{ QuestName.PerformDiagnostics },
                 new List<( string hint, string image )> {
-                    ( "Talk to the Shogun of Bakufu", "Images/test.jpg" )
+                    ( "Automatic", null ),
                 })
         );
 
@@ -123,7 +123,7 @@ public class QuestManager : MonoBehaviour
                 QuestName.AnIdiotsLuggage, 
                 new List<QuestName>{ QuestName.PerformDiagnostics },
                 new List<( string hint, string image )> {
-                    ( "Talk to the Bank Manager at Morgan's Panley", "Images/test.jpg" )
+                    ( "Automatic", null ),
                 }) 
         );
     }

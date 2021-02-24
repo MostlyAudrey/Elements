@@ -24,10 +24,6 @@ namespace Utility {
             }
         }
 
-        public static bool WithinRadius(Vector3 pos1, Vector3 pos2, float radius)
-        {
-            return ( ( pos1 - pos2 ).magnitude <= radius );
-        }
     }
 
 }

@@ -24,10 +24,7 @@ public class DialogOption : Interactable
 	void Start()
 	{
         // audioPlayer = GetComponent<AudioSource>();
-        
-        //uncomment this when I know what it does
-        //eventInstance = RuntimeManager.CreateInstance(eventPath);
-        
+        eventInstance = RuntimeManager.CreateInstance(eventPath);
         anim = GetComponent<Animator>();
 
         if ( startImmediately )
@@ -106,7 +103,7 @@ public class DialogOption : Interactable
     {
         talkPauseTimer = 0f;
         currAudioClip += 1;
-        if ( audioClips.Length == 0 || currAudioClip == audioClips.Length )
+        if ( currAudioClip  == audioClips.Length )
         {
             // audioPlayer.clip = null;
             currAudioClip = -1;

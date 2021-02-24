@@ -8,34 +8,22 @@ using UnityEngine;
     * 
     * Built to handle the observation of conditions needed to progress in a quest.
     * */
-public class QuestTrigger : MonoBehaviour
+public abstract class QuestTrigger : MonoBehaviour
 {
     public QuestName quest;             // Associated Quest.
-    public  GameObject target;
 
     // If set to anything other than -1 the interactable will be active until the Quest is in a greater phase
     public int nextPhase = -1;               // The next phase once the trigger conditions are met.
 
     public GameObject buttonHint;       // A corresponding game object that 'holds a hint' related to the completion of the quest.
-    public bool showButtonHint    = true;         // Will the corresponding hint be shown?
-    public float buttonHintRadius = 15.0f;
-    protected bool showingHint;            // Is it currently being shown?
+    public bool showButtonHint;         // Will the corresponding hint be shown?
+    public bool showingHint;            // Is it currently being shown?
 
     public virtual void enableTrigger(){}
 
-    public virtual void disableTrigger(){ _hideButtonHint(); }
-
-    void Update()
+    public virtual void disableTrigger()
     {
-        if ( showButtonHint )
-        {
-            if ( !target ) 
-                target = GameObject.FindGameObjectWithTag("Player");
-            if ( !showingHint && Vector3.Distance(target.transform.position, transform.position) <= buttonHintRadius)
-      		    _displayButtonHint();
-      	    else if ( showingHint && Vector3.Distance(target.transform.position, transform.position) > buttonHintRadius )
-      		    _hideButtonHint();
-        }
+        _hideButtonHint();
     }
     protected virtual void _displayButtonHint()
     {

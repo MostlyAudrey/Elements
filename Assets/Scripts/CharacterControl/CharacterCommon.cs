@@ -81,40 +81,34 @@ public class CharacterCommon {
     {
         List<GameObject> items = new List<GameObject>();
 
-        for (float i = -1.0f; i < 1.0f; i += 0.2f)
+        Ray ray = new Ray( charPos.position + ( Vector3.up * .1f ), charPos.forward );
+
+        // int layerMask = 1 << LayerMask.NameToLayer("Default");
+
+
+        RaycastHit[] hits = Physics.RaycastAll(ray, rayDepth);
+
+        foreach(RaycastHit hit in hits)
         {
-            for (float j = 0f; j < 2.0f; j += 0.3f)
-            {
-                Ray ray = new Ray( charPos.position + ( Vector3.left * i ) + ( Vector3.up * j ), charPos.forward );
+            // Renderer rend = hit.transform.GetComponent<Renderer>();
 
-                // int layerMask = 1 << LayerMask.NameToLayer("Default");
+            // if (rend)
+            // {
+            //     // Change the material of all hit colliders
+            //     // to use a transparent shader.
+            //     rend.material.shader = Shader.Find("Transparent/Diffuse");
+            //     Color tempColor = rend.material.color;
+            //     tempColor.a = 0.3F;
+            //     rend.material.color = tempColor;
+            // }
 
-
-                RaycastHit[] hits = Physics.RaycastAll(ray, rayDepth);
-
-                foreach(RaycastHit hit in hits)
-                {
-                    // Renderer rend = hit.transform.GetComponent<Renderer>();
-
-                    // if (rend)
-                    // {
-                    //     // Change the material of all hit colliders
-                    //     // to use a transparent shader.
-                    //     rend.material.shader = Shader.Find("Transparent/Diffuse");
-                    //     Color tempColor = rend.material.color;
-                    //     tempColor.a = 0.3F;
-                    //     rend.material.color = tempColor;
-                    // }
-
-                    if ( !items.Contains(hit.collider.gameObject) )
-                    {           
-                        items.Add(hit.collider.gameObject);
-                    }
-
-                    Helper.DrawRay(ray, rayDepth, true, hit, Color.magenta, Color.green);
-
-                }
+            if ( !items.Contains(hit.collider.gameObject) )
+            {           
+                items.Add(hit.collider.gameObject);
             }
+
+            Helper.DrawRay(ray, rayDepth, true, hit, Color.magenta, Color.green);
+
         }
 
         

@@ -27,7 +27,7 @@ public class NPC : MonoBehaviour
     // Which quests are currently active, and which are not.
     private bool[] activeInteractables;
 
-    void Awake()
+    void Start()
     {
         foreach ( Interactable option in interactables ) option.enabled = false;
         activeInteractables = new bool[startQuestPhase.Length];
@@ -82,6 +82,7 @@ public class NPC : MonoBehaviour
             interactables[activeOption].enabled = false;    // disable the corresponding interactables.
             activeOption = -1;                              // set the active quest to 'none'
         }
+
         // for all interactables...
         for ( int i = 0; i < interactables.Length; i++)
         {

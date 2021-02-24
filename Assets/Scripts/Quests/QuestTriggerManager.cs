@@ -27,7 +27,7 @@ public class QuestTriggerManager : MonoBehaviour
     // Which quests are currently active, and which are not.
     private bool[] activeTriggers;
 
-    void Awake()
+    void Start()
     {
         foreach ( QuestTrigger trigger in triggers ) trigger.enabled = false;
         //activeTriggers = new bool[triggers.Count];

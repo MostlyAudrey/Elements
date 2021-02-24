@@ -1509,11 +1509,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1427883418143470794}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c785962e9ebd089ca1b31b885c1a273, type: 3}
+  m_Script: {fileID: 11500000, guid: 2f38ad6691890624db32a603a9bbd8b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  availableQuestsListRoot: {fileID: 3609562387126091592}
-  inprogressQuestsListRoot: {fileID: 6333199316209097470}
+  availableQuestsListRoot: {fileID: 558952337064615348}
+  inprogressQuestsListRoot: {fileID: 8657464493833772975}
   listItemPrefab: {fileID: 3240770728389990524, guid: 0b0458dffa210d9459fc2a2a9ea80f1f,
     type: 3}
 --- !u!1 &1742621172771876367
@@ -3152,7 +3152,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4828894172375837636}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f480fc449bbafb62a106032fe14a8ee, type: 3}
+  m_Script: {fileID: 11500000, guid: d206dc3728d02d245810c23e5f4d60c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   menuRoot: {fileID: 3966152025224203768}
@@ -3209,7 +3209,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4860520178879902536}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b188abdd23eedb9aa8185599dca07f6b, type: 3}
+  m_Script: {fileID: 11500000, guid: 81832865ab86a274f9959389547df2cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   masterVolumeSlider: {fileID: 3577933273390626733}
@@ -4882,7 +4882,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 160524104701233420}
   m_HandleRect: {fileID: 5512520363173058231}
   m_Direction: 2
-  m_Value: 0.99999976
+  m_Value: 1
   m_Size: 0.6666667
   m_NumberOfSteps: 0
   m_OnValueChanged:
