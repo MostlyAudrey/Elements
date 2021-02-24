@@ -305,4 +305,11 @@ public class RootMotionControlScript : MonoBehaviour
         buttonObject.GetComponent<ButtonPressTrigger>().pushButton();
     }
 
+    public void LoadLocation(PlayerData data)
+    {
+        Quaternion currRot = transform.rotation;
+        Vector3 newLoc = data.GetPlayerLocation();
+        transform.SetPositionAndRotation(newLoc, currRot);
+        Debug.Log("Loaded player location at " + newLoc);
+    }
 }

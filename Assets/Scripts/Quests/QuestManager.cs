@@ -128,4 +128,14 @@ public class QuestManager : MonoBehaviour
         );
     }
 
+    public static void LoadQuestPhases(PlayerData data)
+    {
+        int i = 0;
+        foreach (KeyValuePair<QuestName, Quest> entry in quests)
+        {
+            QuestName currName = entry.Key;
+            ProgressQuestToPhase(currName, data.GetQuestPhase(i)); //Makes sure prereqs get updated too
+            ++i;
+        }
+    }
 }

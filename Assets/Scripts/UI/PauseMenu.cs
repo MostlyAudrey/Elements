@@ -79,24 +79,51 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    // Add functionality to save and quit buttons here!
     void ResumeGame()
     {
+        SetPauseMenuActivation(false);
     }
 
     void SaveGame()
     {
+        RootMotionControlScript playerRootMotionControl = FindObjectOfType<RootMotionControlScript>();
+        if (playerRootMotionControl != null)
+        {
+            SaveSystem.SavePlayerData(playerRootMotionControl);
+        }
+        else
+        {
+            Debug.LogError("PauseMenu could not find RootMotionControlScript object");
+        }
     }
 
     void LoadFromSave()
     {
+        PlayerData data = SaveSystem.LoadPlayerData();
+
+        RootMotionControlScript playerRootMotionControl = FindObjectOfType<RootMotionControlScript>();
+        if (playerRootMotionControl != null)
+        {
+            playerRootMotionControl.LoadLocation(data);
+        }
+        else
+        {
+            Debug.LogError("PauseMenu could not find RootMotionControlScript object");
+        }
+
+        QuestManager.LoadQuestPhases(data);
+
+        ResumeGame();
     }
 
     void SaveAndExit()
     {
+        SaveGame();
+        ExitWithoutSaving();
     }
 
     void ExitWithoutSaving()
     {
+        //Add exit functionality
     }
 }
