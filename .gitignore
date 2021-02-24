@@ -49,6 +49,8 @@ ExportedObj/
 *.mdb.meta
 *.log
 
+fmod_editor.log
+
 # Unity3D generated file on crash reports
 sysinfo.txt
 
