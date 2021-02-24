@@ -23,6 +23,7 @@ public class Quest
         this.currentPhase = prerequisites.Count > 0 ? -1: 0;
 
         if (this.currentPhase == 0) EventManager.instance.QuestProgressed( name, 0 );
+        Debug.Log(name + ": " + currentPhase);
     }
 
     public ( string hint, string image ) getPhaseHint()

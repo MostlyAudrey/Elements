@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Utility;
+
 public class ReturnItem : Interactable
 {
     public GameObject itemToBeReturned;
@@ -10,7 +12,7 @@ public class ReturnItem : Interactable
 
     void Update()
     {
-        if ( ( transform.position - itemToBeReturned.transform.position ).magnitude <= pickupRadius )
+        if ( Helper.WithinRadius( transform.position, itemToBeReturned.transform.position, pickupRadius ) )
         {
             Debug.Log("Delivered item");
             itemToBeReturned.SetActive( false );
