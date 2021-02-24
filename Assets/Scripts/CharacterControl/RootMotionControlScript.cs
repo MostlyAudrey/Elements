@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utility;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -33,7 +34,7 @@ public class RootMotionControlScript : MonoBehaviour
 
     public GameObject pickedUpItem;
 
-	public GameObject buttonObject;
+	private GameObject buttonObject;
 
     public GameObject HoldSpot;
 
@@ -43,8 +44,11 @@ public class RootMotionControlScript : MonoBehaviour
 
     public bool isGrounded;
 
+    private bool hasSword;
+
     private bool inAttackStance;
 
+    // Use this for initialization
     void Awake()
     {
         anim = GetComponent<Animator>();
@@ -62,13 +66,8 @@ public class RootMotionControlScript : MonoBehaviour
             Debug.Log("CharacterInput could not be found");
 
         anim.applyRootMotion = true;
-    }
 
-
-    // Use this for initialization
-    void Start()
-    {
-        _sheath();
+        EventManager.instance.onQuestProgressed += _watch_quest_progress;
 		//example of how to get access to certain limbs
         // leftFoot = this.transform.Find("Root/Hips/UpperLeg_L/LowerLeg_L/Ankle_L");
         // rightFoot = this.transform.Find("Root/Hips/UpperLeg_R/LowerLeg_R/Ankle_R");
@@ -80,6 +79,12 @@ public class RootMotionControlScript : MonoBehaviour
 
         //never sleep so that OnCollisionStay() always reports for ground check
         rbody.sleepThreshold = 0f;
+    }
+
+    void Start()
+    {
+        hasSword = (QuestManager.CheckQuestPhase( QuestName.PerformDiagnostics ) == 3);
+        _sheath();
     }
     
     private bool debounceInteractButton = false;
@@ -135,10 +140,11 @@ public class RootMotionControlScript : MonoBehaviour
 
         if ( pickedUpItem )
         {
-            if ( !itemInPosition && pickedUpItem.transform.position == HoldSpot.transform.position ) itemInPosition = true;
-
+            if ( !itemInPosition && Helper.WithinRadius(pickedUpItem.transform.position, HoldSpot.transform.position, .5f) ) itemInPosition = true;
             if ( !itemInPosition ) pickedUpItem.transform.position += (HoldSpot.transform.position - pickedUpItem.transform.position) * (Time.deltaTime * pickupSpeed);
             else pickedUpItem.transform.position = HoldSpot.transform.position;
+            
+            if ( itemInPosition && pickedUpItem.GetComponent<ItemPickupTrigger>() ) pickedUpItem.GetComponent<ItemPickupTrigger>().inPosition();
         } 
 
 		anim.speed = animationSpeed;
@@ -258,6 +264,13 @@ public class RootMotionControlScript : MonoBehaviour
         itemInPosition = false;
     }
 
+    public void destroy_picked_up_item()
+    {
+        Destroy(pickedUpItem);
+        itemInPosition = false;
+        pickedUpItem = null;
+    }
+
     private void _attack()
     {
         if (!inAttackStance)
@@ -272,9 +285,9 @@ public class RootMotionControlScript : MonoBehaviour
 
     private void _unsheath()
     {
-        inAttackStance = true;
-        anim.SetBool("holding sword", true);
-        swordInHand.SetActive(true);
+        inAttackStance = hasSword;
+        anim.SetBool("holding sword", hasSword);
+        swordInHand.SetActive(hasSword);
         sheathedSword.SetActive(false);
     }
 
@@ -283,7 +296,7 @@ public class RootMotionControlScript : MonoBehaviour
         inAttackStance = false;
         anim.SetBool("holding sword", false);
         swordInHand.SetActive(false);
-        sheathedSword.SetActive(true);
+        sheathedSword.SetActive(hasSword);
     }
 
     private void _checkForButton()
@@ -297,7 +310,6 @@ public class RootMotionControlScript : MonoBehaviour
                 return;
             }
         }
-
     }
 
     public void buttonPushed()
@@ -311,5 +323,17 @@ public class RootMotionControlScript : MonoBehaviour
         Vector3 newLoc = data.GetPlayerLocation();
         transform.SetPositionAndRotation(newLoc, currRot);
         Debug.Log("Loaded player location at " + newLoc);
+    }
+    
+    // This method will be called during every questphase update. 
+    // Anything that changes the state of the hero should be done here
+    void _watch_quest_progress(QuestName quest, int phase)
+    {
+        Debug.Log("Player heard quest: " + quest + " be updated to phase: " + phase);
+        if (quest == QuestName.PerformDiagnostics && phase == 3)
+        {
+            hasSword = true;
+            _sheath();
+        }    
     }
 }
