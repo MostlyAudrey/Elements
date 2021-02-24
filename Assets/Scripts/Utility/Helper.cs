@@ -24,6 +24,11 @@ namespace Utility {
             }
         }
 
+        public static bool WithinRadius(Vector3 pos1, Vector3 pos2, float radius)
+        {
+            Debug.Log( ( pos1 - pos2 ).magnitude );
+            return ( ( pos1 - pos2 ).magnitude <= radius );
+        }
     }
 
 }
