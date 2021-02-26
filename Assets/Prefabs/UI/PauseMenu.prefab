@@ -387,7 +387,7 @@ GameObject:
   - component: {fileID: 5644304467757296229}
   - component: {fileID: 2977168887217118127}
   m_Layer: 5
-  m_Name: ListContent
+  m_Name: AvailableListContent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1512,8 +1512,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c785962e9ebd089ca1b31b885c1a273, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  availableQuestsListRoot: {fileID: 3609562387126091592}
-  inprogressQuestsListRoot: {fileID: 6333199316209097470}
+  availableQuestsListRoot: {fileID: 558952337064615348}
+  inprogressQuestsListRoot: {fileID: 8657464493833772975}
   listItemPrefab: {fileID: 3240770728389990524, guid: 0b0458dffa210d9459fc2a2a9ea80f1f,
     type: 3}
 --- !u!1 &1742621172771876367
@@ -1815,7 +1815,7 @@ GameObject:
   - component: {fileID: 703374077879227056}
   - component: {fileID: 3699738048914552963}
   m_Layer: 5
-  m_Name: ListContent
+  m_Name: SettingsListContent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4882,7 +4882,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 160524104701233420}
   m_HandleRect: {fileID: 5512520363173058231}
   m_Direction: 2
-  m_Value: 0.99999976
+  m_Value: 1
   m_Size: 0.6666667
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -5584,7 +5584,7 @@ GameObject:
   - component: {fileID: 4632841833387614957}
   - component: {fileID: 8557976799548435067}
   m_Layer: 5
-  m_Name: ListContent
+  m_Name: InProgressListContent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
