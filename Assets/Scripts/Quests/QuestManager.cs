@@ -58,7 +58,7 @@ public class QuestManager : MonoBehaviour
         foreach (KeyValuePair<QuestName, Quest> entry in quests)
         {
             Quest curr = entry.Value;
-            if (curr.currentPhase >= 0 && curr.currentPhase <= curr.totalPhases)
+            if (curr.currentPhase >= 0 && curr.currentPhase < curr.totalPhases)
             {
                 availableQuests.Add(curr);
             }
