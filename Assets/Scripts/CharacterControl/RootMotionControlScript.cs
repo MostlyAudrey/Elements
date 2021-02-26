@@ -317,6 +317,14 @@ public class RootMotionControlScript : MonoBehaviour
         buttonObject.GetComponent<ButtonPressTrigger>().pushButton();
     }
 
+    public void LoadLocation(PlayerData data)
+    {
+        Quaternion currRot = transform.rotation;
+        Vector3 newLoc = data.GetPlayerLocation();
+        transform.SetPositionAndRotation(newLoc, currRot);
+        Debug.Log("Loaded player location at " + newLoc);
+    }
+    
     // This method will be called during every questphase update. 
     // Anything that changes the state of the hero should be done here
     void _watch_quest_progress(QuestName quest, int phase)

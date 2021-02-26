@@ -6,9 +6,11 @@ using UnityEngine.UI;
 
 public class QuestListItem : MonoBehaviour
 {
-    public Image image;
     public Text title;
     public ProgressBar progressBar;
+
+    public Text hintText;
+    public Image hintImage;
 
     private static Regex camelCaseDelimiter;
 
@@ -16,19 +18,6 @@ public class QuestListItem : MonoBehaviour
     public void Init(Quest quest)
     {
         string questName = quest.name.ToString();
-
-        // Set quest image
-        string picPath = "QuestInterface/Pictures/" + questName;
-        Texture2D texData = Resources.Load<Texture2D>(picPath); // for some reason sprites are not loading
-        if (texData != null)
-        {
-            Sprite spriteData = Sprite.Create(texData, new Rect(0f, 0f, texData.width, texData.height), new Vector2(0.5f, 0.5f));
-            image.overrideSprite = spriteData;
-        }
-        else
-        {
-            Debug.Log(picPath + " did not load!");
-        }
 
         // Set quest title
         // Put spaces in between camelCase of quest name
@@ -39,9 +28,40 @@ public class QuestListItem : MonoBehaviour
         string questTitle = camelCaseDelimiter.Replace(questName, " $1");
         title.text = questTitle;
 
-        // Set quest progress
+        // Set progress
         float percentProgress = ((float)quest.currentPhase) / quest.totalPhases;
         progressBar.SetPercentFill(percentProgress);
+
+        // Set hint text and image
+        (string, string) hint = quest.getPhaseHint();
+        string hintDesc = hint.Item1;
+        string hintImgPath = hint.Item2;
+
+        hintText.text = hintDesc;
+
+        Texture2D texData = Resources.Load<Texture2D>(hintImgPath);  // for some reason sprites are not loading
+        if (texData != null)
+        {
+            Sprite spriteData = Sprite.Create(texData, new Rect(0f, 0f, texData.width, texData.height), new Vector2(0.5f, 0.5f));
+            hintImage.overrideSprite = spriteData;
+        }
+        else
+        {
+            Debug.Log(hintImgPath + " did not load!");
+        }
+
+
+        // string picPath = "QuestInterface/Pictures/" + questName;
+        // Texture2D texData = Resources.Load<Texture2D>(picPath); // for some reason sprites are not loading
+        // if (texData != null)
+        // {
+        //     Sprite spriteData = Sprite.Create(texData, new Rect(0f, 0f, texData.width, texData.height), new Vector2(0.5f, 0.5f));
+        //     image.overrideSprite = spriteData;
+        // }
+        // else
+        // {
+        //     Debug.Log(picPath + " did not load!");
+        // }
 
         // Set quest description
         //TextAsset descData = Resources.Load<TextAsset>("QuestInterface/Descriptions/" + questName);
