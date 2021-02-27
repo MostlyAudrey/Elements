@@ -127,8 +127,8 @@ public class portalSetup : MonoBehaviour {
         scriptCamB.cameraId = groupId + ".b";
 
         //and setup both portal's script
-        teleport scriptPortalA = portalA.Find("plane").GetComponent<teleport>();
-        teleport scriptPortalB = portalB.Find("plane").GetComponent<teleport>();
+        teleport scriptPortalA = portalA.Find("teleporter").GetComponent<teleport>();
+        teleport scriptPortalB = portalB.Find("teleporter").GetComponent<teleport>();
         scriptPortalA.setup = this;
         scriptPortalA.cameraScript = scriptCamA;
         scriptPortalA.otherScript = scriptPortalB;
@@ -163,12 +163,12 @@ public class portalSetup : MonoBehaviour {
         matB.mainTexture = cameraB.targetTexture;
 
         //and asign those materials to the planes (here is where they cross)
-        portalA.Find("plane").GetComponent<MeshRenderer>().material = matB;
-        portalB.Find("plane").GetComponent<MeshRenderer>().material = matA;
+        portalA.Find("teleporter").GetComponent<MeshRenderer>().material = matB;
+        portalB.Find("teleporter").GetComponent<MeshRenderer>().material = matA;
 
         //also to the "emergency" plane (see online documentation)
-        if (portalA.Find("plane2") != null) portalA.Find("plane2").GetComponent<MeshRenderer>().material = matB;
-        if (portalB.Find("plane2") != null) portalB.Find("plane2").GetComponent<MeshRenderer>().material = matA;
+        if (portalA.Find("screen") != null) portalA.Find("screen").GetComponent<MeshRenderer>().material = matB;
+        if (portalB.Find("screen") != null) portalB.Find("screen").GetComponent<MeshRenderer>().material = matA;
 
         //fire event
         if (fireEvent) {
