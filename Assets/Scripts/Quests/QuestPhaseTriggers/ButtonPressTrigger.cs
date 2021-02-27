@@ -10,15 +10,7 @@ using UnityEngine;
  */
 class ButtonPressTrigger : QuestTrigger
 {
-    //Assumes collisions will occur during a player press.
-    // void OnCollisionEnter(Collision other)
-    // {
-    //     if (other.gameObject.tag == "Player")
-    //     {
-    //     	Debug.Log("Hit Player");
-    //         AdvanceQuest();
-    //     }
-    // }
+    public GameObject moveableComponent;
 
     public override void enableTrigger()
     {

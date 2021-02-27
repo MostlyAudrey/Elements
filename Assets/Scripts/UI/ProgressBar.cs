@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class ProgressBar : MonoBehaviour
 {
-    public GameObject ContainerRect;
-    public GameObject FillRect;
+    [Tooltip("Transform must only have anchors and no size delta.")]
+    public GameObject containerRect;
+    public GameObject fillRect;
 
-    void Start()
-    {
-    }
 
     void Update()
     {
@@ -20,10 +18,18 @@ public class ProgressBar : MonoBehaviour
     // Set amount of fill with float between 0 and 1
     public void SetPercentFill(float percent)
     {
-        RectTransform m_ContainerRect = ContainerRect.transform as RectTransform;
-        RectTransform m_FillRect = FillRect.transform as RectTransform;
-        // Change fill rect's sizeDelta (does not update when changing rect.width or rect)
-        m_FillRect.sizeDelta = new Vector2(m_ContainerRect.sizeDelta.x * percent, m_FillRect.sizeDelta.y);
-        Debug.Log("Set percent fill to " + percent + " at width " + m_ContainerRect.sizeDelta.x * percent);
+        RectTransform containerTransform = containerRect.transform as RectTransform;
+        RectTransform fillTransform = fillRect.transform as RectTransform;
+
+        fillTransform.sizeDelta = containerTransform.sizeDelta;
+        fillTransform.pivot = containerTransform.pivot;
+        fillTransform.anchorMin = containerTransform.anchorMin;
+
+        //PercentFill*(anchorMax.x-anchorMin.x)+anchorMin.x = PercentFill*anchorMax.X+(1-PercentFill)*anchorMin.X  
+        fillTransform.anchorMax = new Vector2(percent * containerTransform.anchorMax.x + (1f - percent) * containerTransform.anchorMin.x,
+            containerTransform.anchorMax.y);
+
+        //FillTransform.sizeDelta = new Vector2(ContainerTransform.sizeDelta.x * percent, ContainerTransform.sizeDelta.y);
+        //Debug.Log("Set percent fill to " + percent + " at width " + ContainerTransform.sizeDelta.x * percent);
     }
 }
