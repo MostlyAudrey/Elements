@@ -81,36 +81,40 @@ public class CharacterCommon {
     {
         List<GameObject> items = new List<GameObject>();
 
-        Ray ray = new Ray( charPos.position + ( Vector3.up * .1f ), charPos.forward );
-
-        // int layerMask = 1 << LayerMask.NameToLayer("Default");
-
-
-        RaycastHit[] hits = Physics.RaycastAll(ray, rayDepth);
-
-        RaycastHit itemHit = new RaycastHit();
-
-        foreach(RaycastHit hit in hits)
+        for (float i = -1.0f; i < 1.0f; i += 0.2f)
         {
-            // Renderer rend = hit.transform.GetComponent<Renderer>();
+            for (float j = 0f; j < 2.0f; j += 0.3f)
+            {
+                Ray ray = new Ray( charPos.position + ( Vector3.left * i ) + ( Vector3.up * j ), charPos.forward );
 
-            // if (rend)
-            // {
-            //     // Change the material of all hit colliders
-            //     // to use a transparent shader.
-            //     rend.material.shader = Shader.Find("Transparent/Diffuse");
-            //     Color tempColor = rend.material.color;
-            //     tempColor.a = 0.3F;
-            //     rend.material.color = tempColor;
-            // }
+                // int layerMask = 1 << LayerMask.NameToLayer("Default");
 
-            if ( !items.Contains(hit.collider.gameObject) )
-            {           
-                items.Add(hit.collider.gameObject);
+
+                RaycastHit[] hits = Physics.RaycastAll(ray, rayDepth);
+
+                foreach(RaycastHit hit in hits)
+                {
+                    // Renderer rend = hit.transform.GetComponent<Renderer>();
+
+                    // if (rend)
+                    // {
+                    //     // Change the material of all hit colliders
+                    //     // to use a transparent shader.
+                    //     rend.material.shader = Shader.Find("Transparent/Diffuse");
+                    //     Color tempColor = rend.material.color;
+                    //     tempColor.a = 0.3F;
+                    //     rend.material.color = tempColor;
+                    // }
+
+                    if ( !items.Contains(hit.collider.gameObject) )
+                    {           
+                        items.Add(hit.collider.gameObject);
+                    }
+
+                    Helper.DrawRay(ray, rayDepth, true, hit, Color.magenta, Color.green);
+
+                }
             }
-
-            Helper.DrawRay(ray, rayDepth, true, hit, Color.magenta, Color.green);
-
         }
 
         

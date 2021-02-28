@@ -12,6 +12,8 @@ TagManager:
   - Player_Weapon
   - walls
   - Enemy
+  - Breakable
+  - Button
   layers:
   - Default
   - TransparentFX

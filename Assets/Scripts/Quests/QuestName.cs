@@ -11,6 +11,7 @@ public enum QuestName
     InternLunchHour,
     CalculatorCatastrophe,
     ThisIsPureSnow,
+    ThingsAreGettingSerious,
     TheGreatWolf,
     BjornAndMoose,
     ForbiddenLovers,

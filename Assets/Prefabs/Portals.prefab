@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6370579040264628460}
   - component: {fileID: 3721925825757680094}
   m_Layer: 8
-  m_Name: plane2
+  m_Name: screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 842017173950831076}
   - component: {fileID: 7504465306587264252}
   m_Layer: 8
-  m_Name: plane2
+  m_Name: screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -266,7 +266,7 @@ GameObject:
   - component: {fileID: 4952838705518671723}
   - component: {fileID: 4952838705518671724}
   m_Layer: 0
-  m_Name: plane
+  m_Name: teleporter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -409,7 +409,7 @@ GameObject:
   - component: {fileID: 4952838706017401081}
   - component: {fileID: 4952838706017401082}
   m_Layer: 0
-  m_Name: plane
+  m_Name: teleporter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Animator), typeof(Rigidbody), typeof(CapsuleCollider))]
+[RequireComponent(typeof(Animator))]
 public class Interactable : QuestTrigger
 {
     //only 1 dialog option can be displayed at one time, the lower the rank the higher its priority
     public int rank = 0;
-	public float buttonHintRadius = 15.0f;
 	public bool getPlayerAttention = true;
 	public float getPlayerAttentionRadius = 30.0f;
 
@@ -24,7 +23,7 @@ public class Interactable : QuestTrigger
         target = GameObject.FindGameObjectWithTag("Player");
         anim = GetComponent<Animator>();
         anim.applyRootMotion = false;
-        buttonHint.SetActive( false );
+        if ( buttonHint ) buttonHint.SetActive( false );
     }
 
     protected void _startWaving()

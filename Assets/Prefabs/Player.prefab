@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3646909912342922279
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4252600397314320677}
+  m_Layer: 0
+  m_Name: HoldSpot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4252600397314320677
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3646909912342922279}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 150, z: 100}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4929697919326842258}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4934555612772412640
 GameObject:
   m_ObjectHideFlags: 0
@@ -47,7 +77,6 @@ GameObject:
   - component: {fileID: 8255935131647437534}
   - component: {fileID: 4475046668266933530}
   - component: {fileID: 4913080777439431382}
-  - component: {fileID: 2845738501222432059}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -68,6 +97,7 @@ Transform:
   m_Children:
   - {fileID: 4933540541840339926}
   - {fileID: 2822807549865929543}
+  - {fileID: 4252600397314320677}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -253,10 +283,12 @@ MonoBehaviour:
   rootMovementSpeed: 100
   rootTurnSpeed: 1
   fallSpeed: 1
+  buttonRadius: 5
   pickupSpeed: 1
+  stepDown: 0.3
   pickedUpItem: {fileID: 0}
   buttonObject: {fileID: 0}
-  HoldSpot: {fileID: 0}
+  HoldSpot: {fileID: 3646909912342922279}
   swordInHand: {fileID: 6072522411693503878}
   sheathedSword: {fileID: 1276830474738151801}
   isGrounded: 0
@@ -295,18 +327,6 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: 1
   OverrideMaxDistance: 20
---- !u!114 &2845738501222432059
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4934571390747675948}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 827ec767567334843995953e335ca7dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4934595503357350650
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,6 +336,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4933444233178849412}
+  - component: {fileID: 7130226559112016882}
   m_Layer: 0
   m_Name: Hand_R
   m_TagString: Untagged
@@ -341,6 +362,20 @@ Transform:
   m_Father: {fileID: 4929465161571535442}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &7130226559112016882
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4934595503357350650}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 11.576515
+  m_Height: 20
+  m_Direction: 1
+  m_Center: {x: 11.441869, y: 0.08999989, z: 0.00000031548967}
 --- !u!1 &4934618742528257076
 GameObject:
   m_ObjectHideFlags: 0
@@ -1998,15 +2033,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 694b0fc9d0f51d34fb49ea2b3bad4631, type: 3}
---- !u!1 &1276830474738151801 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 164074, guid: 694b0fc9d0f51d34fb49ea2b3bad4631,
-    type: 3}
-  m_PrefabInstance: {fileID: 1276830474738315667}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1276830474738391799 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 486244, guid: 694b0fc9d0f51d34fb49ea2b3bad4631,
+    type: 3}
+  m_PrefabInstance: {fileID: 1276830474738315667}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1276830474738151801 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 164074, guid: 694b0fc9d0f51d34fb49ea2b3bad4631,
     type: 3}
   m_PrefabInstance: {fileID: 1276830474738315667}
   m_PrefabAsset: {fileID: 0}
@@ -2020,6 +2055,10 @@ PrefabInstance:
     - target: {fileID: 164074, guid: 694b0fc9d0f51d34fb49ea2b3bad4631, type: 3}
       propertyPath: m_Name
       value: SM_Wep_Sword_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 164074, guid: 694b0fc9d0f51d34fb49ea2b3bad4631, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 164074, guid: 694b0fc9d0f51d34fb49ea2b3bad4631, type: 3}
       propertyPath: m_TagString
@@ -2089,15 +2128,15 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 64332563918427860, guid: 694b0fc9d0f51d34fb49ea2b3bad4631, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 694b0fc9d0f51d34fb49ea2b3bad4631, type: 3}
---- !u!1 &6072522411693503878 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 164074, guid: 694b0fc9d0f51d34fb49ea2b3bad4631,
-    type: 3}
-  m_PrefabInstance: {fileID: 6072522411693340012}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6072522411693252104 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 486244, guid: 694b0fc9d0f51d34fb49ea2b3bad4631,
+    type: 3}
+  m_PrefabInstance: {fileID: 6072522411693340012}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6072522411693503878 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 164074, guid: 694b0fc9d0f51d34fb49ea2b3bad4631,
     type: 3}
   m_PrefabInstance: {fileID: 6072522411693340012}
   m_PrefabAsset: {fileID: 0}

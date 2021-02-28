@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utility;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -26,12 +27,14 @@ public class RootMotionControlScript : MonoBehaviour
 	public float rootMovementSpeed = 1f;
 	public float rootTurnSpeed = 1f;
     public float fallSpeed = 1f;
+    public float buttonRadius = 5f;
 
     public float pickupSpeed = 1f;
+    public float stepDown = 0.3f;
 
     public GameObject pickedUpItem;
 
-	public GameObject buttonObject;
+	private GameObject buttonObject;
 
     public GameObject HoldSpot;
 
@@ -41,8 +44,11 @@ public class RootMotionControlScript : MonoBehaviour
 
     public bool isGrounded;
 
+    private bool hasSword;
+
     private bool inAttackStance;
 
+    // Use this for initialization
     void Awake()
     {
         anim = GetComponent<Animator>();
@@ -60,13 +66,8 @@ public class RootMotionControlScript : MonoBehaviour
             Debug.Log("CharacterInput could not be found");
 
         anim.applyRootMotion = true;
-    }
 
-
-    // Use this for initialization
-    void Start()
-    {
-        _sheath();
+        EventManager.instance.onQuestProgressed += _watch_quest_progress;
 		//example of how to get access to certain limbs
         // leftFoot = this.transform.Find("Root/Hips/UpperLeg_L/LowerLeg_L/Ankle_L");
         // rightFoot = this.transform.Find("Root/Hips/UpperLeg_R/LowerLeg_R/Ankle_R");
@@ -78,6 +79,12 @@ public class RootMotionControlScript : MonoBehaviour
 
         //never sleep so that OnCollisionStay() always reports for ground check
         rbody.sleepThreshold = 0f;
+    }
+
+    void Start()
+    {
+        hasSword = (QuestManager.CheckQuestPhase( QuestName.PerformDiagnostics ) == 3);
+        _sheath();
     }
     
     private bool debounceInteractButton = false;
@@ -92,7 +99,9 @@ public class RootMotionControlScript : MonoBehaviour
 
         if(cinput.Interact && !debounceInteractButton )
         {
+            _sheath();
             EventManager.instance.ActionButtonPressed();
+            _checkForButton();
             debounceInteractButton = true; 
         } 
         else if (!cinput.Interact && debounceInteractButton)
@@ -131,10 +140,11 @@ public class RootMotionControlScript : MonoBehaviour
 
         if ( pickedUpItem )
         {
-            if ( !itemInPosition && pickedUpItem.transform.position == HoldSpot.transform.position ) itemInPosition = true;
-
+            if ( !itemInPosition && Helper.WithinRadius(pickedUpItem.transform.position, HoldSpot.transform.position, .5f) ) itemInPosition = true;
             if ( !itemInPosition ) pickedUpItem.transform.position += (HoldSpot.transform.position - pickedUpItem.transform.position) * (Time.deltaTime * pickupSpeed);
             else pickedUpItem.transform.position = HoldSpot.transform.position;
+            
+            if ( itemInPosition && pickedUpItem.GetComponent<ItemPickupTrigger>() ) pickedUpItem.GetComponent<ItemPickupTrigger>().inPosition();
         } 
 
 		anim.speed = animationSpeed;
@@ -159,14 +169,15 @@ public class RootMotionControlScript : MonoBehaviour
         //onCollisionStay() doesn't always work for checking if the character is grounded from a playability perspective
         //Uneven terrain can cause the player to become technically airborne, but so close the player thinks they're touching ground.
         //Therefore, an additional raycast approach is used to check for close ground
-        if (CharacterCommon.CheckGroundNear(this.transform.position, jumpableGroundNormalMaxAngle, 1.5f, 1f, out closeToJumpableGround))
+        // anim.SetBool("isFalling", !CharacterCommon.CheckGroundNear(this.transform.position, jumpableGroundNormalMaxAngle, 1f, 1f, out closeToJumpableGround));
+        if (CharacterCommon.CheckGroundNear(this.transform.position, jumpableGroundNormalMaxAngle, .2f, 1f, out closeToJumpableGround))
+        {
             isGrounded = true;
+        }
                                                     
        
         anim.SetFloat("velx", inputTurn);	
         anim.SetFloat("vely", inputForward);
-        anim.SetBool("isFalling", !isGrounded);
-
     }
 
     //This is a physics callback
@@ -179,7 +190,6 @@ public class RootMotionControlScript : MonoBehaviour
     //This is a physics callback
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision);
         if (collision.transform.gameObject.tag == "ground")
         {
       
@@ -203,7 +213,7 @@ public class RootMotionControlScript : MonoBehaviour
         else
         {
             //Simple trick to keep model from climbing other rigidbodies that aren't the ground  - Time.deltaTime * fallSpeed
-            newRootPosition = new Vector3(anim.rootPosition.x, this.transform.position.y, anim.rootPosition.z);
+            newRootPosition = anim.rootPosition + ( Vector3.down * Time.deltaTime * stepDown ); //new Vector3(anim.rootPosition.x, this.transform.position.y, anim.rootPosition.z);
         }
 
         //use rotational root motion as is
@@ -224,11 +234,12 @@ public class RootMotionControlScript : MonoBehaviour
 
 			if (astate.IsName ("ButtonPress")) {
 				float buttonWeight = anim.GetFloat ("buttonClose");
+                // Debug.Log(buttonObject.transform.position);
 				if (buttonObject) {
 					anim.SetLookAtWeight (buttonWeight);
-					anim.SetLookAtPosition (buttonObject.transform.position);
+					anim.SetLookAtPosition (buttonObject.transform.position + (Vector3.down * 1.35f));
 					anim.SetIKPositionWeight (AvatarIKGoal.RightHand, buttonWeight);
-					anim.SetIKPosition (AvatarIKGoal.RightHand, buttonObject.transform.position);
+					anim.SetIKPosition (AvatarIKGoal.RightHand, buttonObject.transform.position + (Vector3.down * 1.35f));
 				}
 			} else {
 				anim.SetIKPositionWeight (AvatarIKGoal.RightHand, 0);
@@ -253,13 +264,17 @@ public class RootMotionControlScript : MonoBehaviour
         itemInPosition = false;
     }
 
+    public void destroy_picked_up_item()
+    {
+        Destroy(pickedUpItem);
+        itemInPosition = false;
+        pickedUpItem = null;
+    }
+
     private void _attack()
     {
         if (!inAttackStance)
-        {
-            anim.SetBool("holding sword", true);
             _unsheath();
-        }
         anim.SetTrigger("attack");
     }
 
@@ -270,14 +285,55 @@ public class RootMotionControlScript : MonoBehaviour
 
     private void _unsheath()
     {
-        swordInHand.SetActive(true);
+        inAttackStance = hasSword;
+        anim.SetBool("holding sword", hasSword);
+        swordInHand.SetActive(hasSword);
         sheathedSword.SetActive(false);
     }
 
     private void _sheath()
     {
+        inAttackStance = false;
+        anim.SetBool("holding sword", false);
         swordInHand.SetActive(false);
-        sheathedSword.SetActive(true);
+        sheathedSword.SetActive(hasSword);
     }
 
+    private void _checkForButton()
+    {
+        foreach( Collider collision in Physics.OverlapSphere(transform.position, buttonRadius) )
+        {      
+            if ( collision.gameObject.tag == "Button" )
+            {
+                buttonObject = collision.gameObject;
+                this.anim.SetTrigger("buttonPress");
+                return;
+            }
+        }
+    }
+
+    public void buttonPushed()
+    {
+        buttonObject.GetComponent<ButtonPressTrigger>().pushButton();
+    }
+
+    public void LoadLocation(PlayerData data)
+    {
+        Quaternion currRot = transform.rotation;
+        Vector3 newLoc = data.GetPlayerLocation();
+        transform.SetPositionAndRotation(newLoc, currRot);
+        Debug.Log("Loaded player location at " + newLoc);
+    }
+    
+    // This method will be called during every questphase update. 
+    // Anything that changes the state of the hero should be done here
+    void _watch_quest_progress(QuestName quest, int phase)
+    {
+        Debug.Log("Player heard quest: " + quest + " be updated to phase: " + phase);
+        if (quest == QuestName.PerformDiagnostics && phase == 3)
+        {
+            hasSword = true;
+            _sheath();
+        }    
+    }
 }
