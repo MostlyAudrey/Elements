@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Utility;
+using FMODUnity;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -48,6 +49,8 @@ public class RootMotionControlScript : MonoBehaviour
 
     private bool inAttackStance;
 
+    private FMOD.Studio.EventInstance buttonAudio;
+
     // Use this for initialization
     void Awake()
     {
@@ -85,6 +88,8 @@ public class RootMotionControlScript : MonoBehaviour
     {
         hasSword = (QuestManager.CheckQuestPhase( QuestName.PerformDiagnostics ) == 3);
         _sheath();
+
+        buttonAudio = RuntimeManager.CreateInstance("event:/Interactables/Button");
     }
     
     private bool debounceInteractButton = false;
@@ -315,6 +320,7 @@ public class RootMotionControlScript : MonoBehaviour
     public void buttonPushed()
     {
         buttonObject.GetComponent<ButtonPressTrigger>().pushButton();
+        buttonAudio.start();
     }
 
     public void LoadLocation(PlayerData data)
