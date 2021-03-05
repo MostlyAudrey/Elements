@@ -170,7 +170,7 @@ public class MobAI : MonoBehaviour
 		if (health <= 0)
 		{
 			isDead = true;
-			animator.SetTrigger("Dead");
+			animator.SetBool("Dead",true);
 			_die();
 		}
 	}
