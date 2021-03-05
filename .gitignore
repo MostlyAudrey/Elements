@@ -63,3 +63,5 @@ crashlytics-build.properties
 
 *.meta
 Packages/packages-lock.json
+Packages/packages-lock.json
+Packages/packages-lock.json
