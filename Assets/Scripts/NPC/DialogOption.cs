@@ -8,8 +8,8 @@ public class DialogOption : Interactable
     //public float textSpeed = 1f;
     public float textBreakTime = 1f;
 	public string[] messageText;
-    public AudioClip[] audioClips;
     public int[] audioIndices;
+    public float[] audioLengths;
     public string eventPath;
 
     private int currAudioClip = -1;
@@ -26,7 +26,7 @@ public class DialogOption : Interactable
         // audioPlayer = GetComponent<AudioSource>();
         
         //uncomment this when I know what it does
-        //eventInstance = RuntimeManager.CreateInstance(eventPath);
+        eventInstance = RuntimeManager.CreateInstance(eventPath);
         
         anim = GetComponent<Animator>();
 
@@ -81,7 +81,7 @@ public class DialogOption : Interactable
         float time_per_char = 0f;
         foreach ( string message in messageText ) {
             int char_count = message.Length - (message.Split(' ').Length - 1);
-            time_per_char = (audioClips[index].length)/ char_count;
+            time_per_char = (audioLengths[index])/ char_count;
             EventManager.instance.DisplayText(message, time_per_char, textBreakTime);
             index++;
         }
@@ -106,7 +106,7 @@ public class DialogOption : Interactable
     {
         talkPauseTimer = 0f;
         currAudioClip += 1;
-        if ( audioClips.Length == 0 || currAudioClip == audioClips.Length )
+        if ( audioIndices.Length == 0 || currAudioClip == audioIndices.Length )
         {
             // audioPlayer.clip = null;
             currAudioClip = -1;
@@ -123,7 +123,9 @@ public class DialogOption : Interactable
             // audioPlayer.Play();
             
             eventInstance.setParameterByName("Dialogue Option", audioIndices[currAudioClip]);
+            
             eventInstance.start();
+            
         }
     }
     
