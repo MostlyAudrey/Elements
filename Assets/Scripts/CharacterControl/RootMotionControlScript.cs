@@ -45,7 +45,7 @@ public class RootMotionControlScript : MonoBehaviour
 
     public bool isGrounded;
 
-    private bool hasSword;
+    public bool hasSword;
 
     private bool inAttackStance;
 
@@ -70,7 +70,6 @@ public class RootMotionControlScript : MonoBehaviour
 
         anim.applyRootMotion = true;
 
-        EventManager.instance.onQuestProgressed += _watch_quest_progress;
 		//example of how to get access to certain limbs
         // leftFoot = this.transform.Find("Root/Hips/UpperLeg_L/LowerLeg_L/Ankle_L");
         // rightFoot = this.transform.Find("Root/Hips/UpperLeg_R/LowerLeg_R/Ankle_R");
@@ -87,7 +86,7 @@ public class RootMotionControlScript : MonoBehaviour
     void Start()
     {
         hasSword = (QuestManager.CheckQuestPhase( QuestName.PerformDiagnostics ) == 3);
-        _sheath();
+        sheath();
 
         buttonAudio = RuntimeManager.CreateInstance("event:/Interactables/Button");
     }
@@ -104,7 +103,7 @@ public class RootMotionControlScript : MonoBehaviour
 
         if(cinput.Interact && !debounceInteractButton )
         {
-            _sheath();
+            sheath();
             EventManager.instance.ActionButtonPressed();
             _checkForButton();
             debounceInteractButton = true; 
@@ -296,7 +295,7 @@ public class RootMotionControlScript : MonoBehaviour
         sheathedSword.SetActive(false);
     }
 
-    private void _sheath()
+    public void sheath()
     {
         inAttackStance = false;
         anim.SetBool("holding sword", false);
@@ -331,15 +330,4 @@ public class RootMotionControlScript : MonoBehaviour
         Debug.Log("Loaded player location at " + newLoc);
     }
     
-    // This method will be called during every questphase update. 
-    // Anything that changes the state of the hero should be done here
-    void _watch_quest_progress(QuestName quest, int phase)
-    {
-        Debug.Log("Player heard quest: " + quest + " be updated to phase: " + phase);
-        if (quest == QuestName.PerformDiagnostics && phase == 3)
-        {
-            hasSword = true;
-            _sheath();
-        }    
-    }
 }
