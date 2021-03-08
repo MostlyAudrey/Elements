@@ -26,7 +26,7 @@ public class DialogOption : Interactable
         // audioPlayer = GetComponent<AudioSource>();
         
         //uncomment this when I know what it does
-        eventInstance = RuntimeManager.CreateInstance(eventPath);
+        //eventInstance = RuntimeManager.CreateInstance(eventPath);
         
         anim = GetComponent<Animator>();
 
