@@ -7,31 +7,27 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-public class PlayerState: MonoBehaviour
+public class PlayerState : MonoBehaviour
 {
     private Animator anim;
-    public int Health = 10;
+    public int Health = 100; // Default health. 
 
-    // This actually might be handles by the animator already,
-    // based on the length of the Exit time of the animation state 'Hit'
-
-    public bool Hurt = false; // Hurt handles whether the character is invincible. (invincibility frames)
-    public float invincibleTime = 1.5f;
-
-    public void TakeDamage(int amount)
+	public void Start()
+	{
+        anim = gameObject.GetComponent<Animator>();
+	}
+	public void TakeDamage(int amount)
     {
         AnimatorStateInfo astate = anim.GetCurrentAnimatorStateInfo(0);
-        if (!astate.IsName("hit") && !astate.IsName("Death")){
+        if (!astate.IsName("hit") && !astate.IsName("Death"))
+        {
+            anim.SetTrigger("hit");
+            Debug.Log("Took Damage");
             Health = Health -= amount;
             if (Health < 0)
             {
                 onDeath();
                 return;
-            } 
-            else 
-            {
-                Timer timer = new Timer();
-                timer.setTimer(invincibleTime, notHurtAnymore);
             }
         }
     }
@@ -40,16 +36,12 @@ public class PlayerState: MonoBehaviour
     {
         // tell the animator you are dead.
         anim.SetBool("Dead", true);
-
+        Debug.Log("Player Dead");
         /* And here's where I'd put my respawn logic!*
-         * 
-         * ... IF I HAD ANY!
-         * */
+        * 
+        * ... IF I HAD ANY!
+        * */
     }
-
-    public void notHurtAnymore()
-    {
-        Hurt = false;
-    }
-
 }
+
+
