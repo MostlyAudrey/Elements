@@ -27,7 +27,12 @@ public class DialogOption : Interactable
         // audioPlayer = GetComponent<AudioSource>();
         
         //uncomment this when I know what it does
-        eventInstance = RuntimeManager.CreateInstance(eventPath);
+        try {
+            eventInstance = RuntimeManager.CreateInstance(eventPath);
+        } catch (EventNotFoundException) {
+            Debug.Log("Event not found.");
+        }
+        
         
         anim = GetComponent<Animator>();
 
