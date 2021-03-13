@@ -11,6 +11,7 @@ public class DialogOption : Interactable
     public int[] audioIndices;
     public float[] audioLengths;
     public string eventPath;
+    public bool darkmode = false;
 
     private int currAudioClip = -1;
 
@@ -26,7 +27,7 @@ public class DialogOption : Interactable
         // audioPlayer = GetComponent<AudioSource>();
         
         //uncomment this when I know what it does
-        //eventInstance = RuntimeManager.CreateInstance(eventPath);
+        eventInstance = RuntimeManager.CreateInstance(eventPath);
         
         anim = GetComponent<Animator>();
 
@@ -82,7 +83,7 @@ public class DialogOption : Interactable
         foreach ( string message in messageText ) {
             int char_count = message.Length - (message.Split(' ').Length - 1);
             time_per_char = (audioLengths[index])/ char_count;
-            EventManager.instance.DisplayText(message, time_per_char, textBreakTime);
+            EventManager.instance.DisplayText(message, time_per_char, textBreakTime, darkmode);
             index++;
         }
         _playNextAudioClip();
