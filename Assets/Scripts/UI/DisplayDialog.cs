@@ -8,12 +8,12 @@ public class DisplayDialog : MonoBehaviour
 {
 	private Image textImage;
     private Text text;
-    private Queue<(string text, float time_per_char, float restTimer)> stringBuffer;
+    private Queue<(string text, float time_per_char, float restTimer, bool darkmode)> stringBuffer;
 
     private float currTextTimer;
     private float currRestTimer;
     private int currCharIndex;
-    private (string text, float time_per_char, float restTimer) currString;
+    private (string text, float time_per_char, float restTimer, bool darkmode) currString;
     private bool displayingString = false;
     void Start()
     {
@@ -21,12 +21,12 @@ public class DisplayDialog : MonoBehaviour
         text = textImage.transform.GetChild(0).gameObject.GetComponent<Text>() as Text;
         textImage.gameObject.SetActive(false);
         EventManager.instance.onDisplayText += _displayText;
-        stringBuffer = new Queue<(string text, float time_per_char, float restTimer)>();
+        stringBuffer = new Queue<(string text, float time_per_char, float restTimer, bool darkmode)>();
     }
 
-    void _displayText( string textToBeDisplayed, float time_per_char, float restTimer )
+    void _displayText( string textToBeDisplayed, float time_per_char, float restTimer, bool darkmode )
     {
-        stringBuffer.Enqueue((textToBeDisplayed, time_per_char, restTimer));
+        stringBuffer.Enqueue((textToBeDisplayed, time_per_char, restTimer, darkmode));
     }
 
     void _showText()
@@ -61,6 +61,9 @@ public class DisplayDialog : MonoBehaviour
         }
         if ( displayingString  )
         {
+            textImage.color = currString.darkmode ? new Color32(040, 040, 040, 255) : new Color32(210, 210, 210, 210);
+            text.color      = currString.darkmode ? new Color32(000, 255, 102, 255) : new Color32(050, 050, 050, 255);
+
             if ( currCharIndex < currString.text.Length )
             {
                 currTextTimer += Time.deltaTime;

@@ -20,6 +20,7 @@ public class QuestManager : MonoBehaviour
 
     public static void ProgressQuestToPhase( QuestName quest, int phase )
     {
+        print("Quest: " + quest + "Updated to phase: " + phase);
         QuestManager.quests[quest].currentPhase = phase;
         EventManager.instance.QuestProgressed( quest, quests[quest].currentPhase );
         if ( QuestManager.quests[quest].currentPhase >= QuestManager.quests[quest].totalPhases )
@@ -43,7 +44,7 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    public static int CheckQuestPhase( QuestName quest )
+    public static int GetQuestPhase( QuestName quest )
     {
         return QuestManager.quests[quest].currentPhase;
     }

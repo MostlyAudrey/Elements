@@ -32792,13 +32792,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quest: 0
+  target: {fileID: 0}
   nextPhase: -1
-  triggerOwner: {fileID: 0}
   buttonHint: {fileID: 1822825794}
   showButtonHint: 1
-  showingHint: 0
-  rank: 0
   buttonHintRadius: 15
+  rank: 0
   getPlayerAttention: 1
   getPlayerAttentionRadius: 25
   startImmediately: 0
@@ -32824,13 +32823,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quest: 0
+  target: {fileID: 0}
   nextPhase: -1
-  triggerOwner: {fileID: 0}
   buttonHint: {fileID: 1822825794}
   showButtonHint: 1
-  showingHint: 0
-  rank: 2
   buttonHintRadius: 5
+  rank: 2
   getPlayerAttention: 1
   getPlayerAttentionRadius: 15
   startImmediately: 0
@@ -39122,26 +39120,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1003068969}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1003900527 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8536167675589671378, guid: e69d3c016bf2aef2da7bb66b7f6b3dc1,
-    type: 3}
-  m_PrefabInstance: {fileID: 2111462773}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1003900529
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1003900527}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attenuationObject: {fileID: 0}
-  ListenerNumber: -1
 --- !u!1001 &1004448833
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -41821,13 +41799,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quest: 0
+  target: {fileID: 0}
   nextPhase: -1
-  triggerOwner: {fileID: 0}
   buttonHint: {fileID: 1344614676}
   showButtonHint: 1
-  showingHint: 0
-  rank: 0
   buttonHintRadius: 15
+  rank: 0
   getPlayerAttention: 1
   getPlayerAttentionRadius: 25
   startImmediately: 0
@@ -41908,13 +41885,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quest: 0
+  target: {fileID: 0}
   nextPhase: -1
-  triggerOwner: {fileID: 0}
   buttonHint: {fileID: 1344614676}
   showButtonHint: 0
-  showingHint: 0
-  rank: 0
   buttonHintRadius: 15
+  rank: 0
   getPlayerAttention: 0
   getPlayerAttentionRadius: 30
   startImmediately: 1
@@ -85144,6 +85120,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: 7.56
       objectReference: {fileID: 0}
+    - target: {fileID: 4252600397314320677, guid: e69d3c016bf2aef2da7bb66b7f6b3dc1,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4929697919326842258, guid: e69d3c016bf2aef2da7bb66b7f6b3dc1,
         type: 3}
       propertyPath: m_RootOrder
@@ -85239,8 +85220,7 @@ PrefabInstance:
       propertyPath: HoldSpot
       value: 
       objectReference: {fileID: 114322797}
-    m_RemovedComponents:
-    - {fileID: 1876745786044711863, guid: e69d3c016bf2aef2da7bb66b7f6b3dc1, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e69d3c016bf2aef2da7bb66b7f6b3dc1, type: 3}
 --- !u!1 &2112086421 stripped
 GameObject:
