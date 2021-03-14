@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 0
+    path: Assets/Scenes/Cameron_Practice/Game World_Cameron_Bakufu.unity
+    guid: 3a97eae7a57067149899175f0960223a
+  - enabled: 1
+    path: Assets/Scenes/Game World.unity
+    guid: 9a64cf35b6871dee4ae6752a8c03d024
   m_configObjects: {}

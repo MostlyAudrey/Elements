@@ -37,11 +37,11 @@ public class EventManager : MonoBehaviour
 		if ( onActionButtonPressed != null ) onActionButtonPressed(); 
 	}
 
-	public event Action<string, float, float> onDisplayText;
+	public event Action<string, float, float, bool> onDisplayText;
 
-	public void DisplayText( string text, float textSpeed, float timer )
+	public void DisplayText( string text, float textSpeed, float timer, bool darkmode = false )
 	{
-		if ( onDisplayText != null ) onDisplayText( text, textSpeed, timer );
+		if ( onDisplayText != null ) onDisplayText( text, textSpeed, timer, darkmode );
 	}
 
 	public event Action onHideDisplayText;

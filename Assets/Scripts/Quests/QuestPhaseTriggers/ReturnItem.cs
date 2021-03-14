@@ -16,6 +16,7 @@ public class ReturnItem : Interactable
         {
             Debug.Log("Delivered item");
             itemToBeReturned.SetActive( false );
+            disableTrigger();
             AdvanceQuest();
         }
     }

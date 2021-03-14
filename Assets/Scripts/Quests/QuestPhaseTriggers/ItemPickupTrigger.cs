@@ -11,5 +11,6 @@ public class ItemPickupTrigger : QuestTrigger
         if ( !target ) 
             target = GameObject.FindGameObjectWithTag("Player");
         target.GetComponent<RootMotionControlScript>().destroy_picked_up_item();
+        disableTrigger();
     }
 }
