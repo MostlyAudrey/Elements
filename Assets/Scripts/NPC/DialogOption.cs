@@ -11,6 +11,7 @@ public class DialogOption : Interactable
     public int[] audioIndices;
     public float[] audioLengths;
     public string eventPath;
+    public bool repeatable = false;
     public bool darkmode = false;
 
     private int currAudioClip = -1;
@@ -26,7 +27,6 @@ public class DialogOption : Interactable
 	{
         // audioPlayer = GetComponent<AudioSource>();
         
-        //uncomment this when I know what it does
         try {
             eventInstance = RuntimeManager.CreateInstance(eventPath);
         } catch (EventNotFoundException) {
@@ -97,8 +97,14 @@ public class DialogOption : Interactable
     void _finishTalking()
     {
         Debug.Log("Here 2: " + nextPhase);
-        AdvanceQuest();
         _stopTalking();
+        if (!repeatable) 
+        {
+            NPC npc = gameObject.GetComponent<NPC>();
+            int index = npc.interactables.IndexOf(this);
+            npc.endQuestPhase[index] = QuestManager.GetQuestPhase( npc.quests[index] );
+        }        
+        AdvanceQuest();
     }
 
     void _stopTalking()
