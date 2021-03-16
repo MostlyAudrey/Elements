@@ -7,7 +7,7 @@ public class NPC : MonoBehaviour
 
     // The elements at each index in each of these lists should coorespond to each other  
     // example dialogs[0] is only active if quests[0] is at questPhase[0]
-	public Interactable[] interactables;
+	public List<Interactable> interactables;
 	public List<QuestName> quests;
 
     /* At which phase in the quest the corresponding interactable should be active
@@ -95,7 +95,7 @@ public class NPC : MonoBehaviour
             activeOption = -1;                              // set the active quest to 'none'
         }
         // for all interactables...
-        for ( int i = 0; i < interactables.Length; i++)
+        for ( int i = 0; i < interactables.Count; i++)
         {
             // if the corresponding quest type is the particular quest type , and it is within the range of where the interactable should be online...
             if (quests[i] == quest && (startQuestPhase[i] <= phase && endQuestPhase[i] >= phase))
