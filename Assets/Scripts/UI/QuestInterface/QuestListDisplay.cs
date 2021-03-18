@@ -4,32 +4,50 @@ using UnityEngine;
 
 public class QuestListDisplay : MonoBehaviour
 {
-    public GameObject availableQuestsListRoot;
-    public GameObject inprogressQuestsListRoot;
+    public GameObject questListRoot;
     public GameObject listItemPrefab;
 
     private List<QuestListItem> listItems;                                                        
 
-    void Start()
+    void OnEnable()
     {
-        listItems = new List<QuestListItem>();
+        OpenDisplay();
+    }
+
+    void OnDisable()
+    {
+        CloseDisplay();
     }
 
     public void OpenDisplay()
     {
         List<Quest> availableQuests = QuestManager.GetAvailableQuests();
-        for (int i = 0; i < availableQuests.Count; ++i)
+        
+        List<Quest> inProgress = new List<Quest>();
+        List<Quest> ready2Start = new List<Quest>();
+
+        foreach (Quest quest in availableQuests)
         {
-            // Filter out in-progress quests
-            if (availableQuests[i].currentPhase > 0)
+            //Filter based on progress
+            if (quest.currentPhase > 0)
             {
-                AddQuestListItem(availableQuests[i], inprogressQuestsListRoot.transform);
+                inProgress.Add(quest);
             }
             else
             {
-                AddQuestListItem(availableQuests[i], availableQuestsListRoot.transform);
+                ready2Start.Add(quest);
             }
-            Debug.Log(availableQuests[i].name);
+        }
+
+        //Add in-progress quests before quests that have yet to be started
+        foreach (Quest quest in inProgress)
+        {
+            AddQuestListItem(quest);
+        }
+
+        foreach (Quest quest in ready2Start)
+        {
+            AddQuestListItem(quest);
         }
     }
 
@@ -39,71 +57,25 @@ public class QuestListDisplay : MonoBehaviour
         {
             RemoveQuestListItemAt(i);
         }
+        listItems = null;
     }
 
-    // public void RefreshOngoingQuests()
-    // {
-    //     // Remove completed quests
-    //     for (int i = 0; i < questListItems.Count; ++i)
-    //     {
-    //         Quest quest = questListItems[i].GetQuest();
-    //         if (quest.currentPhase >= quest.totalPhases)
-    //         {
-    //             RemoveQuestListItem(i);
-    //         }
-    //     }
-
-    //     // Refresh quest progress in display list items for ongoing quests
-    //     foreach (QuestListItem item in questListItems)
-    //     {
-    //         item.RefreshQuestProgress();
-    //     }
-
-    //     // Add new quests
-    //     foreach (KeyValuePair<QuestName, Quest> questKeyValPair in QuestManager.GetQuests())
-    //     {
-    //         Quest quest = questKeyValPair.Value;
-    //         if (quest.currentPhase > 0 && quest.currentPhase < quest.totalPhases)
-    //         {
-    //             if (questListItems.Count == 0)
-    //             {
-    //                 AddQuestListItem(0, quest);
-    //             }
-    //             else
-    //             {
-    //                 // Check if quest is already in the list using a binary search
-    //                 // If the quest is not in the list, insert it in order
-    //                 int binarySearchRes = BinarySearchQuestList(0, questListItems.Count - 1, quest);
-    //                 if (binarySearchRes < 0)
-    //                 {
-    //                     AddQuestListItem(-binarySearchRes, quest);
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
-
-    private void AddQuestListItem(Quest quest, Transform root)
+    private void AddQuestListItem(Quest quest)
     {
         if (listItemPrefab != null)
         {
-            GameObject listItem = Instantiate(listItemPrefab, root);
-            if (listItem != null)
+            QuestListItem questListItem = Instantiate(listItemPrefab, questListRoot.transform).GetComponent<QuestListItem>();
+            questListItem.Init(quest);
+            
+            if (listItems == null)
             {
-                // // Make sure it displays in right order
-                // itemGameObject.transform.SetSiblingIndex(index);
-                QuestListItem comp = listItem.GetComponent<QuestListItem>();
-                comp.Init(quest);
-                listItems.Add(comp);
+                listItems = new List<QuestListItem>();
             }
-            else
-            {
-                Debug.Log("QuestListManager: list item instantiation unsuccessful!");
-            }
+            listItems.Add(questListItem);
         }
         else
         {
-            Debug.Log("QuestListManager: listItemPrefab is null!");
+            Debug.LogError("QuestListDisplay: listItemPrefab is null!");
         }
     }
 
@@ -111,39 +83,9 @@ public class QuestListDisplay : MonoBehaviour
     {
         if (listItems[index] != null)
         {
-            // Destroys the list item object at the end of the frame
+            //Destroy the quest list item object at the end of the frame
             Destroy(listItems[index].gameObject);
         }
         listItems.RemoveAt(index);
     }
-
-    // // Helper method to perform an efficient binary search to see
-    // // if a given quest is already associated with a quest list item.
-    // // Returns 0 if there are 0 quest list items, otherwise
-    // // the negative complement of the higher quest list item if
-    // // the quest was not found.
-    // private int BinarySearchQuestList(int startIndex, int endIndex, Quest quest)
-    // {
-    //     if (startIndex > endIndex)
-    //     {
-    //         // index of the list item with the quest directly higher than the given quest
-    //         return -startIndex;
-    //     }
-    //     else
-    //     {
-    //         int mid = (startIndex + endIndex) / 2;
-    //         if (quest == questListItems[mid].GetQuest())
-    //         {
-    //             return mid;
-    //         }
-    //         else if ((int)quest.name > (int)questListItems[mid].GetQuest().name)
-    //         {
-    //             return BinarySearchQuestList(mid + 1, endIndex, quest);
-    //         }
-    //         else
-    //         {
-    //             return BinarySearchQuestList(startIndex, mid - 1, quest);
-    //         }
-    //     }
-    // }
 }
