@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -28,7 +29,15 @@ public class WalkToTarget : QuestPhaseListener
         try
         {
             currWaypoint = (currWaypoint + 1) % waypoints.Length;
-            navMeshAgent.SetDestination(waypoints[currWaypoint].transform.position);
+            if (currWaypoint == path.transform.childCount-1)
+            {
+                anim.SetBool("walking", false);
+                action = Action.Idle;
+            }
+            else
+            {
+                navMeshAgent.SetDestination(waypoints[currWaypoint].transform.position);
+            }            
         }
         catch
         {
@@ -96,6 +105,8 @@ public class WalkToTarget : QuestPhaseListener
     // This function will be the action performed when the quest specified reaches the phase to listen for
     public override void _action()
     {
+        action = Action.Walking;
+        anim.SetBool("walking", true);
         path.SetActive(true);
     }
 }
