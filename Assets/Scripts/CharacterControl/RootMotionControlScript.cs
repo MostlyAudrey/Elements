@@ -85,7 +85,7 @@ public class RootMotionControlScript : MonoBehaviour
 
     void Start()
     {
-        hasSword = (QuestManager.CheckQuestPhase( QuestName.PerformDiagnostics ) == 3);
+        hasSword = (QuestManager.GetQuestPhase( QuestName.PerformDiagnostics ) == 3);
         sheath();
 
         buttonAudio = RuntimeManager.CreateInstance("event:/Interactables/Button");

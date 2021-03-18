@@ -27,7 +27,9 @@ public class BackgroundCharacterController : MonoBehaviour
         SwingingTool,
         NervousLookingAround,
         Laughing,
-        Walking
+        Walking,
+        Sitting,
+        Typing
     }
 
     public Action action = Action.Idle;
@@ -65,6 +67,12 @@ public class BackgroundCharacterController : MonoBehaviour
                 break;
             case Action.Laughing:
                 anim.SetBool("laughing", true);
+                break;
+            case Action.Sitting:
+                anim.SetBool("sitting", true);
+                break;
+            case Action.Typing:
+            	anim.SetBool("typing", true);
                 break;
             case Action.Walking:
                 anim.SetBool("walking", true);
