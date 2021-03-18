@@ -198,7 +198,7 @@ Recordings by David at Track Time Audio.</value>
 	</object>
 	<object class="EventMixerGroup" id="{cab8585f-4802-40ae-b8c8-8f822593975f}">
 		<property name="volume">
-			<value>3</value>
+			<value>-5</value>
 		</property>
 		<property name="name">
 			<value>Footsteps</value>
