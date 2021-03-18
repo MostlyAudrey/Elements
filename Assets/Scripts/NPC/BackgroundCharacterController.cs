@@ -31,7 +31,8 @@ public class BackgroundCharacterController : MonoBehaviour
         Sitting,
         Typing,
         Watering,
-        Cheering
+        Cheering,
+        Clapping
     }
 
     public Action action = Action.Idle;
@@ -81,6 +82,9 @@ public class BackgroundCharacterController : MonoBehaviour
                 break;
             case Action.Cheering:
                 anim.SetBool("cheering", true);
+                break;
+            case Action.Clapping:
+                anim.SetBool("clapping", true);
                 break;
             case Action.Walking:
                 anim.SetBool("walking", true);
