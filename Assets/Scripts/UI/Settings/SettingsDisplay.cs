@@ -11,14 +11,17 @@ public class SettingsDisplay : MonoBehaviour
 
     void Start()
     {
-        float masterVolume = _getBusVolume("");
-        masterVolumeSlider.value = masterVolume;
+        //float masterVolume = _getBusVolume("");
+        //masterVolumeSlider.value = masterVolume;
         masterVolumeSlider.onValueChanged.AddListener(OnMasterVolumeChanged);
     }
 
     void OnMasterVolumeChanged(float newValue)
     {
-        _setBusVolume("", newValue);
+        float masterVolume = _getBusVolume("");
+        //Middle of slider corresponds to original master volume, right end corresponds to twice the volume, left end corresponds to 0
+        masterVolume *= 2f * (newValue - masterVolumeSlider.minValue) / (masterVolumeSlider.maxValue - masterVolumeSlider.minValue);
+        _setBusVolume("", masterVolume);
     }
 
     private float _getBusVolume(string path)
