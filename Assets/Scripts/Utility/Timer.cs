@@ -38,5 +38,6 @@ public class Timer : MonoBehaviour
     {
         timeRemaining = time;
         Todo = callback;
+        active = true;
     }
 }

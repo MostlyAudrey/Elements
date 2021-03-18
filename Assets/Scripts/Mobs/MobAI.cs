@@ -63,6 +63,7 @@ public class MobAI : MonoBehaviour
 		swordInHand = Instantiate(viking_weapons[0], hand, false) as GameObject;
 		swordInHand.transform.localPosition = new Vector3(0.068f, 0.03f, 0.0f);
 		swordInHand.transform.localRotation = Quaternion.Euler(-90.0f, 0f, -15f);
+
 		Transform spine = transform.Find("Root/Hips/Spine_01/Spine_02/Spine_03");
 		Debug.Log(spine);
 		sheathedSword = Instantiate(viking_weapons[0], spine, false) as GameObject;
@@ -95,7 +96,7 @@ public class MobAI : MonoBehaviour
 
 		if (is_hostile && (PlayerInRadius() || PlayerInSight()))
 		{
-			Debug.Log("Engaging!");
+			//Debug.Log("Engaging!");
 			_unsheath();
 			animator.SetBool("holding sword", true);
 
@@ -170,7 +171,7 @@ public class MobAI : MonoBehaviour
 		if (health <= 0)
 		{
 			isDead = true;
-			animator.SetTrigger("Dead");
+			animator.SetBool("Dead",true);
 			_die();
 		}
 	}
@@ -217,7 +218,7 @@ public class MobAI : MonoBehaviour
 
 		if (distance <= 10f)
 		{
-			Debug.Log("Player within radius of an enemy.");
+			//Debug.Log("Player within radius of an enemy.");
 			return true;
 		}
 		else
@@ -231,7 +232,7 @@ public class MobAI : MonoBehaviour
 			animator.SetBool("holding sword", true);
 			_unsheath();
 		}
-		Debug.Log("Enemy attacking...");
+		//Debug.Log("Enemy attacking...");
 		animator.SetTrigger("attack");
 		// reduce the player's health by ___.
 	}
