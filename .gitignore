@@ -60,12 +60,3 @@ sysinfo.txt
 
 # Crashlytics generated file
 crashlytics-build.properties
-
-*.meta
-Packages/packages-lock.json
-Packages/packages-lock.json
-Packages/packages-lock.json
-ProjectSettings/Packages/com.unity.probuilder/Settings.json
-Assets/Plugins/FMOD/Cache/Editor/FMODStudioCache.asset
-Packages/packages-lock.json
-ProjectSettings/Packages/com.unity.probuilder/Settings.json
