@@ -336,9 +336,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6743685983714652407}
   - component: {fileID: 4030895466112461389}
-  - component: {fileID: 9017659596071715698}
+  - component: {fileID: 8015642850211610986}
   m_Layer: 5
-  m_Name: QuestListDisplay
+  m_Name: QuestListWidget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -372,7 +372,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7098465332172624888}
   m_CullTransparentMesh: 0
---- !u!114 &9017659596071715698
+--- !u!114 &8015642850211610986
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

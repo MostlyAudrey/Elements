@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QuestListDisplay : MonoBehaviour
+public class QuestListWidget : MonoBehaviour
 {
     public GameObject questListRoot;
     public GameObject listItemPrefab;
