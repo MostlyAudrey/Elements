@@ -11,6 +11,7 @@ public class PlayerState : MonoBehaviour
 {
     private Animator anim;
     public int Health = 100; // Default health. 
+    public int maxHealth = 100;
 
 	public void Start()
 	{
