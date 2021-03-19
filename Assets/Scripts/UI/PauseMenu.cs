@@ -18,7 +18,7 @@ public class PauseMenu : MonoBehaviour
     public Button saveAndExitButton;
     [Tooltip("Button used to exit game without saving")]
     public Button exitNoSaveButton;
-    public QuestListDisplay m_QuestListDisplay;
+    public QuestListWidget m_QuestListDisplay;
 
     void Start()
     {
@@ -63,7 +63,7 @@ public class PauseMenu : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
-            Time.timeScale = 0f; // Pauses game time
+            //Time.timeScale = 0f; // Pauses game time
 
             m_QuestListDisplay.OpenDisplay();
                
