@@ -51,6 +51,8 @@ public class RootMotionControlScript : MonoBehaviour
 
     private FMOD.Studio.EventInstance buttonAudio;
 
+    private CharacterAudio characterAudio;
+
     // Use this for initialization
     void Awake()
     {
@@ -89,6 +91,8 @@ public class RootMotionControlScript : MonoBehaviour
         sheath();
 
         buttonAudio = RuntimeManager.CreateInstance("event:/Interactables/Button");
+
+        characterAudio = GetComponent<CharacterAudio>();
     }
     
     private bool debounceInteractButton = false;
@@ -169,16 +173,19 @@ public class RootMotionControlScript : MonoBehaviour
             inputForward = cinput.Forward;
             inputTurn = cinput.Turn;
         }
+
+        int surface;
 	
         //onCollisionStay() doesn't always work for checking if the character is grounded from a playability perspective
         //Uneven terrain can cause the player to become technically airborne, but so close the player thinks they're touching ground.
         //Therefore, an additional raycast approach is used to check for close ground
         // anim.SetBool("isFalling", !CharacterCommon.CheckGroundNear(this.transform.position, jumpableGroundNormalMaxAngle, 1f, 1f, out closeToJumpableGround));
-        if (CharacterCommon.CheckGroundNear(this.transform.position, jumpableGroundNormalMaxAngle, .2f, 1f, out closeToJumpableGround))
+        if (CharacterCommon.CheckGroundNear(this.transform.position, jumpableGroundNormalMaxAngle, .2f, 1f, out closeToJumpableGround, out surface))
         {
             isGrounded = true;
         }
-                                                    
+        
+        characterAudio.surface = surface;
        
         anim.SetFloat("velx", inputTurn);	
         anim.SetFloat("vely", inputForward);

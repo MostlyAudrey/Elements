@@ -6,19 +6,19 @@ using Utility;
 
 public class CharacterCommon {
 
-
-
     public static bool CheckGroundNear(
         Vector3 charPos,       
         float jumpableGroundNormalMaxAngle, 
         float rayDepth, //how far down from charPos will we look for ground?
         float rayOriginOffset, //charPos near bottom of collider, so need a fudge factor up away from there
-        out bool isJumpable
+        out bool isJumpable,
+        out int surface
     ) 
     {
 
         bool ret = false;
         bool _isJumpable = false;
+        surface = 0;
 
 
         float totalRayLen = rayOriginOffset + rayDepth;
@@ -34,8 +34,17 @@ public class CharacterCommon {
 
         foreach(RaycastHit hit in hits)
         {
+            if (hit.collider.gameObject.tag.EndsWith("grass")) {
+                surface = 1;
+            } else if (hit.collider.gameObject.tag.EndsWith("concrete")) {
+                surface = 0;
+            } else if (hit.collider.gameObject.tag.EndsWith("snow")) {
+                surface = 1;
+            }else if (hit.collider.gameObject.tag.EndsWith("dirt")) {
+                surface = 1;
+            }
 
-            if (hit.collider.gameObject.CompareTag("ground"))
+            if (hit.collider.gameObject.tag.StartsWith("ground"))
             {           
 
                 ret = true;
@@ -47,6 +56,8 @@ public class CharacterCommon {
                 break; //only need to find the ground once
 
             }
+
+            
 
         }
 
