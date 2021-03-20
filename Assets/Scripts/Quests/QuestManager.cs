@@ -44,7 +44,7 @@ public class QuestManager : MonoBehaviour
         }
     }
 
-    public static int CheckQuestPhase( QuestName quest )
+    public static int GetQuestPhase( QuestName quest )
     {
         return QuestManager.quests[quest].currentPhase;
     }
