@@ -7,10 +7,23 @@ public class QuestManager : MonoBehaviour
 
     static Dictionary<QuestName, Quest> quests;
 
-    void Start()
+    void Awake()
     {
         QuestManager.quests = new Dictionary<QuestName, Quest>();
         _instantiate_quests();
+    }
+
+    void Start()
+    {
+        //Progress quest if quest phase == 0
+        foreach (KeyValuePair<QuestName, Quest> entry in quests)
+        {
+            Quest quest = entry.Value;
+            if (quest.currentPhase == 0)
+            {
+                EventManager.instance.QuestProgressed(quest.name, 0);
+            }
+        }
     }
 
     public static void ProgressQuest( QuestName quest )
@@ -263,8 +276,21 @@ public class QuestManager : MonoBehaviour
         int i = 0;
         foreach (KeyValuePair<QuestName, Quest> entry in quests)
         {
-            QuestName currName = entry.Key;
-            ProgressQuestToPhase(currName, data.GetQuestPhase(i)); //Makes sure prereqs get updated too
+            QuestName questName = entry.Key;
+            Quest quest = entry.Value;
+
+            //May be called before Start function, so progress quests to 0 if necessary
+            if (quest.currentPhase == 0)
+            {
+                EventManager.instance.QuestProgressed(quest.name, 0);
+            }
+
+            //Activate all QuestPhaseListeners (Iterate through each quest phase)
+            for (int questPhase = quest.currentPhase; questPhase < data.GetQuestPhase(i); ++questPhase)
+            {
+                ProgressQuest(questName);
+            }
+
             ++i;
         }
     }

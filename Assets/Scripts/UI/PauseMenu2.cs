@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu2 : MonoBehaviour
 {
@@ -12,8 +13,12 @@ public class PauseMenu2 : MonoBehaviour
     public Button loadFromSaveButton;
     public Button exitButton;
 
+    static private bool loadingFromSave = false;
+
     void Start()
     {
+        _LoadLastSave();
+
         SetPauseMenuActivation(false);
 
         resumeButton.onClick.AddListener(Resume);
@@ -86,21 +91,33 @@ public class PauseMenu2 : MonoBehaviour
 
     public void LoadLastSave()
     {
-        PlayerData data = SaveSystem.LoadPlayerData();
+        //Reload current scene
+        loadingFromSave = true;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single); //Changes scene at end of frame
+    }
 
-        RootMotionControlScript playerRootMotionControl = FindObjectOfType<RootMotionControlScript>();
-        if (playerRootMotionControl != null)
+    private void _LoadLastSave()
+    {
+        if (loadingFromSave)
         {
-            playerRootMotionControl.LoadLocation(data);
-        }
-        else
-        {
-            Debug.LogError("PauseMenu could not find RootMotionControlScript object");
-        }
+            loadingFromSave = false;
 
-        QuestManager.LoadQuestPhases(data);
+            PlayerData data = SaveSystem.LoadPlayerData();
 
-        Resume();
+            RootMotionControlScript playerRootMotionControl = FindObjectOfType<RootMotionControlScript>();
+            if (playerRootMotionControl != null)
+            {
+                playerRootMotionControl.LoadLocation(data);
+            }
+            else
+            {
+                Debug.LogError("PauseMenu could not find RootMotionControlScript object");
+            }
+
+            QuestManager.LoadQuestPhases(data);
+
+            Resume();
+        }
     }
 
     public void ExitGame()
