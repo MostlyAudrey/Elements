@@ -19,7 +19,20 @@ public class TabGroup : MonoBehaviour
         if (tabButtons != null)
         {
             ResetTabs();
-            OnTabSelected(tabButtons[0]);
+            //Select first tab
+            int i = 0;
+            while (i < tabButtons.Count && tabButtons[i].transform.GetSiblingIndex() != 0)
+            {
+                ++i;
+            }
+            if (i < tabButtons.Count)
+            {
+                OnTabSelected(tabButtons[i]);
+            }
+            else //Select random tab if no tab has sibling index == 0
+            {
+                OnTabSelected(tabButtons[0]);
+            }
         }
     }
 

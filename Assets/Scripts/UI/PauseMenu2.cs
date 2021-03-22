@@ -3,18 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu2 : MonoBehaviour
 {
     public GameObject menuRoot;
+    public bool animateMenu = true;
+    public GameObject animRoot;
+    public float animDuration = 0.5f;
     public Button resumeButton;
     public Button saveButton;
     public Button loadFromSaveButton;
     public Button exitButton;
 
+    static private bool loadingFromSave = false;
+
+    private Vector3 posBeforeAnim;
+
     void Start()
     {
-        SetPauseMenuActivation(false);
+        _LoadLastSave();
+
+        SetPauseMenuActivation(false, false);
 
         resumeButton.onClick.AddListener(Resume);
         saveButton.onClick.AddListener(Save);
@@ -42,33 +52,85 @@ public class PauseMenu2 : MonoBehaviour
         if (Input.GetButtonDown(GameConstants.k_ButtonNamePauseMenu)
             || (menuRoot.activeSelf && Input.GetButtonDown(GameConstants.k_ButtonNameCancel)))
         {
-            SetPauseMenuActivation(!menuRoot.activeSelf);
+            SetPauseMenuActivation(!menuRoot.activeSelf, animateMenu);
         }
     }
     
-    void SetPauseMenuActivation(bool active)
+    void SetPauseMenuActivation(bool active, bool animate)
     {
-        menuRoot.SetActive(active);
-
-        if (menuRoot.activeSelf)
+        if (active)
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            menuRoot.SetActive(true);
             Time.timeScale = 0f;
                
             EventSystem.current.SetSelectedGameObject(null);
+
+            if (animate)
+            {
+                _OpenMenuAnimation();
+            }
+            else
+            {
+                _OnMenuOpened();
+            }
         }
         else
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-            Time.timeScale = 1f; // Resumes game time
+
+            if (animate)
+            {
+                _CloseMenuAnimation();
+            }
+            else
+            {
+                _OnMenuClosed();
+            }
         }
+    }
+
+    private void _OpenMenuAnimation()
+    {
+        //Move obj from left off screen
+        Vector3 endPos = animRoot.transform.position;
+        Vector3 startPos = new Vector3(endPos.x - Screen.width, endPos.y, endPos.z);
+        
+        animRoot.transform.SetPositionAndRotation(startPos, animRoot.transform.rotation);
+        LeanTween.moveX(animRoot, endPos.x, animDuration).setIgnoreTimeScale(true).setOnComplete(
+            () => _OnMenuOpened()
+        );
+    }
+
+    private void _OnMenuOpened()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    private void _CloseMenuAnimation()
+    {
+        //Move obj to left off screen
+        posBeforeAnim = animRoot.transform.position;
+        LeanTween.moveX(animRoot, posBeforeAnim.x - Screen.width, animDuration).setIgnoreTimeScale(true).setOnComplete(
+            () => 
+            {
+                //Reset animation
+                animRoot.transform.SetPositionAndRotation(posBeforeAnim, animRoot.transform.rotation);
+                _OnMenuClosed();
+            }
+        );
+    }
+
+    private void _OnMenuClosed()
+    {
+        menuRoot.SetActive(false);
+        Time.timeScale = 1f;
     }
 
     public void Resume()
     {
-        SetPauseMenuActivation(false);
+        SetPauseMenuActivation(false, animateMenu);
     }
 
     public void Save()
@@ -86,21 +148,31 @@ public class PauseMenu2 : MonoBehaviour
 
     public void LoadLastSave()
     {
-        PlayerData data = SaveSystem.LoadPlayerData();
+        //Reload current scene
+        loadingFromSave = true;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single); //Changes scene at end of frame
+    }
 
-        RootMotionControlScript playerRootMotionControl = FindObjectOfType<RootMotionControlScript>();
-        if (playerRootMotionControl != null)
+    private void _LoadLastSave()
+    {
+        if (loadingFromSave)
         {
-            playerRootMotionControl.LoadLocation(data);
-        }
-        else
-        {
-            Debug.LogError("PauseMenu could not find RootMotionControlScript object");
-        }
+            loadingFromSave = false;
 
-        QuestManager.LoadQuestPhases(data);
+            PlayerData data = SaveSystem.LoadPlayerData();
 
-        Resume();
+            RootMotionControlScript playerRootMotionControl = FindObjectOfType<RootMotionControlScript>();
+            if (playerRootMotionControl != null)
+            {
+                playerRootMotionControl.LoadLocation(data);
+            }
+            else
+            {
+                Debug.LogError("PauseMenu could not find RootMotionControlScript object");
+            }
+
+            QuestManager.LoadQuestPhases(data);
+        }
     }
 
     public void ExitGame()
