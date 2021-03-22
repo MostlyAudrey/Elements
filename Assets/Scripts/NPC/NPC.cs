@@ -97,11 +97,20 @@ public class NPC : MonoBehaviour
         // for all interactables...
         for ( int i = 0; i < interactables.Count; i++)
         {
-            // if the corresponding quest type is the particular quest type , and it is within the range of where the interactable should be online...
-            if (quests[i] == quest && (startQuestPhase[i] <= phase && endQuestPhase[i] >= phase))
+            // if the corresponding quest type is the particular quest type...
+            if (quests[i] == quest)
             {
-                // Set that quest to an active quest.
-                activeInteractables[i] = true;
+                // ...and it is within the range of where the interactable should be online...
+                if (startQuestPhase[i] <= phase && endQuestPhase[i] >= phase)
+                {
+                    // Set that quest to an active quest.
+                    activeInteractables[i] = true;
+                }
+                else
+                {
+                    // Addition by Aneet Nadella -> Disable interactables once quest phase is out of appropriate range
+                    activeInteractables[i] = false;
+                }
             }
         }
     }

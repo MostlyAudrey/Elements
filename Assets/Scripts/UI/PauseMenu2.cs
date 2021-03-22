@@ -116,7 +116,7 @@ public class PauseMenu2 : MonoBehaviour
 
             QuestManager.LoadQuestPhases(data);
 
-            Resume();
+            //Resume();
         }
     }
 
