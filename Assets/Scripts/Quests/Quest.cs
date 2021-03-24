@@ -27,7 +27,8 @@ public class Quest
         this.currentPhase = prerequisites.Count > 0 ? -1: 0;
         this.numPrereqsRequired = numPrereqsRequired;
 
-        if (this.currentPhase == 0) EventManager.instance.QuestProgressed( name, 0 );
+        //Moved this line to QuestManager Start function so that it is called after QuestPhaseListener delegates are bound
+        // if (this.currentPhase == 0) EventManager.instance.QuestProgressed( name, 0 );
         Debug.Log(name + ": " + currentPhase);
     }
 
