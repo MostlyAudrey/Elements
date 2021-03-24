@@ -103,6 +103,7 @@ public class RootMotionControlScript : MonoBehaviour
 
     void Update()
     {
+        if (!characterAudio) characterAudio = GetComponent<CharacterAudio>();
         // // Event-based inputs need to be handled in Update()
 
         if(cinput.Interact && !debounceInteractButton )
@@ -184,6 +185,7 @@ public class RootMotionControlScript : MonoBehaviour
         {
             isGrounded = true;
         }
+        
         
         characterAudio.surface = surface;
        

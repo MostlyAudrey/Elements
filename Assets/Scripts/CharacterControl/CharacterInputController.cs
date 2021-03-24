@@ -76,11 +76,11 @@ public class CharacterInputController : MonoBehaviour {
         }
 
 
-        //BEGIN ANALOG ON KEYBOARD DEMO CODE
-        if (Input.GetKey(KeyCode.Q))
-            h = -0.5f;
-        else if (Input.GetKey(KeyCode.E))
-            h = 0.5f;
+        // //BEGIN ANALOG ON KEYBOARD DEMO CODE
+        // if (Input.GetKey(KeyCode.Q))
+        //     h = -0.5f;
+        // else if (Input.GetKey(KeyCode.E))
+        //     h = 0.5f;
 
         //do some filtering of our input as well as clamp to a speed limit
         filteredForwardInput = Mathf.Clamp(Mathf.Lerp(filteredForwardInput, v, 
