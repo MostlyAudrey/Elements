@@ -142,6 +142,22 @@ public class QuestManager : MonoBehaviour
         );
 
         QuestManager.quests.Add( 
+            QuestName.WhateverFloatsYourBoat, 
+            new Quest( 
+                QuestName.WhateverFloatsYourBoat, 
+                new List<QuestName>{ QuestName.PerformDiagnostics },
+                new List<( string hint, string image )> {
+                    ( "Talk to Viking Chief", "Images/test" ),
+                    ( "Talk to Sven at the Docks", "Images/test" ),
+                    ( "Talk to Ormen at the Lumberyard", "Images/test" ),
+                    ( "Take a Stack of Planks back to Sven","Images/test" ),
+                    ( "Find Sigrid in her home", "Images/test" ),
+                    ( "Take the sail back to Sven", "Images/test" ),
+                    ( "Talk to the Viking Chief", "Images/test" )
+                })
+        );
+
+        QuestManager.quests.Add( 
             QuestName.AnIdiotsLuggage, 
             new Quest( 
                 QuestName.AnIdiotsLuggage, 

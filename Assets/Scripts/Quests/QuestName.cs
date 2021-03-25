@@ -5,6 +5,7 @@ public enum QuestName
     GettingALayOfTheLand,
     CarlTheJarl,
     ForGlory,
+    WhateverFloatsYourBoat,
     AnIdiotsLuggage,
     GoldenHandcuffs,
     ButThisIsMyBirthCertificate,
