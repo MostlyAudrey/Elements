@@ -1936,7 +1936,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Volume: {fileID: 0}
   m_PlayerState: {fileID: 8038363634422593585}
-  maxIntensity: 0.75
+  maxRoundness: 1
+  exp_coeff: -4
 --- !u!1 &8536167675589671378
 GameObject:
   m_ObjectHideFlags: 0
