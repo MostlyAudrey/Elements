@@ -14,7 +14,10 @@ public class PauseMenu2 : MonoBehaviour
     public Button resumeButton;
     public Button saveButton;
     public Button loadFromSaveButton;
+    public Button mainMenuButton;
     public Button exitButton;
+
+    public int mainMenuLevelIndex = 0;
 
     static private bool loadingFromSave = false;
 
@@ -29,6 +32,7 @@ public class PauseMenu2 : MonoBehaviour
         resumeButton.onClick.AddListener(Resume);
         saveButton.onClick.AddListener(Save);
         loadFromSaveButton.onClick.AddListener(LoadLastSave);
+        mainMenuButton.onClick.AddListener(ToMainMenu);
         exitButton.onClick.AddListener(ExitGame);
     }
 
@@ -173,6 +177,11 @@ public class PauseMenu2 : MonoBehaviour
 
             QuestManager.LoadQuestPhases(data);
         }
+    }
+
+    public void ToMainMenu()
+    {
+        SceneManager.LoadScene(mainMenuLevelIndex, LoadSceneMode.Single);
     }
 
     public void ExitGame()
