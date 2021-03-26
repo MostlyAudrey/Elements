@@ -28,7 +28,7 @@ public class RootMotionControlScript : MonoBehaviour
 	public float rootMovementSpeed = 1f;
 	public float rootTurnSpeed = 1f;
     public float fallSpeed = 1f;
-    public float buttonRadius = 5f;
+    public float buttonRadius = 2f;
 
     public float pickupSpeed = 1f;
     public float stepDown = 0.3f;
@@ -108,9 +108,11 @@ public class RootMotionControlScript : MonoBehaviour
 
         if(cinput.Interact && !debounceInteractButton )
         {
-            sheath();
-            EventManager.instance.ActionButtonPressed();
-            _checkForButton();
+            if (anim && !anim.GetCurrentAnimatorStateInfo(0).IsName ("Attack")) {
+		         sheath();
+                EventManager.instance.ActionButtonPressed();
+                _checkForButton();
+            }
             debounceInteractButton = true; 
         } 
         else if (!cinput.Interact && debounceInteractButton)
@@ -127,8 +129,10 @@ public class RootMotionControlScript : MonoBehaviour
         
         if(cinput.Jump && !debounceJumpButton )
         {
-            _jump();
-            debounceJumpButton = true; 
+            if (anim && !anim.GetCurrentAnimatorStateInfo(0).IsName ("Jump")) {
+		        _jump();
+            }
+            debounceJumpButton = true;
         } 
         else if (!cinput.Jump && debounceJumpButton)
             debounceJumpButton = false;
@@ -154,7 +158,19 @@ public class RootMotionControlScript : MonoBehaviour
             else pickedUpItem.transform.position = HoldSpot.transform.position;
             
             if ( itemInPosition && pickedUpItem.GetComponent<ItemPickupTrigger>() ) pickedUpItem.GetComponent<ItemPickupTrigger>().inPosition();
-        } 
+        }
+
+        if ( cinput.Shield )
+        {
+            if (anim)
+            {
+                AnimatorStateInfo astate = anim.GetCurrentAnimatorStateInfo (0);
+			    if ( ! (astate.IsName("Jump") || astate.IsName("Attack") || astate.IsName("Block")  ) )
+                {
+                    anim.SetBool("block", true);
+                }
+            }
+        }
 
 		anim.speed = animationSpeed;
     }
@@ -186,8 +202,7 @@ public class RootMotionControlScript : MonoBehaviour
             isGrounded = true;
         }
         
-        
-        characterAudio.surface = surface;
+        if (characterAudio) characterAudio.surface = surface;
        
         anim.SetFloat("velx", inputTurn);	
         anim.SetFloat("vely", inputForward);

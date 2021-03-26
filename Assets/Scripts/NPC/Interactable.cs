@@ -44,12 +44,11 @@ public class Interactable : QuestTrigger
 			AnimatorStateInfo astate = anim.GetCurrentAnimatorStateInfo (0);
 
 			if ( astate.IsName ("waving") || astate.IsName ("talking_happy") ) {
-                print("TURNING HEAD");
 				float lookWeight = anim.GetFloat ("lookWeight");
                 
 				if (target) {
 					anim.SetLookAtWeight (lookWeight);
-					anim.SetLookAtPosition (target.transform.position);
+					anim.SetLookAtPosition (target.transform.position + Vector3.up);
 				}
 			} else {
 				anim.SetLookAtWeight (0);
