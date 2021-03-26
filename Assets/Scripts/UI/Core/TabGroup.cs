@@ -19,20 +19,7 @@ public class TabGroup : MonoBehaviour
         if (tabButtons != null)
         {
             ResetTabs();
-            //Select first tab
-            int i = 0;
-            while (i < tabButtons.Count && tabButtons[i].transform.GetSiblingIndex() != 0)
-            {
-                ++i;
-            }
-            if (i < tabButtons.Count)
-            {
-                OnTabSelected(tabButtons[i]);
-            }
-            else //Select random tab if no tab has sibling index == 0
-            {
-                OnTabSelected(tabButtons[0]);
-            }
+            SelectFirstTab();
         }
     }
 
@@ -44,6 +31,10 @@ public class TabGroup : MonoBehaviour
         }
 
         tabButtons.Add(button);
+        //Bug fix: if menuRoot is inactive in editor, first tab is not selected when opened
+        //because start function for TabButton is called after OnEnable(). This ensures
+        //that SelectFirstTab() method always runs after TabButtons subscribe.
+        SelectFirstTab();
     }
 
     // Call when tab button is hovered over
@@ -92,6 +83,23 @@ public class TabGroup : MonoBehaviour
             {
                 button.background.color = tabIdle;
             }
+        }
+    }
+
+    private void SelectFirstTab()
+    {
+        int i = 0;
+        while (i < tabButtons.Count && tabButtons[i].transform.GetSiblingIndex() != 0)
+        {
+            ++i;
+        }
+        if (i < tabButtons.Count)
+        {
+            OnTabSelected(tabButtons[i]);
+        }
+        else //Select random tab if no tab has sibling index == 0
+        {
+            OnTabSelected(tabButtons[0]);
         }
     }
 }
