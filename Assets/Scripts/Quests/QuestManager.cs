@@ -133,7 +133,9 @@ public class QuestManager : MonoBehaviour
                 new List<QuestName>{ QuestName.PerformDiagnostics },
                 new List<( string hint, string image )> {
                     ( "Talk to the Shogun of Bakufu", "Images/test" ),
-                    ( "Go to the arena", "Images/test" ),
+                    ( "Follow the Shogun", "Images/test" ),
+                    ( "Step into the arena", "Images/test" ),
+                    ( "Prepare to fight", "Images/test" ),
                     ( "Defeat Helga", "Images/test" ),
                     ( "Defeat Musashi The Machine","Images/test" ),
                     ( "Defeat Stacy From Accounting", "Images/test" ),
