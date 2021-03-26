@@ -342,6 +342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d7df5fb54bb96696a7b1e32eb6fbc45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  surface: 0
 --- !u!114 &8038363634422593585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,6 +357,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 100
   maxHealth: 100
+  gameOverScreenPrefab: {fileID: 7583646843749293509, guid: ed3f340e880d8754695e50e82ca2f570,
+    type: 3}
 --- !u!1 &4934595503357350650
 GameObject:
   m_ObjectHideFlags: 0
