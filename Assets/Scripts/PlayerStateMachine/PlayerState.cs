@@ -13,6 +13,8 @@ public class PlayerState : MonoBehaviour
     public int Health = 100; // Default health. 
     public int maxHealth = 100;
 
+    public GameObject gameOverScreenPrefab;
+
 	public void Start()
 	{
         anim = gameObject.GetComponent<Animator>();
@@ -42,6 +44,11 @@ public class PlayerState : MonoBehaviour
         * 
         * ... IF I HAD ANY!
         * */
+
+        if (gameOverScreenPrefab != null)
+        {
+            Instantiate(gameOverScreenPrefab);
+        }
     }
 }
 
