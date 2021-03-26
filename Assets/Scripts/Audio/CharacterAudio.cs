@@ -27,7 +27,6 @@ public class CharacterAudio : MonoBehaviour
 
     public void Footstep() {
         step.set3DAttributes(RuntimeUtils.To3DAttributes(transform.position));
-        print(surface);
         step.setParameterByName("Surface", surface);
         FMOD.ATTRIBUTES_3D attributes;
         step.get3DAttributes(out attributes);
