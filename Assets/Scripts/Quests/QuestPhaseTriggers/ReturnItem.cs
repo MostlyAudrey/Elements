@@ -7,6 +7,7 @@ using Utility;
 public class ReturnItem : Interactable
 {
     public GameObject itemToBeReturned;
+    public bool destroyItem = true;
 
     public float pickupRadius = 10f;
 
@@ -15,7 +16,10 @@ public class ReturnItem : Interactable
         if ( Helper.WithinRadius( transform.position, itemToBeReturned.transform.position, pickupRadius ) )
         {
             Debug.Log("Delivered item");
-            itemToBeReturned.SetActive( false );
+            if (destroyItem)
+            {
+                itemToBeReturned.SetActive(false);
+            }
             disableTrigger();
             AdvanceQuest();
         }
