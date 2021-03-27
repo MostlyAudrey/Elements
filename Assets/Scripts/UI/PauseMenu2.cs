@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using FMODUnity;
 using UnityEngine.SceneManagement;
 
 public class PauseMenu2 : MonoBehaviour
@@ -16,6 +17,12 @@ public class PauseMenu2 : MonoBehaviour
     public Button loadFromSaveButton;
     public Button mainMenuButton;
     public Button exitButton;
+
+    private FMOD.Studio.Bus masterBus;
+    private FMOD.Studio.Bus musicBus;
+    private FMOD.Studio.Bus dialogueBus;
+    private FMOD.Studio.Bus sfxBus;
+
 
     public int mainMenuLevelIndex = 0;
 
@@ -34,6 +41,11 @@ public class PauseMenu2 : MonoBehaviour
         loadFromSaveButton.onClick.AddListener(LoadLastSave);
         mainMenuButton.onClick.AddListener(ToMainMenu);
         exitButton.onClick.AddListener(ExitGame);
+
+        masterBus = RuntimeManager.GetBus("Bus:/");
+        musicBus = RuntimeManager.GetBus("Bus:/Music");
+        dialogueBus = RuntimeManager.GetBus("Bus:/Dialogue");
+        sfxBus = RuntimeManager.GetBus("Bus:/SFX");
     }
 
     void Update()
@@ -182,6 +194,22 @@ public class PauseMenu2 : MonoBehaviour
     public void ToMainMenu()
     {
         SceneManager.LoadScene(mainMenuLevelIndex, LoadSceneMode.Single);
+    }
+
+    public void SetMasterVolume(float value) {
+        masterBus.setVolume(value);
+    }
+
+    public void SetMusicVolume(float value) {
+        musicBus.setVolume(value);
+    }
+
+    public void SetDialogueVolume(float value) {
+        dialogueBus.setVolume(value);
+    }
+
+    public void SetSFXVolume(float value) {
+        sfxBus.setVolume(value);
     }
 
     public void ExitGame()
