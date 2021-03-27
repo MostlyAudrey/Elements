@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using FMODUnity;
 
 public class PauseMenu2 : MonoBehaviour
 {
@@ -12,6 +13,13 @@ public class PauseMenu2 : MonoBehaviour
     public Button loadFromSaveButton;
     public Button exitButton;
 
+    private FMOD.Studio.Bus masterBus;
+    private FMOD.Studio.Bus musicBus;
+    private FMOD.Studio.Bus dialogueBus;
+    private FMOD.Studio.Bus sfxBus;
+
+
+
     void Start()
     {
         SetPauseMenuActivation(false);
@@ -20,6 +28,11 @@ public class PauseMenu2 : MonoBehaviour
         saveButton.onClick.AddListener(Save);
         loadFromSaveButton.onClick.AddListener(LoadLastSave);
         exitButton.onClick.AddListener(ExitGame);
+
+        masterBus = RuntimeManager.GetBus("Bus:/");
+        musicBus = RuntimeManager.GetBus("Bus:/Music");
+        dialogueBus = RuntimeManager.GetBus("Bus:/Dialogue");
+        sfxBus = RuntimeManager.GetBus("Bus:/SFX");
     }
 
     void Update()
@@ -101,6 +114,22 @@ public class PauseMenu2 : MonoBehaviour
         QuestManager.LoadQuestPhases(data);
 
         Resume();
+    }
+
+    public void SetMasterVolume(float value) {
+        masterBus.setVolume(value);
+    }
+
+    public void SetMusicVolume(float value) {
+        musicBus.setVolume(value);
+    }
+
+    public void SetDialogueVolume(float value) {
+        dialogueBus.setVolume(value);
+    }
+
+    public void SetSFXVolume(float value) {
+        sfxBus.setVolume(value);
     }
 
     public void ExitGame()
