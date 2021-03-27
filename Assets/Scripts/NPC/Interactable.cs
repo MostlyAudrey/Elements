@@ -37,4 +37,22 @@ public class Interactable : QuestTrigger
         gettingAttention = false;
         anim.SetBool("waving", false);
     }
+
+    void OnAnimatorIK()
+	{
+		if (anim) {
+			AnimatorStateInfo astate = anim.GetCurrentAnimatorStateInfo (0);
+
+			if ( astate.IsName ("waving") || astate.IsName ("talking_happy") ) {
+				float lookWeight = anim.GetFloat ("lookWeight");
+                
+				if (target) {
+					anim.SetLookAtWeight (lookWeight);
+					anim.SetLookAtPosition (target.transform.position + Vector3.up);
+				}
+			} else {
+				anim.SetLookAtWeight (0);
+			}
+		}
+	}
 }
