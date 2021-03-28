@@ -13,7 +13,7 @@ using UnityEditor;
 [RequireComponent(typeof(CharacterInputController))]
 public class RootMotionControlScript : MonoBehaviour
 {
-    private Animator anim;	
+    private Animator anim;
     private Rigidbody rbody;
     private CharacterInputController cinput;
 
@@ -100,7 +100,7 @@ public class RootMotionControlScript : MonoBehaviour
 
         characterAudio = GetComponent<CharacterAudio>();
     }
-    
+
     private bool debounceInteractButton = false;
     private bool debounceActionButton = false;
     private bool debounceAttackButton = false;
@@ -127,12 +127,12 @@ public class RootMotionControlScript : MonoBehaviour
         if(cinput.Attack && !debounceAttackButton )
         {
             _attack();
-            debounceAttackButton = true; 
-        } 
+            debounceAttackButton = true;
+        }
         else if (!cinput.Attack && debounceAttackButton)
             debounceAttackButton = false;
 
-        
+
         if(cinput.Jump && !debounceJumpButton )
         {
             if (anim && !anim.GetCurrentAnimatorStateInfo(0).IsName ("Jump")) {
@@ -147,12 +147,12 @@ public class RootMotionControlScript : MonoBehaviour
         if ( cinput.Action && !debounceActionButton)
         {
             if ( pickedUpItem ) _putdown_item();
-            else 
+            else
             {
                 GameObject target = CharacterCommon.CheckForNearestPickupableItem(transform, 100f);
                 if (target) _pickup_item(target);
             }
-            debounceActionButton = true; 
+            debounceActionButton = true;
         }
         else if (!cinput.Action && debounceActionButton)
             debounceActionButton = false;
@@ -162,7 +162,7 @@ public class RootMotionControlScript : MonoBehaviour
             if ( !itemInPosition && Helper.WithinRadius(pickedUpItem.transform.position, HoldSpot.transform.position, .5f) ) itemInPosition = true;
             if ( !itemInPosition ) pickedUpItem.transform.position += (HoldSpot.transform.position - pickedUpItem.transform.position) * (Time.deltaTime * pickupSpeed);
             else pickedUpItem.transform.position = HoldSpot.transform.position;
-            
+
             if ( itemInPosition && pickedUpItem.GetComponent<ItemPickupTrigger>() ) pickedUpItem.GetComponent<ItemPickupTrigger>().inPosition();
         }
 
@@ -189,7 +189,7 @@ public class RootMotionControlScript : MonoBehaviour
 
         // input is polled in the Update() step, not FixedUpdate()
         // Therefore, you should ONLY use input state that is NOT event-based in FixedUpdate()
-        // Input events should be handled in Update(), and possibly passed on to FixedUpdate() through 
+        // Input events should be handled in Update(), and possibly passed on to FixedUpdate() through
         // the state of the MonoBehavior
         if (cinput.enabled)
         {
@@ -198,7 +198,7 @@ public class RootMotionControlScript : MonoBehaviour
         }
 
         int surface;
-	
+
         //onCollisionStay() doesn't always work for checking if the character is grounded from a playability perspective
         //Uneven terrain can cause the player to become technically airborne, but so close the player thinks they're touching ground.
         //Therefore, an additional raycast approach is used to check for close ground
@@ -226,11 +226,11 @@ public class RootMotionControlScript : MonoBehaviour
     {
         if (collision.transform.gameObject.tag == "ground")
         {
-      
+
             // EventManager.TriggerEvent<PlayerLandsEvent, Vector3, float>(collision.contacts[0].point, collision.impulse.magnitude);
 
         }
-						
+
     }
 
     void OnAnimatorMove()
@@ -241,7 +241,7 @@ public class RootMotionControlScript : MonoBehaviour
 
         if (isGrounded)
         {
-         	//use root motion as is if on the ground		
+         	//use root motion as is if on the ground
             newRootPosition = anim.rootPosition;
         }
         else
@@ -256,7 +256,7 @@ public class RootMotionControlScript : MonoBehaviour
 
 		this.transform.position = Vector3.LerpUnclamped( this.transform.position, newRootPosition, rootMovementSpeed );
 		this.transform.rotation = Quaternion.LerpUnclamped( this.transform.rotation, newRootRotation, rootTurnSpeed );
-			
+
         //clear IsGrounded
         isGrounded = false;
     }
@@ -358,7 +358,7 @@ public class RootMotionControlScript : MonoBehaviour
     private void _checkForButton()
     {
         foreach( Collider collision in Physics.OverlapSphere(transform.position, buttonRadius) )
-        {      
+        {
             if ( collision.gameObject.tag == "Button" )
             {
                 buttonObject = collision.gameObject;
@@ -370,7 +370,10 @@ public class RootMotionControlScript : MonoBehaviour
 
     public void buttonPushed()
     {
-        buttonObject.GetComponent<ButtonPressTrigger>().pushButton();
+        if (buttonObject.GetComponent<ButtonPressTrigger>())
+            buttonObject.GetComponent<ButtonPressTrigger>().pushButton();
+        else if (buttonObject.GetComponent<MovableItem>())
+            buttonObject.GetComponent<MovableItem>().pushButton();
         buttonAudio.start();
     }
 
@@ -381,5 +384,5 @@ public class RootMotionControlScript : MonoBehaviour
         transform.SetPositionAndRotation(newLoc, currRot);
         Debug.Log("Loaded player location at " + newLoc);
     }
-    
+
 }
