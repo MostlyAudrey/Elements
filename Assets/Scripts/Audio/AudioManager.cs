@@ -64,6 +64,7 @@ public class AudioManager : MonoBehaviour
                 soundGroups = new Dictionary<SoundGroupName, SoundGroup>();
                 soundGroups.Add(SoundGroupName.MASTER,      new SoundGroup("masterVol"  , ""            ));
                 soundGroups.Add(SoundGroupName.MUSIC,       new SoundGroup("music"      , "Music"       ));
+                soundGroups.Add(SoundGroupName.DIALOGUE,    new SoundGroup("dialogue"   , "Dialogue"    ));
                 soundGroups.Add(SoundGroupName.SFX,         new SoundGroup("sfx"        , "SFX"         ));
                 soundGroups.Add(SoundGroupName.UI,          new SoundGroup("UI"         , "UI"          ));
             }
