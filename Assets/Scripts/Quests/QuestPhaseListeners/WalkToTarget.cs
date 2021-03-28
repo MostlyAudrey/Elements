@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
@@ -7,6 +8,9 @@ using UnityEngine.AI;
 // The purpose of this class is for any NPC which is currently engaging the player in a quest to walk the path to the specified end waypoint
 public class WalkToTarget : QuestPhaseListener
 {
+    private bool atTarget = false;
+    public bool enabled = true;
+
     public GameObject path;
     public GameObject[] waypoints;
 
@@ -48,57 +52,65 @@ public class WalkToTarget : QuestPhaseListener
     // Start is called before the first frame update
     void Start()
     {
-        path.SetActive(false);
-        anim = gameObject.GetComponent<Animator>();
-        navMeshAgent = GetComponent<NavMeshAgent>();
-        switch (action)
+        if (enabled)
         {
-            case Action.Idle:
-                break;
-            case Action.Walking:
-                anim.SetBool("walking", true);
-                if (path)
-                {
-                    waypoints = new GameObject[path.transform.childCount];
-                    for (int i = 0; i < path.transform.childCount; i++)
-                    {
-                        waypoints[i] = path.transform.GetChild(i).gameObject;
-                    }
-                }
-                if (currWaypoint == path.transform.childCount - 1)
-                {
-                    action = Action.Idle;
+            path.SetActive(false);
+            anim = gameObject.GetComponent<Animator>();
+            navMeshAgent = GetComponent<NavMeshAgent>();
+            switch (action)
+            {
+                case Action.Idle:
                     break;
-                }
-                else
-                {
-                    setNextWaypoint();
-                }
-                break;
-            default:
-                break;
+                case Action.Walking:
+                    anim.SetBool("walking", true);
+                    if (path)
+                    {
+                        waypoints = new GameObject[path.transform.childCount];
+                        for (int i = 0; i < path.transform.childCount; i++)
+                        {
+                            waypoints[i] = path.transform.GetChild(i).gameObject;
+                        }
+                    }
+                    if (currWaypoint == path.transform.childCount - 1)
+                    {
+                        anim.SetBool("walking", false);
+                        atTarget = true;
+                        action = Action.Idle;
+                        break;
+                    }
+                    else
+                    {
+                        setNextWaypoint();
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (path && (path.transform.childCount != waypoints.Length))
+        if (enabled)
         {
-            waypoints = new GameObject[path.transform.childCount];
-            for (int i = 0; i < path.transform.childCount; i++)
+            if (path && (path.transform.childCount != waypoints.Length))
             {
-                waypoints[i] = path.transform.GetChild(i).gameObject;
+                waypoints = new GameObject[path.transform.childCount];
+                for (int i = 0; i < path.transform.childCount; i++)
+                {
+                    waypoints[i] = path.transform.GetChild(i).gameObject;
+                }
             }
-        }
-        if (action == Action.Walking)
-        {
-            if (navMeshAgent.remainingDistance < .5 && !navMeshAgent.pathPending)
+            if (action == Action.Walking)
             {
-                setNextWaypoint();
+                if (navMeshAgent.remainingDistance < .5 && !navMeshAgent.pathPending)
+                {
+                    setNextWaypoint();
+                }
+                anim.SetFloat("vely", navMeshAgent.velocity.magnitude / navMeshAgent.speed);
+                anim.SetFloat("velx", (prevVelocity.x - navMeshAgent.velocity.x) / navMeshAgent.speed);
             }
-            anim.SetFloat("vely", navMeshAgent.velocity.magnitude / navMeshAgent.speed);
-            anim.SetFloat("velx", (prevVelocity.x - navMeshAgent.velocity.x) / navMeshAgent.speed);
         }
     }
 
@@ -108,5 +120,10 @@ public class WalkToTarget : QuestPhaseListener
         action = Action.Walking;
         anim.SetBool("walking", true);
         path.SetActive(true);
+    }
+
+    public bool isAtTarget()
+    {
+        return atTarget;
     }
 }

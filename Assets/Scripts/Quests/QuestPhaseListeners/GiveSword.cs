@@ -11,7 +11,7 @@ public class GiveSword : QuestPhaseListener
         if (player_script)
         {
             player_script.hasSword = true;
-            player_script.sheath();
+            player_script.sheathSword();
         }
         else Debug.Log("Could not find RootMotionControlScript");
     }
