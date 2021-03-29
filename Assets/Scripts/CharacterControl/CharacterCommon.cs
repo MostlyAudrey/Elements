@@ -34,16 +34,7 @@ public class CharacterCommon {
 
         foreach(RaycastHit hit in hits)
         {
-            if (hit.collider.gameObject.tag.EndsWith("grass")) {
-                surface = 1;
-            } else if (hit.collider.gameObject.tag.EndsWith("concrete")) {
-                surface = 0;
-            } else if (hit.collider.gameObject.tag.EndsWith("snow")) {
-                surface = 1;
-            }else if (hit.collider.gameObject.tag.EndsWith("dirt")) {
-                surface = 1;
-            }
-
+            
             if (hit.collider.gameObject.tag.StartsWith("ground"))
             {           
 
@@ -53,6 +44,18 @@ public class CharacterCommon {
 
                 _isJumpable = Vector3.Angle(Vector3.up, hit.normal) < jumpableGroundNormalMaxAngle;
 
+                if (hit.collider.gameObject.tag.EndsWith("grass")) {
+                    surface = 1;
+                } else if (hit.collider.gameObject.tag.EndsWith("concrete")) {
+                    surface = 0;
+                } else if (hit.collider.gameObject.tag.EndsWith("snow")) {
+                    surface = 1;
+                }else if (hit.collider.gameObject.tag.EndsWith("dirt")) {
+                    surface = 1;
+                }
+                else 
+                    surface = 0;
+                
                 break; //only need to find the ground once
 
             }

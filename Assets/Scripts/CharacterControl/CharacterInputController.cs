@@ -57,6 +57,12 @@ public class CharacterInputController : MonoBehaviour {
 		private set;
 	}
 
+    public bool Shield
+	{
+		get;
+		private set;
+	}
+
         
 
 	void Update () {
@@ -75,13 +81,6 @@ public class CharacterInputController : MonoBehaviour {
 
         }
 
-
-        //BEGIN ANALOG ON KEYBOARD DEMO CODE
-        if (Input.GetKey(KeyCode.Q))
-            h = -0.5f;
-        else if (Input.GetKey(KeyCode.E))
-            h = 0.5f;
-
         //do some filtering of our input as well as clamp to a speed limit
         filteredForwardInput = Mathf.Clamp(Mathf.Lerp(filteredForwardInput, v, 
             Time.deltaTime * forwardInputFilter), -forwardSpeedLimit, forwardSpeedLimit);
@@ -97,7 +96,8 @@ public class CharacterInputController : MonoBehaviour {
         Attack   = Input.GetButtonDown("Fire1");
         Action   = Input.GetKeyDown(KeyCode.Q);
         Jump     = Input.GetKeyDown(KeyCode.Space);
-        Interact = Input.GetKey(KeyCode.X);
+        Interact = Input.GetKeyDown(KeyCode.X);
+        Shield   = Input.GetKey(KeyCode.LeftShift);
 
 	}
 }

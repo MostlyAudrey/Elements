@@ -19,10 +19,10 @@ public class Weapon : MonoBehaviour
     // Update is called once per frame
     private void OnTriggerEnter(Collider other)
     {
-        if (!other)
-		{
-            return;
-		}
+        if (!other)return;
+        if (!parentAnimator) parentAnimator = GetComponentInParent(typeof(Animator)) as Animator;
+        if (!parentAnimator) return;
+
         if ( parentAnimator.GetCurrentAnimatorStateInfo(0).IsName("Attack") && other.CompareTag("Breakable"))
         {
             Breakable breakable = other.transform.gameObject.GetComponent<Breakable>();

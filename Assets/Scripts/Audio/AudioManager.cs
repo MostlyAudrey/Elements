@@ -9,26 +9,44 @@ public enum SoundGroupName
     MASTER,
     MUSIC,
     DIALOGUE,
-    SFX
+    SFX,
+    UI
+}
+
+public class SoundGroup
+{
+    private string prefKey; //Playerpref key
+    private string busPath;
+    // Volume of sound group before making any changes
+    private float initVolume;
+
+    public SoundGroup(string _PlayerPrefKey, string _BusPath)
+    {
+        prefKey = _PlayerPrefKey;
+        busPath = _BusPath;
+        initVolume = AudioManager.getBusVolume(busPath);
+        //Load volume multiplier from player preferences
+        setVolumeMultiplier(getVolumeMultiplier());
+    }
+
+    public void setVolumeMultiplier(float multiplier)
+    {
+        //Save playerpref and multiply bus volume
+        PlayerPrefs.SetFloat(prefKey, multiplier);
+        AudioManager.setBusVolume(busPath, initVolume * multiplier);
+    }
+
+    public float getVolumeMultiplier()
+    {
+        return PlayerPrefs.GetFloat(prefKey, 1f);
+    }
 }
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
 
-    struct SoundGroupData
-    {
-        public string prefKey; //Playerpref key
-        public string busPath;
-
-        public SoundGroupData(string inPlayerPrefKey, string inBusPath)
-        {
-            prefKey = inPlayerPrefKey;
-            busPath = inBusPath;
-        }
-    }
-
-    private Dictionary<SoundGroupName, SoundGroupData> soundGroups;
+    public Dictionary<SoundGroupName, SoundGroup> soundGroups;
 
     void Awake()
     {
@@ -40,35 +58,21 @@ public class AudioManager : MonoBehaviour
         {
             instance = this;
 
-            //Init dictionary
-            soundGroups = new Dictionary<SoundGroupName, SoundGroupData>();
-            soundGroups.Add(SoundGroupName.MASTER,      new SoundGroupData("masterVol"  , ""            ));
-            soundGroups.Add(SoundGroupName.MUSIC,       new SoundGroupData("music"      , "music"       ));
-            soundGroups.Add(SoundGroupName.DIALOGUE,    new SoundGroupData("dialogue"   , "dialogue"    ));
-            soundGroups.Add(SoundGroupName.SFX,         new SoundGroupData("sfx"        , "sfx"         ));
+            //Initialize soundGroups
+            try
+            {
+                soundGroups = new Dictionary<SoundGroupName, SoundGroup>();
+                soundGroups.Add(SoundGroupName.MASTER,      new SoundGroup("masterVol"  , ""            ));
+                soundGroups.Add(SoundGroupName.MUSIC,       new SoundGroup("music"      , "Music"       ));
+                soundGroups.Add(SoundGroupName.DIALOGUE,    new SoundGroup("dialogue"   , "Dialogue"    ));
+                soundGroups.Add(SoundGroupName.SFX,         new SoundGroup("sfx"        , "SFX"         ));
+                soundGroups.Add(SoundGroupName.UI,          new SoundGroup("UI"         , "UI"          ));
+            }
+            catch (BusNotFoundException)
+            {
+                Debug.LogError("AudioManager: Sound groups set to buses that do not exist!");
+            }
         }
-    }
-
-    void Start()
-    {
-        //Load playerprefs
-        setSoundGroupVolMultiplier(SoundGroupName.MASTER,   PlayerPrefs.GetFloat(soundGroups[SoundGroupName.MASTER].prefKey,    1f));
-        setSoundGroupVolMultiplier(SoundGroupName.MUSIC,    PlayerPrefs.GetFloat(soundGroups[SoundGroupName.MUSIC].prefKey,     1f));
-        setSoundGroupVolMultiplier(SoundGroupName.DIALOGUE, PlayerPrefs.GetFloat(soundGroups[SoundGroupName.DIALOGUE].prefKey,  1f));
-        setSoundGroupVolMultiplier(SoundGroupName.SFX,      PlayerPrefs.GetFloat(soundGroups[SoundGroupName.SFX].prefKey,       1f));
-    }
-
-    public float getSoundGroupVolMultiplier(SoundGroupName soundGroupName)
-    {
-        return PlayerPrefs.GetFloat(soundGroups[soundGroupName].prefKey);
-    }
-
-    public void setSoundGroupVolMultiplier(SoundGroupName soundGroupName, float multiplier)
-    {
-        SoundGroupData soundGroupData = soundGroups[soundGroupName];
-        //Save playerpref and multiply bus volume
-        PlayerPrefs.SetFloat(soundGroupData.prefKey, multiplier);
-        setBusVolume(soundGroupData.busPath, getBusVolume(soundGroupData.busPath) * multiplier);
     }
 
     public static float getBusVolume(string path)

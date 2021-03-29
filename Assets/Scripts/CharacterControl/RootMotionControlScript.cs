@@ -28,7 +28,7 @@ public class RootMotionControlScript : MonoBehaviour
 	public float rootMovementSpeed = 1f;
 	public float rootTurnSpeed = 1f;
     public float fallSpeed = 1f;
-    public float buttonRadius = 5f;
+    public float buttonRadius = 2f;
 
     public float pickupSpeed = 1f;
     public float stepDown = 0.3f;
@@ -43,9 +43,14 @@ public class RootMotionControlScript : MonoBehaviour
 
     public GameObject sheathedSword;
 
+    public GameObject shieldInHand;
+
+    public GameObject sheathedShield;
+
     public bool isGrounded;
 
     public bool hasSword;
+    public bool hasShield;
 
     private bool inAttackStance;
 
@@ -88,7 +93,8 @@ public class RootMotionControlScript : MonoBehaviour
     void Start()
     {
         hasSword = (QuestManager.GetQuestPhase( QuestName.PerformDiagnostics ) == 3);
-        sheath();
+        hasShield = hasSword; //(QuestManager.GetQuestPhase( QuestName.PerformDiagnostics ) == 3);
+        sheathSword();
 
         buttonAudio = RuntimeManager.CreateInstance("event:/Interactables/Button");
 
@@ -103,15 +109,18 @@ public class RootMotionControlScript : MonoBehaviour
 
     void Update()
     {
+        if (!characterAudio) characterAudio = GetComponent<CharacterAudio>();
         // // Event-based inputs need to be handled in Update()
 
         if(cinput.Interact && !debounceInteractButton )
         {
-            sheath();
-            EventManager.instance.ActionButtonPressed();
-            _checkForButton();
-            debounceInteractButton = true;
-        }
+            if (anim && !anim.GetCurrentAnimatorStateInfo(0).IsName ("Attack")) {
+		        sheathSword();
+                EventManager.instance.ActionButtonPressed();
+                _checkForButton();
+            }
+            debounceInteractButton = true; 
+        } 
         else if (!cinput.Interact && debounceInteractButton)
             debounceInteractButton = false;
 
@@ -126,9 +135,11 @@ public class RootMotionControlScript : MonoBehaviour
 
         if(cinput.Jump && !debounceJumpButton )
         {
-            _jump();
+            if (anim && !anim.GetCurrentAnimatorStateInfo(0).IsName ("Jump")) {
+		        _jump();
+            }
             debounceJumpButton = true;
-        }
+        } 
         else if (!cinput.Jump && debounceJumpButton)
             debounceJumpButton = false;
 
@@ -153,6 +164,18 @@ public class RootMotionControlScript : MonoBehaviour
             else pickedUpItem.transform.position = HoldSpot.transform.position;
 
             if ( itemInPosition && pickedUpItem.GetComponent<ItemPickupTrigger>() ) pickedUpItem.GetComponent<ItemPickupTrigger>().inPosition();
+        }
+
+        if ( cinput.Shield )
+        {
+            if (anim)
+            {
+                AnimatorStateInfo astate = anim.GetCurrentAnimatorStateInfo (0);
+			    if ( ! (astate.IsName("Jump") || astate.IsName("Attack") || astate.IsName("Block")  ) )
+                {
+                    _block();
+                }
+            }
         }
 
 		anim.speed = animationSpeed;
@@ -184,10 +207,10 @@ public class RootMotionControlScript : MonoBehaviour
         {
             isGrounded = true;
         }
-
-        // characterAudio.surface = surface;
-
-        anim.SetFloat("velx", inputTurn);
+        
+        if (characterAudio) characterAudio.surface = surface;
+       
+        anim.SetFloat("velx", inputTurn);	
         anim.SetFloat("vely", inputForward);
     }
 
@@ -285,8 +308,15 @@ public class RootMotionControlScript : MonoBehaviour
     private void _attack()
     {
         if (!inAttackStance)
-            _unsheath();
+            _unsheathSword();
+        sheathShield();
         anim.SetTrigger("attack");
+    } 
+    
+    private void _block()
+    {
+        _unsheathShield();
+        anim.SetTrigger("block");
     }
 
     private void _jump()
@@ -294,7 +324,7 @@ public class RootMotionControlScript : MonoBehaviour
         anim.SetTrigger("jump");
     }
 
-    private void _unsheath()
+    private void _unsheathSword()
     {
         inAttackStance = hasSword;
         anim.SetBool("holding sword", hasSword);
@@ -302,14 +332,29 @@ public class RootMotionControlScript : MonoBehaviour
         sheathedSword.SetActive(false);
     }
 
-    public void sheath()
+    public void sheathSword()
     {
+        sheathShield();
         inAttackStance = false;
         anim.SetBool("holding sword", false);
         swordInHand.SetActive(false);
         sheathedSword.SetActive(hasSword);
     }
 
+    private void _unsheathShield()
+    {
+        _unsheathSword();
+        anim.SetBool("block", hasShield);
+        shieldInHand.SetActive(hasShield);
+        sheathedShield.SetActive(false);
+    }
+
+    public void sheathShield()
+    {
+        anim.SetBool("block", false);
+        shieldInHand.SetActive(false);
+        sheathedShield.SetActive(hasShield);
+    }
     private void _checkForButton()
     {
         foreach( Collider collision in Physics.OverlapSphere(transform.position, buttonRadius) )

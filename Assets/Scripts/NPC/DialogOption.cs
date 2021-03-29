@@ -96,7 +96,6 @@ public class DialogOption : Interactable
 
     void _finishTalking()
     {
-        Debug.Log("Here 2: " + nextPhase);
         _stopTalking();
         if (!repeatable) 
         {
@@ -125,7 +124,6 @@ public class DialogOption : Interactable
             playingAudio = false;
             // audioPlayer.Stop();
             eventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-            Debug.Log("Here");
             _finishTalking();
         }
         else
