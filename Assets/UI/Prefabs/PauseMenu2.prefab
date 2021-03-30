@@ -1904,7 +1904,7 @@ MonoBehaviour:
   loadFromSaveButton: {fileID: 4204799189204596983}
   mainMenuButton: {fileID: 7009120994438878413}
   exitButton: {fileID: 1069104574525428274}
-  mainMenuLevelIndex: 1
+  mainMenuLevelIndex: 0
 --- !u!1 &6507230790984010856
 GameObject:
   m_ObjectHideFlags: 0
