@@ -89,7 +89,7 @@ public class PauseMenu : MonoBehaviour
         RootMotionControlScript playerRootMotionControl = FindObjectOfType<RootMotionControlScript>();
         if (playerRootMotionControl != null)
         {
-            SaveSystem.SavePlayerData(playerRootMotionControl);
+            SaveUtility.SavePlayerData(playerRootMotionControl);
         }
         else
         {
@@ -99,7 +99,7 @@ public class PauseMenu : MonoBehaviour
 
     void LoadFromSave()
     {
-        PlayerData data = SaveSystem.LoadPlayerData();
+        PlayerData data = SaveUtility.LoadPlayerData();
 
         RootMotionControlScript playerRootMotionControl = FindObjectOfType<RootMotionControlScript>();
         if (playerRootMotionControl != null)

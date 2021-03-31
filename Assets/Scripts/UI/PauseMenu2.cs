@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using FMODUnity;
-using UnityEngine.SceneManagement;
 
 public class PauseMenu2 : MonoBehaviour
 {
@@ -22,9 +21,6 @@ public class PauseMenu2 : MonoBehaviour
     private FMOD.Studio.Bus musicBus;
     private FMOD.Studio.Bus dialogueBus;
     private FMOD.Studio.Bus sfxBus;
-
-
-    public int mainMenuLevelIndex = 0;
 
     static private bool loadingFromSave = false;
 
@@ -154,7 +150,7 @@ public class PauseMenu2 : MonoBehaviour
         RootMotionControlScript playerRootMotionControl = FindObjectOfType<RootMotionControlScript>();
         if (playerRootMotionControl != null)
         {
-            SaveSystem.SavePlayerData(playerRootMotionControl);
+            SaveUtility.SavePlayerData(playerRootMotionControl);
         }
         else
         {
@@ -166,7 +162,7 @@ public class PauseMenu2 : MonoBehaviour
     {
         //Reload current scene
         loadingFromSave = true;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single); //Changes scene at end of frame
+        LoadingUtility.ReloadCurrentWorld(); //Changes scene at end of frame
     }
 
     private void _LoadLastSave()
@@ -175,7 +171,7 @@ public class PauseMenu2 : MonoBehaviour
         {
             loadingFromSave = false;
 
-            PlayerData data = SaveSystem.LoadPlayerData();
+            PlayerData data = SaveUtility.LoadPlayerData();
 
             RootMotionControlScript playerRootMotionControl = FindObjectOfType<RootMotionControlScript>();
             if (playerRootMotionControl != null)
@@ -193,7 +189,7 @@ public class PauseMenu2 : MonoBehaviour
 
     public void ToMainMenu()
     {
-        SceneManager.LoadScene(mainMenuLevelIndex, LoadSceneMode.Single);
+        LoadingUtility.GoToWorld(World.MAIN_MENU);
     }
 
     public void SetMasterVolume(float value) {
@@ -214,12 +210,6 @@ public class PauseMenu2 : MonoBehaviour
 
     public void ExitGame()
     {
-#if UNITY_STANDALONE
-        Application.Quit();
-#endif
- 
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#endif
+        LoadingUtility.ExitGame();
     }
 }
