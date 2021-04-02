@@ -48,7 +48,8 @@ ExportedObj/
 *.pdb.meta
 *.mdb.meta
 *.log
-
+*raw.wav*
+*Raw.wav*
 fmod_editor.log
 
 # Unity3D generated file on crash reports
