@@ -1303,7 +1303,7 @@ Animator:
   m_GameObject: {fileID: 136822}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: a177b0e6ff26a894180468c168e802cc, type: 3}
-  m_Controller: {fileID: 9100000, guid: 3964edee805e94c2ca573fec3b058bbf, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -1396,9 +1396,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 136822}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 827ec767567334843995953e335ca7dc, type: 3}
+  m_Script: {fileID: 11500000, guid: c51014fa9b6797243b9cd648a6dbbf84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactables: []
+  quests: 
+  startQuestPhase: 
+  endQuestPhase: 
 --- !u!1 &138006
 GameObject:
   m_ObjectHideFlags: 0
