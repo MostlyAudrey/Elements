@@ -63,7 +63,20 @@ public class portalSetup : MonoBehaviour {
     }
     public Advanced advanced;
 
+    private GameObject player;
+
     private void Update() {
+        if (!player) player = GameObject.FindGameObjectWithTag("Player");
+        if (Vector3.Distance(portalA.position, player.transform.position) <= Vector3.Distance(portalB.position, player.transform.position))
+        {
+            cameraA.enabled = false;
+            cameraB.enabled = true;
+        } else {
+            cameraA.enabled = true;
+            cameraB.enabled = false;
+        }
+
+
         //1 second after resize is done, it updates the render textures
         if (timeStartResize == -1 && (screenHeight != Screen.height || screenWidth != Screen.width)) timeStartResize = Time.time;
 

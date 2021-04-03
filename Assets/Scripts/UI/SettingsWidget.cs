@@ -3,12 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/**
+ * Wrapper class for volume multiplier sliders exposed in the UI.
+ */
+[System.Serializable]
+public class VolumeSlider
+{
+    public Slider slider;
+    public SoundGroupName soundGroup;
+
+    public void SetValue(float volumeMultiplier)
+    {
+        slider.normalizedValue = volumeMultiplier * 0.5f;
+    }
+
+    public float GetValue()
+    {
+        //Maximum volume multiplier for sound group is twice the volume, minimum is 0
+        return 2f * slider.normalizedValue;
+    }
+
+    public void ResetValue()
+    {
+        SetValue(AudioManager.instance.soundGroups[soundGroup].getVolumeMultiplier());
+    }
+
+    public void ApplyValue()
+    {
+        AudioManager.instance.soundGroups[soundGroup].setVolumeMultiplier(GetValue());
+    }
+}
+
 public class SettingsWidget : MonoBehaviour
 {
-    public Slider masterVolSlider;
-    public Slider musicSlider;
-    public Slider dialogueSlider;
-    public Slider sfxSlider;
+    public List<VolumeSlider> volumeSliders;
 
     void OnEnable()
     {
@@ -17,33 +45,17 @@ public class SettingsWidget : MonoBehaviour
 
     public void Reset()
     {
-        _setVolMultiplierInSlider(masterVolSlider,  AudioManager.instance.getSoundGroupVolMultiplier(SoundGroupName.MASTER));
-        _setVolMultiplierInSlider(musicSlider,      AudioManager.instance.getSoundGroupVolMultiplier(SoundGroupName.MUSIC));
-        _setVolMultiplierInSlider(dialogueSlider,   AudioManager.instance.getSoundGroupVolMultiplier(SoundGroupName.DIALOGUE));
-        _setVolMultiplierInSlider(sfxSlider,        AudioManager.instance.getSoundGroupVolMultiplier(SoundGroupName.SFX));
+        foreach (VolumeSlider slider in volumeSliders)
+        {
+            slider.ResetValue();
+        }
     } 
 
     public void ApplyChanges()
     {
-        float masterVolMultiplier = _getVolMultiplierFromSlider(masterVolSlider);
-        float musicMultiplier = _getVolMultiplierFromSlider(musicSlider);
-        float dialogueMultiplier = _getVolMultiplierFromSlider(dialogueSlider);
-        float sfxMultiplier = _getVolMultiplierFromSlider(sfxSlider);
-
-        AudioManager.instance.setSoundGroupVolMultiplier(SoundGroupName.MASTER  , masterVolMultiplier);
-        AudioManager.instance.setSoundGroupVolMultiplier(SoundGroupName.MUSIC   , musicMultiplier);
-        AudioManager.instance.setSoundGroupVolMultiplier(SoundGroupName.DIALOGUE, dialogueMultiplier);
-        AudioManager.instance.setSoundGroupVolMultiplier(SoundGroupName.SFX     , sfxMultiplier);
-    }  
-
-    private float _getVolMultiplierFromSlider(Slider slider)
-    {
-        //Maximum multiplier is twice the volume, minimum is 0
-        return 2f * slider.normalizedValue;
-    }
-
-    private void _setVolMultiplierInSlider(Slider slider, float multiplier)
-    {
-        slider.normalizedValue = multiplier * 0.5f;
+        foreach (VolumeSlider slider in volumeSliders)
+        {
+            slider.ApplyValue();
+        }
     }
 }

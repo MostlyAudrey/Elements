@@ -113,20 +113,6 @@ public class QuestManager : MonoBehaviour
         );
 
         QuestManager.quests.Add( 
-            QuestName.CarlTheJarl,
-            new Quest(
-                QuestName.CarlTheJarl,
-                new List<QuestName>{ QuestName.PerformDiagnostics },
-                new List<( string hint, string image )> {
-                    ( "Talk to the Chief of Fimbultoft", "Images/test" ),
-                    ( "Go to Fimbultoft; Find Carl (maybe ask villager to tell you where he is)", "Images/test" ),
-                    ( "Find Carl's home-made shield in the Fimbulwald (the forest)", "Images/test" ),
-                    ( "Return Carl's Shield to him", "Images/test" ),
-                    ( "Return to the bank manager", "Images/test" )
-                }) 
-        );
-
-        QuestManager.quests.Add( 
             QuestName.ForGlory, 
             new Quest( 
                 QuestName.ForGlory, 
@@ -153,8 +139,10 @@ public class QuestManager : MonoBehaviour
                     ( "Talk to Sven at the Docks", "Images/test" ),
                     ( "Talk to Ormen at the Lumberyard", "Images/test" ),
                     ( "Take a Stack of Planks back to Sven","Images/test" ),
+                    ( "Listen to Sven", "Images/test" ),
                     ( "Find Sigrid in her home", "Images/test" ),
                     ( "Take the sail back to Sven", "Images/test" ),
+                    ( "Listen to Sven", "Images/test" ),
                     ( "Talk to the Viking Chief", "Images/test" )
                 })
         );
@@ -171,6 +159,20 @@ public class QuestManager : MonoBehaviour
                     ( "Speak with Olive, the manager's assistant", "Images/test" ),
                     ( "Guess the Manager's Password (hints: green, benjamin, bills)", "Images/test" ),
                     ( "Speak to the manager (automatic)", "Images/test" )
+                }) 
+        );
+
+        QuestManager.quests.Add( 
+            QuestName.CarlTheJarl,
+            new Quest(
+                QuestName.CarlTheJarl,
+                new List<QuestName>{ QuestName.PerformDiagnostics },
+                new List<( string hint, string image )> {
+                    ( "Talk to the Chief of Fimbultoft", "Images/test" ),
+                    ( "Go to Fimbultoft; Find Carl (maybe ask villager to tell you where he is)", "Images/test" ),
+                    ( "Find Carl's home-made shield in the Fimbulwald (the forest)", "Images/test" ),
+                    ( "Return Carl's Shield to him", "Images/test" ),
+                    ( "Return to the bank manager", "Images/test" )
                 }) 
         );
 
