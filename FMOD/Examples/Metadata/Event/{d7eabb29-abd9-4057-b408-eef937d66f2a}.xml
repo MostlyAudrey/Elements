@@ -114,7 +114,7 @@ https://www.fmod.com/resources/documentation-studio?page=working-with-instrument
 	<object class="MixerBusPanner" id="{346ff174-7386-40dd-b00e-5518e798185a}" />
 	<object class="SingleSound" id="{c3402baf-f6de-4880-a774-e4a1179a2700}">
 		<property name="length">
-			<value>2.1829200000000002</value>
+			<value>2.1829166666666668</value>
 		</property>
 		<property name="voiceStealing">
 			<value>3</value>
