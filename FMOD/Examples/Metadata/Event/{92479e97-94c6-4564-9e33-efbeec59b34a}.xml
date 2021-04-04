@@ -101,7 +101,7 @@ Recordings by David at Track Time Audio.</value>
 	<object class="MixerBusPanner" id="{913bf796-cdbf-422b-95a3-09ffbc272dfe}" />
 	<object class="SingleSound" id="{ba12f4d3-3c15-42ca-b2a9-af3a888f6060}">
 		<property name="length">
-			<value>0.91754199999999997</value>
+			<value>0.9175416666666667</value>
 		</property>
 		<property name="voiceStealing">
 			<value>3</value>
