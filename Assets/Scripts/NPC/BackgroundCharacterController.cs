@@ -132,8 +132,8 @@ public class BackgroundCharacterController : MonoBehaviour
             {
                 setNextWaypoint();
             }
-            anim.SetFloat("vely", navMeshAgent.velocity.magnitude / navMeshAgent.speed);
-            anim.SetFloat("velx", (prevVelocity.x - navMeshAgent.velocity.x) / navMeshAgent.speed);
+            //anim.SetFloat("vely", navMeshAgent.velocity.magnitude / navMeshAgent.speed);
+            //anim.SetFloat("velx", (prevVelocity.x - navMeshAgent.velocity.x) / navMeshAgent.speed);
         }
     }
 }
