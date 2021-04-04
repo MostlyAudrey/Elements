@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class CharacterInputController : MonoBehaviour {
 
-    private float filteredForwardInput = 0f;
+    private float filteredMoveFwdInput = 0f;
+    private float filteredMoveRightInput = 0f;
     private float filteredTurnInput = 0f;
+    private float filteredLookUpInput = 0f;
 
     public bool InputMapToCircular = true;
 
-    public float forwardInputFilter = 5f;
+    public float moveFwdInputFilter = 5f;
+    public float moveRightInputFilter = 5f;
     public float turnInputFilter = 5f;
+    public float lookUpInputFilter = 5f;
 
-    private float forwardSpeedLimit = 1f;
+    private float movementSpeedLimit = 1f;
 
 
     public float Forward
@@ -21,7 +25,19 @@ public class CharacterInputController : MonoBehaviour {
         private set;
     }
 
+    public float Right
+    {
+        get;
+        private set;
+    }
+
     public float Turn
+    {
+        get;
+        private set;
+    }
+
+    public float LookUp
     {
         get;
         private set;
@@ -65,32 +81,43 @@ public class CharacterInputController : MonoBehaviour {
 
         
 
-	void Update () {
-		
+	void Update () 
+    {
+        //Movement Input
         //GetAxisRaw() so we can do filtering here instead of the InputManager
-        float h = Input.GetAxisRaw("Horizontal");// setup h variable as our horizontal input axis
-        float v = Input.GetAxisRaw("Vertical"); // setup v variables as our vertical input axis
-
+        float moveFwd = Input.GetAxisRaw(GameConstants.k_ButtonNameMoveFwd);
+        float moveRight = Input.GetAxisRaw(GameConstants.k_ButtonNameMoveRight);
 
         if (InputMapToCircular)
         {
             // make coordinates circular
             //based on http://mathproofs.blogspot.com/2005/07/mapping-square-to-circle.html
-            h = h * Mathf.Sqrt(1f - 0.5f * v * v);
-            v = v * Mathf.Sqrt(1f - 0.5f * h * h);
-
+            moveFwd = moveFwd * Mathf.Sqrt(1f - 0.5f * moveFwd * moveFwd);
+            moveRight = moveRight * Mathf.Sqrt(1f - 0.5f * moveRight * moveRight);
         }
 
         //do some filtering of our input as well as clamp to a speed limit
-        filteredForwardInput = Mathf.Clamp(Mathf.Lerp(filteredForwardInput, v, 
-            Time.deltaTime * forwardInputFilter), -forwardSpeedLimit, forwardSpeedLimit);
+        filteredMoveFwdInput = Mathf.Clamp(Mathf.Lerp(filteredMoveFwdInput, moveFwd, 
+            Time.deltaTime * moveFwdInputFilter), -movementSpeedLimit, movementSpeedLimit);
+        filteredMoveRightInput = Mathf.Clamp(Mathf.Lerp(filteredMoveRightInput, moveRight, 
+            Time.deltaTime * moveRightInputFilter), -movementSpeedLimit, movementSpeedLimit);
 
-        filteredTurnInput = Mathf.Lerp(filteredTurnInput, h, 
+        Forward = filteredMoveFwdInput;
+        Right = filteredMoveRightInput;
+
+        //Camera Input
+        //GetAxisRaw() so we can do filtering here instead of the InputManager
+        float turnDelta = Input.GetAxisRaw(GameConstants.k_ButtonNameTurn);
+        float lookUpDelta = Input.GetAxisRaw(GameConstants.k_ButtonNameLookUp);
+
+        //do some filtering of our input as well as clamp to a speed limit
+        filteredTurnInput = Mathf.Lerp(filteredTurnInput, turnDelta, 
             Time.deltaTime * turnInputFilter);
+        filteredLookUpInput = Mathf.Lerp(filteredLookUpInput, lookUpDelta, 
+            Time.deltaTime * lookUpInputFilter);
 
-        Forward = filteredForwardInput;
         Turn = filteredTurnInput;
-
+        LookUp = filteredLookUpInput;
 
         //Capture "fire" button for action event
         Attack   = Input.GetButtonDown("Fire1");
@@ -98,6 +125,5 @@ public class CharacterInputController : MonoBehaviour {
         Jump     = Input.GetKeyDown(KeyCode.Space);
         Interact = Input.GetKeyDown(KeyCode.X);
         Shield   = Input.GetKey(KeyCode.LeftShift);
-
 	}
 }
