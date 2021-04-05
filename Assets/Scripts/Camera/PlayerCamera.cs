@@ -2,55 +2,45 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Camera))]
 public class PlayerCamera : MonoBehaviour
 {
+
     [SerializeField]
     private Transform cameraCenter;
 
-    [Tooltip("Set to 0 or negative to not cap yaw rotation.")]
-    public float maxYawRotation = 90f;
-    [Tooltip("Set to 0 or negative to not cap pitch rotation.")]
-    public float maxPitchRotation = 90f;
+    [SerializeField]
+    private float mouseSensitivity = 25f;
+    
+    private float camVert = 0f;
+    private float camHoriz = 0;
 
-    private float yawRotation = 0f;
-    private float pitchRotation = 0f;
-
-    private CharacterInputController cInputController;
+    private Vector3 relativePos;
 
     void Start() {
-        cInputController = GetComponentInParent<CharacterInputController>();
-        if (cInputController == null)
-        {
-            Debug.LogError("PlayerCamera cannot get CharacterInputController!");
-        }
-
         Cursor.lockState = CursorLockMode.Locked;
+        relativePos = transform.localPosition - cameraCenter.localPosition;
+        Debug.Log("Camera rel pos is " + relativePos);
     }
 
-    void Update() 
-    {
-        AddCameraYawRotation(cInputController.Turn);
-        AddCameraPitchRotation(cInputController.LookUp);
-    }
+    void Update() {
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        float turnMax = 10f;
+        mouseX = Mathf.Clamp(mouseX, -turnMax, turnMax);
+        mouseY = Mathf.Clamp(mouseY, -turnMax, turnMax);
 
-    private void AddCameraYawRotation(float deltaRot)
-    {
-        if (maxYawRotation > 0f && Mathf.Abs(deltaRot + yawRotation) > maxYawRotation)
-        {
-            deltaRot = Mathf.Sign(deltaRot) * maxYawRotation - yawRotation;
-        }
-        transform.RotateAround(cameraCenter.position, Vector3.up, deltaRot);
-        yawRotation += deltaRot;
-    }
+        camVert += mouseY;
+        camVert = Mathf.Clamp(camVert, -50, 90);
+        camHoriz += mouseX;
+        camHoriz = Mathf.Clamp(camHoriz, -70, 70);
 
-    private void AddCameraPitchRotation(float deltaRot)
-    {
-        if (maxPitchRotation > 0f && Mathf.Abs(deltaRot + pitchRotation) > maxPitchRotation)
-        {
-            deltaRot = Mathf.Sign(deltaRot) * maxPitchRotation - pitchRotation;
-        }
-        transform.RotateAround(cameraCenter.position, transform.right, deltaRot);
-        pitchRotation += deltaRot;
+        
+
+        // transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        // transform.RotateAroundLocal(Vector3.up, mouseX);
+        Quaternion rotation = Quaternion.Euler(camVert, camHoriz, 0);
+        transform.localRotation = rotation;
+        transform.localPosition = cameraCenter.localPosition + (rotation * relativePos);
+        // transform.RotateAround(transform.up, transform.up, mouseX);
     }
 }
