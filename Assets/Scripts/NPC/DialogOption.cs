@@ -32,8 +32,10 @@ public class DialogOption : Interactable
         } catch (EventNotFoundException) {
             Debug.Log("Event not found.");
         }
+
+        if ( !buttonHint ) showButtonHint = false;
         
-        
+        if (showButtonHint) _hideButtonHint();
         anim = GetComponent<Animator>();
 
         if ( startImmediately )
@@ -49,18 +51,21 @@ public class DialogOption : Interactable
         if ( !anim ) anim = GetComponent<Animator>();
 
         if ( !isTalking && !showingHint && Vector3.Distance(target.transform.position, transform.position) <= buttonHintRadius)
-      		_displayButtonHint();
-      	else if ( showingHint && Vector3.Distance(target.transform.position, transform.position) > buttonHintRadius )
-      		_hideButtonHint();
-
-        if ( !isTalking && !gettingAttention && Vector3.Distance(target.transform.position, transform.position) <= getPlayerAttentionRadius && getPlayerAttention)
         {
             EventManager.instance.onActionButtonPressed += _startTalking;
+      		_displayButtonHint();
+        }    
+      	else if ( showingHint && Vector3.Distance(target.transform.position, transform.position) > buttonHintRadius )
+      	{
+            EventManager.instance.onActionButtonPressed -= _startTalking;
+            _hideButtonHint();
+        }
+        if ( !isTalking && !gettingAttention && Vector3.Distance(target.transform.position, transform.position) <= getPlayerAttentionRadius && getPlayerAttention)
+        {
             _startWaving();
         }
         else if ( gettingAttention && Vector3.Distance(target.transform.position, transform.position) > getPlayerAttentionRadius )
         {
-            EventManager.instance.onActionButtonPressed -= _startTalking;
             _stopWaving();
         }
         FMOD.Studio.PLAYBACK_STATE audioState;

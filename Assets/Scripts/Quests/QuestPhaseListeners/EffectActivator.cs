@@ -22,10 +22,4 @@ public class EffectActivator : QuestPhaseListener
         }
         else Debug.Log("Effect is missing");
     }
-
-    public void Update()
-    {
-        if (effect.GetComponent<ParticleSystem>().isPlaying)
-            effect.GetComponent<ParticleSystem>().Stop();
-    }
 }

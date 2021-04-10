@@ -157,8 +157,8 @@ public class QuestManager : MonoBehaviour
                     ( "Speak with Amanda the Teller", "Images/test" ),
                     ( "Speak with Damien in Security", "Images/test" ),
                     ( "Speak with Olive, the manager's assistant", "Images/test" ),
-                    ( "Guess the Manager's Password (hints: green, benjamin, bills)", "Images/test" ),
-                    ( "Speak to the manager (automatic)", "Images/test" )
+                    ( "Guess the Manager's Password", "Images/test" ),
+                    ( "Speak to the manager", "Images/test" )
                 }) 
         );
 

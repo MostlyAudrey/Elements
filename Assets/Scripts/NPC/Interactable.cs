@@ -8,7 +8,7 @@ public class Interactable : QuestTrigger
     //only 1 dialog option can be displayed at one time, the lower the rank the higher its priority
     public int rank = 0;
 	public bool getPlayerAttention = true;
-	public float getPlayerAttentionRadius = 30.0f;
+	public float getPlayerAttentionRadius = 15.0f;
 
     // start as soon as the interactable is activated 
     public bool startImmediately = false;
