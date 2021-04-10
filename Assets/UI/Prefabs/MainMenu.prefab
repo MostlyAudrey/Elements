@@ -1528,7 +1528,7 @@ MonoBehaviour:
   startGameBtn: {fileID: 2245372804756557528}
   creditsBtn: {fileID: 2245372804459730462}
   exitGameBtn: {fileID: 2245372804377654856}
-  startLevelIndex: 0
+  startLevelIndex: 1
   creditsWidget: {fileID: 2245372803810940868}
 --- !u!1 &2245372805153218325
 GameObject:

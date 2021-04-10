@@ -4,7 +4,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
-public static class SaveSystem
+public static class SaveUtility
 {
     private static string saveFilePath = "/player_data.elements";
     
