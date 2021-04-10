@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
 
 public class NPC : MonoBehaviour
 {
@@ -29,6 +30,7 @@ public class NPC : MonoBehaviour
 
     public bool is_sitting = false;
     public bool is_typing = false;
+    private FMOD.Studio.EventInstance sound;
 
     void Awake()
     {
@@ -40,7 +42,12 @@ public class NPC : MonoBehaviour
     void Start()
     {
         Animator anim = GetComponent<Animator>();
-        if ( is_typing ) anim.SetBool("typing", true);
+        if ( is_typing ) {
+            anim.SetBool("typing", true);
+            sound = RuntimeManager.CreateInstance("event:/Character/Typing");
+            sound.set3DAttributes(RuntimeUtils.To3DAttributes(transform.position));
+            sound.start();
+        }
         else if( is_sitting ) anim.SetBool("sitting", true);
     }
 
@@ -123,6 +130,10 @@ public class NPC : MonoBehaviour
                 }
             }
         }
+    }
+
+    void OnDestroy() {
+        sound.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
     }
 
 }
