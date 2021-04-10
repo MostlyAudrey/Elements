@@ -20,6 +20,11 @@ public static class LoadingUtility
         SceneManager.LoadScene((int) world, LoadSceneMode.Single);
     }
 
+    public static AsyncOperation AsyncGoToWorld(World world)
+    {
+        return SceneManager.LoadSceneAsync((int) world, LoadSceneMode.Single);
+    }
+
     public static void AddWorld(World world)
     {
         SceneManager.LoadScene((int) world, LoadSceneMode.Additive);

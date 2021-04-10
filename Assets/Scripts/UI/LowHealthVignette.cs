@@ -54,6 +54,9 @@ public class LowHealthVignette : MonoBehaviour
 
     void OnDestroy()
     {
-        RuntimeUtilities.DestroyVolume(m_Volume, true, true);
+        if (m_Volume != null)
+        {
+            RuntimeUtilities.DestroyVolume(m_Volume, true, true);
+        }
     }
 }

@@ -160,9 +160,10 @@ public class PauseMenu2 : MonoBehaviour
 
     public void LoadLastSave()
     {
+        SetPauseMenuActivation(false, false);
         //Reload current scene
         loadingFromSave = true;
-        LoadingUtility.ReloadCurrentWorld(); //Changes scene at end of frame
+        SceneLoader.Get().ReloadCurrentWorld();
     }
 
     private void _LoadLastSave()
@@ -189,7 +190,8 @@ public class PauseMenu2 : MonoBehaviour
 
     public void ToMainMenu()
     {
-        LoadingUtility.GoToWorld(World.MAIN_MENU);
+        SetPauseMenuActivation(false, false);
+        SceneLoader.Get().GoToWorld(World.MAIN_MENU);
     }
 
     public void SetMasterVolume(float value) {
