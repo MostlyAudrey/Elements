@@ -27,11 +27,21 @@ public class NPC : MonoBehaviour
     // Which quests are currently active, and which are not.
     private bool[] activeInteractables;
 
+    public bool is_sitting = false;
+    public bool is_typing = false;
+
     void Awake()
     {
         foreach ( Interactable option in interactables ) option.enabled = false;
         activeInteractables = new bool[startQuestPhase.Length];
         EventManager.instance.onQuestProgressed += _check_interactable_options;
+    }
+
+    void Start()
+    {
+        Animator anim = GetComponent<Animator>();
+        if ( is_typing ) anim.SetBool("typing", true);
+        else if( is_sitting ) anim.SetBool("sitting", true);
     }
 
     void Update()
