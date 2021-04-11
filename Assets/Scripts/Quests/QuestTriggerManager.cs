@@ -91,7 +91,7 @@ public class QuestTriggerManager : MonoBehaviour
                 triggers[i].enableTrigger();
                 triggers[i].enabled = true;
             }
-            else
+            else if (quests[i] == quest)
             {
                 triggers[i].disableTrigger();
                 triggers[i].enabled = false;
