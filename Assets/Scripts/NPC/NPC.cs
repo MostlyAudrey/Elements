@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using FMODUnity;
 
 public class NPC : MonoBehaviour
@@ -41,6 +42,8 @@ public class NPC : MonoBehaviour
 
     void Start()
     {
+        if ( interactables.Count != quests.Count || interactables.Count != startQuestPhase.Length || interactables.Count != endQuestPhase.Length )
+             throw new Exception("interactables, quests, startQuestPhase, and endQuestPhase should all be the same length");
         Animator anim = GetComponent<Animator>();
         if ( is_typing ) {
             anim.SetBool("typing", true);
@@ -135,5 +138,25 @@ public class NPC : MonoBehaviour
     void OnDestroy() {
         sound.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
     }
+
+    void OnAnimatorIK()
+	{
+        GameObject target = GameObject.FindGameObjectWithTag("Player");
+        Animator anim = GetComponent<Animator>();
+		if (anim) {
+			AnimatorStateInfo astate = anim.GetCurrentAnimatorStateInfo (0);
+
+			if ( astate.IsName ("waving") || astate.IsName ("talking_happy") || astate.IsName ("Sitting and Talking") ) {
+				float lookWeight = anim.GetFloat ("lookWeight");
+                
+				if (target) {
+					anim.SetLookAtWeight (lookWeight);
+					anim.SetLookAtPosition (target.transform.position + Vector3.up * 0.5f);
+				}
+			} else {
+				anim.SetLookAtWeight (0);
+			}
+		}
+	}
 
 }

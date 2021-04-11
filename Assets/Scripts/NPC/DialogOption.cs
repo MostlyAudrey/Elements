@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
@@ -27,6 +28,9 @@ public class DialogOption : Interactable
 	{
         // audioPlayer = GetComponent<AudioSource>();
         
+        if (messageText.Length != audioIndices.Length || messageText.Length != audioLengths.Length ) throw new Exception("messageText, audioIndicies, and audioLengths should all be the same size");
+
+
         try {
             eventInstance = RuntimeManager.CreateInstance(eventPath);
         } catch (EventNotFoundException) {
