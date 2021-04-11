@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Runtime.Versioning;
 using System.ComponentModel.Design;
+using FMODUnity;
 
 [RequireComponent(typeof(Animator), typeof(Rigidbody), typeof(Collider))]
 
@@ -19,6 +20,8 @@ public class BackgroundCharacterController : MonoBehaviour
     private NavMeshAgent navMeshAgent;
     private VelocityReporter velocityReporter;
     private Vector3 prevVelocity;
+
+    private FMOD.Studio.EventInstance sound;
 
     public enum Action
     {
@@ -78,7 +81,10 @@ public class BackgroundCharacterController : MonoBehaviour
                 anim.SetBool("sitting", true);
                 break;
             case Action.Typing:
-            	  anim.SetBool("typing", true);
+                anim.SetBool("typing", true);
+                sound = RuntimeManager.CreateInstance("event:/Character/Typing");
+                sound.set3DAttributes(RuntimeUtils.To3DAttributes(transform.position));
+                sound.start();
                 break;
             case Action.Watering:
                 anim.SetBool("watering", true);
@@ -135,5 +141,9 @@ public class BackgroundCharacterController : MonoBehaviour
             //anim.SetFloat("vely", navMeshAgent.velocity.magnitude / navMeshAgent.speed);
             //anim.SetFloat("velx", (prevVelocity.x - navMeshAgent.velocity.x) / navMeshAgent.speed);
         }
+    }
+
+    void OnDestroy() {
+        sound.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
     }
 }
