@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
@@ -27,6 +28,9 @@ public class DialogOption : Interactable
 	{
         // audioPlayer = GetComponent<AudioSource>();
         
+        if (messageText.Length != audioIndices.Length || messageText.Length != audioLengths.Length ) throw new Exception("messageText, audioIndicies, and audioLengths should all be the same size");
+
+
         try {
             eventInstance = RuntimeManager.CreateInstance(eventPath);
         } catch (EventNotFoundException) {
@@ -92,7 +96,7 @@ public class DialogOption : Interactable
         float time_per_char = 0f;
         foreach ( string message in messageText ) {
             int char_count = message.Length - (message.Split(' ').Length - 1);
-            time_per_char = (audioLengths[index])/ char_count;
+            time_per_char = (audioLengths[index] - textBreakTime)/ char_count ;
             EventManager.instance.DisplayText(message, time_per_char, textBreakTime, darkmode);
             index++;
         }

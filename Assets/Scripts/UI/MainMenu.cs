@@ -16,11 +16,17 @@ public class MainMenu : MonoBehaviour
         startGameBtn.onClick.AddListener(StartGame);
         creditsBtn.onClick.AddListener(OpenCredits);
         exitGameBtn.onClick.AddListener(ExitGame);
+
+        // Enable mouse
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public void StartGame()
     {
-        LoadingUtility.GoToWorld(World.GAME_WORLD);
+        // Hide main menu to avoid interference with loading screen
+        gameObject.SetActive(false);
+        SceneLoader.Get().GoToWorld(World.GAME_WORLD);
     }
 
     public void OpenCredits()
