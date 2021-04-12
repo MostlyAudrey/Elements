@@ -23,4 +23,8 @@ public class BGMusic : MonoBehaviour
         music = RuntimeManager.CreateInstance(eventName);
         music.start();
     }
+
+    public void OnDestroy() {
+        music.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+    }
 }

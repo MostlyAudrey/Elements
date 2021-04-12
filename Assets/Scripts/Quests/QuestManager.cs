@@ -85,6 +85,17 @@ public class QuestManager : MonoBehaviour
     private void _instantiate_quests()
     {
         // All quests have to be added to QuestName and then added here
+
+        // Add a none quest so that random background characters can advance none 
+        QuestManager.quests.Add( 
+            QuestName.None, 
+            new Quest( 
+                QuestName.None,
+                new List<QuestName>{},
+                new List<( string hint, string image )> {}
+            )
+        );
+
         QuestManager.quests.Add( 
             QuestName.PerformDiagnostics, 
             new Quest( 
