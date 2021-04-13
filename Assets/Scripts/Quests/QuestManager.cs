@@ -301,28 +301,4 @@ public class QuestManager : MonoBehaviour
     
     
     }
-
-    public static void LoadQuestPhases(PlayerData data)
-    {
-        int i = 0;
-        foreach (KeyValuePair<QuestName, Quest> entry in quests)
-        {
-            QuestName questName = entry.Key;
-            Quest quest = entry.Value;
-
-            //May be called before Start function, so progress quests to 0 if necessary
-            if (quest.currentPhase == 0)
-            {
-                EventManager.instance.QuestProgressed(quest.name, 0);
-            }
-
-            //Activate all QuestPhaseListeners (Iterate through each quest phase)
-            for (int questPhase = quest.currentPhase; questPhase < data.GetQuestPhase(i); ++questPhase)
-            {
-                ProgressQuest(questName);
-            }
-
-            ++i;
-        }
-    }
 }

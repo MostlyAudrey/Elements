@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 /**
  * Singleton class for handling the process of going from one scene
  * to another. Uses a loading screen and asynchronous loading to disguise stuttering.
+ * Persistent across levels.
  *
  * By Aneet Nadella
  */
@@ -18,6 +19,7 @@ public class SceneLoader : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -37,7 +39,10 @@ public class SceneLoader : MonoBehaviour
     public GameObject loadingScreenPrefab;
     private LoadingScreen loadingScreen = null;
 
+    private AsyncOperation loadOperation = null;
     private World worldToLoad;
+    // Absolute path of save file
+    private string saveFile = null;
 
     /**
      * Call to unload current world and load desired world.
@@ -65,8 +70,14 @@ public class SceneLoader : MonoBehaviour
      */
     private void StartAsyncLoading()
     {
-        AsyncOperation loadOperation = LoadingUtility.AsyncGoToWorld(worldToLoad);
+        loadOperation = LoadingUtility.AsyncGoToWorld(worldToLoad);
         loadingScreen.Init(loadOperation);
+        loadOperation.completed += OnAsyncLoadComplete;
+
+        // Clear all UI to avoid interference with loading screen
+        UICanvas.Get().ClearScreen();
+        // Make sure time scale is normal
+        Time.timeScale = 1f;
     }
 
     /**
@@ -75,6 +86,28 @@ public class SceneLoader : MonoBehaviour
     public void ReloadCurrentWorld()
     {
         GoToWorld((World) SceneManager.GetActiveScene().buildIndex);
-        Debug.Log((World) SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void OnAsyncLoadComplete(AsyncOperation loadOp)
+    {
+        // Let go of refs
+        loadingScreen = null;
+        loadOperation = null;
+
+        // Load save file if necessary
+        if (saveFile != null)
+        {
+            SaveUtility.LoadPlayerData(saveFile, true).LoadGame();
+            saveFile = null;
+        }
+    }
+
+    /**
+     * Call to load game world with a specified save file.
+     */
+    public void LoadGameWorldFromSave(string saveFile)
+    {
+        this.saveFile = saveFile;
+        GoToWorld(World.GAME_WORLD);
     }
 }

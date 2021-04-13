@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class TabGroup : MonoBehaviour
 {
+    // First tab to select (set to -1 to not select anything at first)
+    public int selectFirst;
+
     public Color tabIdle;
     public Color tabHover;
     public Color tabActive;
@@ -19,7 +22,10 @@ public class TabGroup : MonoBehaviour
         if (tabButtons != null)
         {
             ResetTabs();
-            SelectFirstTab();
+            if (selectFirst >= 0)
+            {
+                SelectTab(selectFirst);
+            }
         }
     }
 
@@ -33,8 +39,12 @@ public class TabGroup : MonoBehaviour
         tabButtons.Add(button);
         //Bug fix: if menuRoot is inactive in editor, first tab is not selected when opened
         //because start function for TabButton is called after OnEnable(). This ensures
-        //that SelectFirstTab() method always runs after TabButtons subscribe.
-        SelectFirstTab();
+        //that SelectTab() method always runs after TabButtons subscribe.
+        ResetTabs();
+        if (selectFirst >= 0)
+        {
+            SelectTab(selectFirst);
+        }
     }
 
     // Call when tab button is hovered over
@@ -86,10 +96,10 @@ public class TabGroup : MonoBehaviour
         }
     }
 
-    private void SelectFirstTab()
+    private void SelectTab(int index)
     {
         int i = 0;
-        while (i < tabButtons.Count && tabButtons[i].transform.GetSiblingIndex() != 0)
+        while (i < tabButtons.Count && tabButtons[i].transform.GetSiblingIndex() != index)
         {
             ++i;
         }
@@ -97,7 +107,7 @@ public class TabGroup : MonoBehaviour
         {
             OnTabSelected(tabButtons[i]);
         }
-        else //Select random tab if no tab has sibling index == 0
+        else //Select random tab if no tab has sibling index == index
         {
             OnTabSelected(tabButtons[0]);
         }
