@@ -148,7 +148,7 @@ public class PauseMenu2 : MonoBehaviour
 
     public void LoadLastSave()
     {
-        SetPauseMenuActivation(false, false);
+        //SetPauseMenuActivation(false, false);
         SceneLoader.Get().LoadGameWorldFromSave(
             SaveUtility.GetLastSaveFile()
         );
@@ -156,7 +156,7 @@ public class PauseMenu2 : MonoBehaviour
 
     public void ToMainMenu()
     {
-        SetPauseMenuActivation(false, false);
+        //SetPauseMenuActivation(false, false);
         SceneLoader.Get().GoToWorld(World.MAIN_MENU);
     }
 

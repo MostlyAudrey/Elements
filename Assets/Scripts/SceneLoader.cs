@@ -73,6 +73,11 @@ public class SceneLoader : MonoBehaviour
         loadOperation = LoadingUtility.AsyncGoToWorld(worldToLoad);
         loadingScreen.Init(loadOperation);
         loadOperation.completed += OnAsyncLoadComplete;
+
+        // Clear all UI to avoid interference with loading screen
+        UICanvas.Get().ClearScreen();
+        // Make sure time scale is normal
+        Time.timeScale = 1f;
     }
 
     /**
