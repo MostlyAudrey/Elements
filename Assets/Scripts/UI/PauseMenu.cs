@@ -86,34 +86,34 @@ public class PauseMenu : MonoBehaviour
 
     void SaveGame()
     {
-        RootMotionControlScript playerRootMotionControl = FindObjectOfType<RootMotionControlScript>();
-        if (playerRootMotionControl != null)
-        {
-            SaveUtility.SavePlayerData(playerRootMotionControl);
-        }
-        else
-        {
-            Debug.LogError("PauseMenu could not find RootMotionControlScript object");
-        }
+        // RootMotionControlScript playerRootMotionControl = FindObjectOfType<RootMotionControlScript>();
+        // if (playerRootMotionControl != null)
+        // {
+        //     SaveUtility.SavePlayerData(playerRootMotionControl);
+        // }
+        // else
+        // {
+        //     Debug.LogError("PauseMenu could not find RootMotionControlScript object");
+        // }
     }
 
     void LoadFromSave()
     {
-        PlayerData data = SaveUtility.LoadPlayerData();
+        // PlayerData data = SaveUtility.LoadPlayerData();
 
-        RootMotionControlScript playerRootMotionControl = FindObjectOfType<RootMotionControlScript>();
-        if (playerRootMotionControl != null)
-        {
-            playerRootMotionControl.LoadPlayerData(data);
-        }
-        else
-        {
-            Debug.LogError("PauseMenu could not find RootMotionControlScript object");
-        }
+        // RootMotionControlScript playerRootMotionControl = FindObjectOfType<RootMotionControlScript>();
+        // if (playerRootMotionControl != null)
+        // {
+        //     playerRootMotionControl.LoadPlayerData(data);
+        // }
+        // else
+        // {
+        //     Debug.LogError("PauseMenu could not find RootMotionControlScript object");
+        // }
 
-        QuestManager.LoadQuestPhases(data);
+        // QuestManager.LoadQuestPhases(data);
 
-        ResumeGame();
+        // ResumeGame();
     }
 
     void SaveAndExit()

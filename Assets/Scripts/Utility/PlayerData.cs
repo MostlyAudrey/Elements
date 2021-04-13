@@ -1,59 +1,53 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class PlayerData
 {
-    public float[] location;
-    public float[] rotation;
-    public float[] scale;
-    public bool sword = false;
-    public bool shield = false;
+    private long dateTime;
+    private float[] location;
+    private float[] rotation;
+    private float[] scale;
+    private bool sword = false;
+    private bool shield = false;
+    private int[] questPhases;
 
-    public int year;
-    public int month;
-    public int date;
-    public int hour;
-    public int minute;
-
-    public int[] questPhases;
-
-    public PlayerData(RootMotionControlScript playerRootMotionControl)
+    public PlayerData()
     {
+        dateTime = System.DateTime.Now.ToBinary();
+
+        RootMotionControlScript rootMotionControl =
+            GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<RootMotionControlScript>(true);
+        if (rootMotionControl == null)
+        {
+            Debug.LogError("PlayerData could not find RootMotionControlScript object");
+            return;
+        }
+
         // Save each location coordinate as a float element
-        Vector3 charPosition = playerRootMotionControl.transform.position;
+        Vector3 charPosition = rootMotionControl.transform.position;
         location = new float[3];
         location[0] = charPosition.x;
         location[1] = charPosition.y;
         location[2] = charPosition.z;
 
-        Quaternion charRotation = playerRootMotionControl.transform.rotation;
+        Quaternion charRotation = rootMotionControl.transform.rotation;
         rotation = new float[4];
         rotation[0] = charRotation.x;
         rotation[1] = charRotation.y;
         rotation[2] = charRotation.z;
         rotation[3] = charRotation.w;
 
-        Vector3 charScale = playerRootMotionControl.transform.localScale;
+        Vector3 charScale = rootMotionControl.transform.localScale;
         scale = new float[3];
         scale[0] = charScale.x;
         scale[1] = charScale.y;
         scale[2] = charScale.z;
 
-        sword =  playerRootMotionControl.hasSword;
-        shield = playerRootMotionControl.hasShield;
-        Debug.Log("Sword" + sword);
-        Debug.Log("Shield" + shield);
-
-        var dt = System.DateTime.Now;
-        year = dt.Year;
-        month = dt.Month;
-        date = dt.Day;
-        hour = dt.Hour;
-        minute = dt.Minute;
-
-
+        sword =  rootMotionControl.hasSword;
+        shield = rootMotionControl.hasShield;
 
         // Save each current quest phase as an element in questPhases
         Dictionary<QuestName, Quest> quests = QuestManager.GetQuests();
@@ -68,42 +62,50 @@ public class PlayerData
         }
     }
 
-    public Vector3 GetPlayerLocation()
+    /**
+     * Call after loading scene to load game with saved player data.
+     */
+    public void LoadGame()
     {
-        if (location.Length >= 3)
+        RootMotionControlScript rootMotionControl =
+            GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<RootMotionControlScript>(true);
+        if (rootMotionControl == null)
         {
-            return new Vector3(location[0], location[1], location[2]);
+            Debug.LogError("PlayerData could not find RootMotionControlScript object");
+            return;
         }
-        else
-        {
-            Debug.LogError("Tried to load location data that was not saved");
-            return Vector3.zero;
-        }
-    }
 
-    public Quaternion GetPlayerRotation()
-    {
-        if (rotation.Length >= 4)
-        {
-            return new Quaternion(rotation[0], rotation[1], rotation[2], rotation[3]);
-        }
-        else
-        {
-            Debug.LogError("Tried to load rotation data that was not saved");
-            return Quaternion.identity;
-        }
-    }
+        // Deserialize location, rotation, and scale
+        Vector3 newLocation = new Vector3(location[0], location[1], location[2]);
+        Quaternion newRotation = new Quaternion(rotation[0], rotation[1], rotation[2], rotation[3]);
+        Vector3 newScale = new Vector3(scale[0], scale[1], scale[2]);
 
-    public Vector3 GetPlayerScale()
-    {
-        if (scale.Length >= 3)
+        // Update root motion controller
+        rootMotionControl.transform.SetPositionAndRotation(newLocation, newRotation);
+        rootMotionControl.transform.localScale = newScale;
+        rootMotionControl.hasSword = sword;
+        rootMotionControl.hasShield = shield;
+
+        // Update quest manager
+        int i = 0;
+        foreach (KeyValuePair<QuestName, Quest> entry in QuestManager.GetQuests())
         {
-            return new Vector3(scale[0], scale[1], scale[2]);
-        }
-        else
-        {
-            Debug.LogError("Tried to load scale data that was not saved");
-            return Vector3.zero;
+            QuestName questName = entry.Key;
+            Quest quest = entry.Value;
+
+            //May be called before Start function, so progress quests to 0 if necessary
+            if (quest.currentPhase == 0)
+            {
+                EventManager.instance.QuestProgressed(quest.name, 0);
+            }
+
+            //Activate all QuestPhaseListeners (Iterate through each quest phase)
+            for (int questPhase = quest.currentPhase; questPhase < GetQuestPhase(i); ++questPhase)
+            {
+                QuestManager.ProgressQuest(questName);
+            }
+
+            ++i;
         }
     }
 
@@ -118,5 +120,10 @@ public class PlayerData
             Debug.LogError("Tried to load quest phase data that was not saved at index: " + index);
             return -1;
         }
+    }
+
+    public System.DateTime GetDateTime()
+    {
+        return System.DateTime.FromBinary(dateTime);
     }
 }

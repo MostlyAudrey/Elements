@@ -147,15 +147,7 @@ public class PauseMenu2 : MonoBehaviour
 
     public void Save()
     {
-        RootMotionControlScript playerRootMotionControl = FindObjectOfType<RootMotionControlScript>();
-        if (playerRootMotionControl != null)
-        {
-            SaveUtility.SavePlayerData(playerRootMotionControl);
-        }
-        else
-        {
-            Debug.LogError("PauseMenu could not find RootMotionControlScript object");
-        }
+        SaveUtility.SavePlayerData();
     }
 
     public void LoadLastSave()
@@ -171,20 +163,7 @@ public class PauseMenu2 : MonoBehaviour
         if (loadingFromSave)
         {
             loadingFromSave = false;
-
-            PlayerData data = SaveUtility.LoadPlayerData();
-
-            RootMotionControlScript playerRootMotionControl = FindObjectOfType<RootMotionControlScript>();
-            if (playerRootMotionControl != null)
-            {
-                playerRootMotionControl.LoadPlayerData(data);
-            }
-            else
-            {
-                Debug.LogError("PauseMenu could not find RootMotionControlScript object");
-            }
-
-            QuestManager.LoadQuestPhases(data);
+            SaveUtility.LoadPlayerData();
         }
     }
 

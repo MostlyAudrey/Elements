@@ -8,19 +8,19 @@ public static class SaveUtility
 {
     private static string saveFilePath = "/player_data.elements";
     
-    public static void SavePlayerData(RootMotionControlScript playerRootMotionControl)
+    public static void SavePlayerData()
     {
         BinaryFormatter formatter = new BinaryFormatter();
         string absolutePath = Application.persistentDataPath + saveFilePath;
         FileStream stream = new FileStream(absolutePath, FileMode.Create);
 
-        PlayerData data = new PlayerData(playerRootMotionControl);
+        PlayerData data = new PlayerData();
 
         formatter.Serialize(stream, data);
         stream.Close();
     }
 
-    public static PlayerData LoadPlayerData()
+    public static void LoadPlayerData()
     {
         string absolutePath = Application.persistentDataPath + saveFilePath;
         if (File.Exists(absolutePath))
@@ -31,14 +31,11 @@ public static class SaveUtility
             PlayerData data = formatter.Deserialize(stream) as PlayerData;
             stream.Close();
 
-            return data;
+            data.LoadGame();
         }
         else
         {
             Debug.LogError("Save file not found at " + absolutePath);
-            return null;
         }
     }
-
-    
 }

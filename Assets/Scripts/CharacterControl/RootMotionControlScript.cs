@@ -92,8 +92,9 @@ public class RootMotionControlScript : MonoBehaviour
 
     void Start()
     {
-        hasSword = (QuestManager.GetQuestPhase( QuestName.PerformDiagnostics ) == 3);
-        hasShield = hasSword; //(QuestManager.GetQuestPhase( QuestName.PerformDiagnostics ) == 3);
+        // For testing
+        // hasSword = (QuestManager.GetQuestPhase( QuestName.PerformDiagnostics ) == 3);
+        // hasShield = hasSword; //(QuestManager.GetQuestPhase( QuestName.PerformDiagnostics ) == 3);
         sheathSword();
 
         buttonAudio = RuntimeManager.CreateInstance("event:/Interactables/Button");
@@ -376,14 +377,4 @@ public class RootMotionControlScript : MonoBehaviour
             buttonObject.GetComponent<MovableItem>().pushButton();
         buttonAudio.start();
     }
-
-    public void LoadPlayerData(PlayerData data)
-    {
-        transform.SetPositionAndRotation(data.GetPlayerLocation(), data.GetPlayerRotation());
-        transform.localScale = data.GetPlayerScale();
-        hasSword = data.sword;
-        hasShield = data.shield;
-
-    }
-
 }
