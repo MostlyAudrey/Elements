@@ -104,7 +104,7 @@ public class PauseMenu : MonoBehaviour
         RootMotionControlScript playerRootMotionControl = FindObjectOfType<RootMotionControlScript>();
         if (playerRootMotionControl != null)
         {
-            playerRootMotionControl.LoadLocation(data);
+            playerRootMotionControl.LoadPlayerData(data);
         }
         else
         {

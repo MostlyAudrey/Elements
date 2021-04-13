@@ -377,12 +377,13 @@ public class RootMotionControlScript : MonoBehaviour
         buttonAudio.start();
     }
 
-    public void LoadLocation(PlayerData data)
+    public void LoadPlayerData(PlayerData data)
     {
-        Quaternion currRot = transform.rotation;
-        Vector3 newLoc = data.GetPlayerLocation();
-        transform.SetPositionAndRotation(newLoc, currRot);
-        Debug.Log("Loaded player location at " + newLoc);
+        transform.SetPositionAndRotation(data.GetPlayerLocation(), data.GetPlayerRotation());
+        transform.localScale = data.GetPlayerScale();
+        hasSword = data.sword;
+        hasShield = data.shield;
+
     }
 
 }
