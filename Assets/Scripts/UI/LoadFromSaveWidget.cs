@@ -8,7 +8,7 @@ public class LoadFromSaveWidget : MonoBehaviour
     public GameObject saveListItemPrefab;
 
     // Populate list of save file items
-    void Start()
+    void Awake()
     {
         List<string> saveFiles = SaveUtility.GetAllSaveFiles();
         if (saveFiles == null)
@@ -39,5 +39,16 @@ public class LoadFromSaveWidget : MonoBehaviour
         string saveFilePath = SaveUtility.GetSaveFilePath(dt, true);
         Debug.Log("OnSaveFileSelected: " + saveFilePath);
         SceneLoader.Get().LoadGameWorldFromSave(saveFilePath);
+    }
+
+    // Automatically go to game world if no save file items exist
+    void OnEnable()
+    {
+        if (saveListRoot.childCount == 0)
+        {
+            SceneLoader.Get().GoToWorld(World.GAME_WORLD);
+            // Close this widget
+            gameObject.SetActive(false);
+        }
     }
 }
