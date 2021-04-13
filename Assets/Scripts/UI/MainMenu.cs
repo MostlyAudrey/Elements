@@ -13,8 +13,8 @@ public class MainMenu : MonoBehaviour
 
     void Start()
     {
-        startGameBtn.onClick.AddListener(StartGame);
-        creditsBtn.onClick.AddListener(OpenCredits);
+        //startGameBtn.onClick.AddListener(StartGame);
+        //creditsBtn.onClick.AddListener(OpenCredits);
         exitGameBtn.onClick.AddListener(ExitGame);
 
         // Enable mouse

@@ -22,14 +22,10 @@ public class PauseMenu2 : MonoBehaviour
     private FMOD.Studio.Bus dialogueBus;
     private FMOD.Studio.Bus sfxBus;
 
-    static private bool loadingFromSave = false;
-
     private Vector3 posBeforeAnim;
 
     void Start()
     {
-        _LoadLastSave();
-
         SetPauseMenuActivation(false, false);
 
         resumeButton.onClick.AddListener(Resume);
@@ -153,18 +149,9 @@ public class PauseMenu2 : MonoBehaviour
     public void LoadLastSave()
     {
         SetPauseMenuActivation(false, false);
-        //Reload current scene
-        loadingFromSave = true;
-        SceneLoader.Get().ReloadCurrentWorld();
-    }
-
-    private void _LoadLastSave()
-    {
-        if (loadingFromSave)
-        {
-            loadingFromSave = false;
-            SaveUtility.LoadPlayerData();
-        }
+        SceneLoader.Get().LoadGameWorldFromSave(
+            SaveUtility.GetLastSaveFile()
+        );
     }
 
     public void ToMainMenu()
