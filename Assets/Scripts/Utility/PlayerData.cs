@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/**
+ * Class representing a save file. Any primitive instance variable
+ * in this class will be serialized.
+ *
+ * Made by Aneet Nadella and Akash C.
+ */
 [System.Serializable]
 public class PlayerData
 {

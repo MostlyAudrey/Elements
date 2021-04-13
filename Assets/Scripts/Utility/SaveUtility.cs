@@ -4,6 +4,10 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
+/**
+ * Utility class for creating save files and accessing them.
+ * Made by Aneet Nadella and Akash C.
+ */
 public static class SaveUtility
 {
     public static string saveFilePrefix = "/player_data";
