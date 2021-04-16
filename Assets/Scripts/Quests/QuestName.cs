@@ -6,7 +6,7 @@ public enum QuestName
     ForGlory,
     WhateverFloatsYourBoat,
     AnIdiotsLuggage,
-    CarlTheJarl,
+    KarlTheJarl,
     GoldenHandcuffs,
     ButThisIsMyBirthCertificate,
     InternLunchHour,

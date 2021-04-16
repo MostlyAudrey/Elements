@@ -117,8 +117,8 @@ public class QuestManager : MonoBehaviour
                 new List<QuestName>{ QuestName.PerformDiagnostics },
                 new List<( string hint, string image )> {
                     ( "Automatic", null ),
-                    ( "Talk to the Bank Manager at Morgan's Panley", "Images/test" ),
-                    ( "Talk to the Shogun of Bakufu", "Images/test" ),
+                    ( "Talk to the Bank Manager at Morgan's Panley", "QuestImages/Manager" ),
+                    ( "Talk to the Shogun of Bakufu", "QuestImages/Shogun" ),
                     ( "Talk to the Chief of Fimbultoft", "QuestImages/VikingChief" ),
                 })
         );
@@ -129,14 +129,14 @@ public class QuestManager : MonoBehaviour
                 QuestName.ForGlory, 
                 new List<QuestName>{ QuestName.PerformDiagnostics },
                 new List<( string hint, string image )> {
-                    ( "Talk to the Shogun of Bakufu", "Images/test" ),
-                    ( "Follow the Shogun", "Images/test" ),
-                    ( "Step into the arena", "Images/test" ),
+                    ( "Talk to the Shogun of Bakufu", "QuestImages/Shogun" ),
+                    ( "Follow the Shogun", "QuestImages/Shogun2" ),
+                    ( "Step into the arena", "QuestImages/Arena" ),
                     ( "Prepare to fight", "Images/test" ),
                     ( "Defeat Helga", "Images/test" ),
                     ( "Defeat Musashi The Machine","Images/test" ),
                     ( "Defeat Stacy From Accounting", "Images/test" ),
-                    ( "Talk to the shogun (automatic)", "Images/test" )
+                    ( "Talk to the shogun (automatic)", "QuestImages/Shogun" )
                 })
         );
 
@@ -164,140 +164,140 @@ public class QuestManager : MonoBehaviour
                 QuestName.AnIdiotsLuggage, 
                 new List<QuestName>{ QuestName.PerformDiagnostics },
                 new List<( string hint, string image )> {
-                    ( "Talk to the Bank Manager at Morgan's Panley", "Images/test" ),
-                    ( "Speak with Amanda the Teller", "Images/test" ),
-                    ( "Speak with Damien in Security", "Images/test" ),
-                    ( "Speak with Olive, the manager's assistant", "Images/test" ),
-                    ( "Guess the Manager's Password", "Images/test" ),
-                    ( "Speak to the manager", "Images/test" )
+                    ( "Talk to the Bank Manager at Morgan's Panley", "QuestImages/Manager" ),
+                    ( "Speak with Amanda the Teller", "QuestImages/Amanda" ),
+                    ( "Speak with Damien in Security", "QuestImages/Damien" ),
+                    ( "Speak with Olivia, the manager's assistant", "QuestImages/Olivia" ),
+                    ( "Guess the Manager's Password", "QuestImages/VaultUnlock" ),
+                    ( "Speak to the manager", "QuestImages/Manager" )
                 }) 
         );
 
         QuestManager.quests.Add( 
-            QuestName.CarlTheJarl,
+            QuestName.KarlTheJarl,
             new Quest(
-                QuestName.CarlTheJarl,
-                new List<QuestName>{ QuestName.PerformDiagnostics },
+                QuestName.KarlTheJarl,
+                new List<QuestName>{ QuestName.WhateverFloatsYourBoat, QuestName.AnIdiotsLuggage },
                 new List<( string hint, string image )> {
-                    ( "Talk to the Chief of Fimbultoft", "Images/test" ),
-                    ( "Go to Fimbultoft; Find Carl (maybe ask villager to tell you where he is)", "Images/test" ),
-                    ( "Find Carl's home-made shield in the Fimbulwald (the forest)", "Images/test" ),
-                    ( "Return Carl's Shield to him", "Images/test" ),
-                    ( "Return to the bank manager", "Images/test" )
+                    ( "Talk to the Bank Manager, Eugene Pants", "QuestImages/Manager" ),
+                    ( "Go to Fimbultoft; Find Carl (maybe ask villager to tell you where he is)", "QuestImages/Carl" ),
+                    ( "Find Carl's home-made shield in the Fimbulwald (the forest)", "QuestImages/Shield" ),
+                    ( "Return Carl's Shield to him", "QuestImages/Carl" ),
+                    ( "Return to the bank manager", "QuestImages/Manager" )
                 }) 
         );
 
-        QuestManager.quests.Add( 
-            QuestName.GoldenHandcuffs, 
-            new Quest( 
-                QuestName.GoldenHandcuffs, 
-                new List<QuestName>{ QuestName.AnIdiotsLuggage },
-                new List<( string hint, string image )> {
-                    ( "Talk to the Bank Manager at Morgan's Panley", "Images/test" )
-                }) 
-        );
+        // QuestManager.quests.Add( 
+        //     QuestName.GoldenHandcuffs, 
+        //     new Quest( 
+        //         QuestName.GoldenHandcuffs, 
+        //         new List<QuestName>{ QuestName.AnIdiotsLuggage },
+        //         new List<( string hint, string image )> {
+        //             ( "Talk to the Bank Manager at Morgan's Panley", "Images/test" )
+        //         }) 
+        // );
 
-        QuestManager.quests.Add( 
-            QuestName.ButThisIsMyBirthCertificate, 
-            new Quest( 
-                QuestName.ButThisIsMyBirthCertificate, 
-                new List<QuestName>{ QuestName.ForGlory },
-                new List<( string hint, string image )> {
-                    ( "Talk to the Bank Manager at Morgan's Panley", "Images/test" )
-                }) 
-        );
+        // QuestManager.quests.Add( 
+        //     QuestName.ButThisIsMyBirthCertificate, 
+        //     new Quest( 
+        //         QuestName.ButThisIsMyBirthCertificate, 
+        //         new List<QuestName>{ QuestName.ForGlory },
+        //         new List<( string hint, string image )> {
+        //             ( "Talk to the Bank Manager at Morgan's Panley", "Images/test" )
+        //         }) 
+        // );
         
-        QuestManager.quests.Add( 
-            QuestName.InternLunchHour, 
-            new Quest( 
-                QuestName.InternLunchHour, 
-                new List<QuestName>{ QuestName.AnIdiotsLuggage },
-                new List<( string hint, string image )> {
-                    ( "Talk to the Bank Manager at Morgan's Panley", "Images/test" )
-                }) 
-        );
+        // QuestManager.quests.Add( 
+        //     QuestName.InternLunchHour, 
+        //     new Quest( 
+        //         QuestName.InternLunchHour, 
+        //         new List<QuestName>{ QuestName.AnIdiotsLuggage },
+        //         new List<( string hint, string image )> {
+        //             ( "Talk to the Bank Manager at Morgan's Panley", "Images/test" )
+        //         }) 
+        // );
 
-        QuestManager.quests.Add( 
-            QuestName.CalculatorCatastrophe, 
-            new Quest( 
-                QuestName.CalculatorCatastrophe, 
-                new List<QuestName>{ QuestName.AnIdiotsLuggage, QuestName.ForGlory },
-                new List<( string hint, string image )> {
-                    ( "Talk to the Bank Manager at Morgan's Panley", "Images/test" )
-                }) 
-        );
+        // QuestManager.quests.Add( 
+        //     QuestName.CalculatorCatastrophe, 
+        //     new Quest( 
+        //         QuestName.CalculatorCatastrophe, 
+        //         new List<QuestName>{ QuestName.AnIdiotsLuggage, QuestName.ForGlory },
+        //         new List<( string hint, string image )> {
+        //             ( "Talk to the Bank Manager at Morgan's Panley", "Images/test" )
+        //         }) 
+        // );
 
-        QuestManager.quests.Add( 
-            QuestName.ThisIsPureSnow, 
-            new Quest( 
-                QuestName.ThisIsPureSnow, 
-                new List<QuestName>{ QuestName.AnIdiotsLuggage, QuestName.CarlTheJarl },
-                new List<( string hint, string image )> {
-                    ( "Talk to the Bank Manager at Morgan's Panley", "Images/test" )
-                }) 
-        );
+        // QuestManager.quests.Add( 
+        //     QuestName.ThisIsPureSnow, 
+        //     new Quest( 
+        //         QuestName.ThisIsPureSnow, 
+        //         new List<QuestName>{ QuestName.AnIdiotsLuggage, QuestName.CarlTheJarl },
+        //         new List<( string hint, string image )> {
+        //             ( "Talk to the Bank Manager at Morgan's Panley", "Images/test" )
+        //         }) 
+        // );
 
-        QuestManager.quests.Add( 
-            QuestName.ThingsAreGettingSerious, 
-            new Quest( 
-                QuestName.ThingsAreGettingSerious, 
-                new List<QuestName>{ QuestName.GoldenHandcuffs, QuestName.ButThisIsMyBirthCertificate, QuestName.InternLunchHour, QuestName.CalculatorCatastrophe, QuestName.ThisIsPureSnow },
-                new List<( string hint, string image )> {
-                    ( "Talk to the Bank Manager at Morgan's Panley", "Images/test" )
-                },
-                3 )
-        );
+        // QuestManager.quests.Add( 
+        //     QuestName.ThingsAreGettingSerious, 
+        //     new Quest( 
+        //         QuestName.ThingsAreGettingSerious, 
+        //         new List<QuestName>{ QuestName.GoldenHandcuffs, QuestName.ButThisIsMyBirthCertificate, QuestName.InternLunchHour, QuestName.CalculatorCatastrophe, QuestName.ThisIsPureSnow },
+        //         new List<( string hint, string image )> {
+        //             ( "Talk to the Bank Manager at Morgan's Panley", "Images/test" )
+        //         },
+        //         3 )
+        // );
 
-        QuestManager.quests.Add( 
-            QuestName.TheGreatWolf, 
-            new Quest( 
-                QuestName.TheGreatWolf, 
-                new List<QuestName>{ QuestName.ThingsAreGettingSerious },
-                new List<( string hint, string image )> {
-                    ( "Talk to the Bank Manager at Morgan's Panley", "Images/test" )
-                })
-        );
+        // QuestManager.quests.Add( 
+        //     QuestName.TheGreatWolf, 
+        //     new Quest( 
+        //         QuestName.TheGreatWolf, 
+        //         new List<QuestName>{ QuestName.ThingsAreGettingSerious },
+        //         new List<( string hint, string image )> {
+        //             ( "Talk to the Bank Manager at Morgan's Panley", "Images/test" )
+        //         })
+        // );
         
-        QuestManager.quests.Add( 
-            QuestName.BjornAndMoose, 
-            new Quest( 
-                QuestName.BjornAndMoose, 
-                new List<QuestName>{ QuestName.ThingsAreGettingSerious },
-                new List<( string hint, string image )> {
-                    ( "Talk to the Bank Manager at Morgan's Panley", "Images/test" )
-                })
-        );
+        // QuestManager.quests.Add( 
+        //     QuestName.BjornAndMoose, 
+        //     new Quest( 
+        //         QuestName.BjornAndMoose, 
+        //         new List<QuestName>{ QuestName.ThingsAreGettingSerious },
+        //         new List<( string hint, string image )> {
+        //             ( "Talk to the Bank Manager at Morgan's Panley", "Images/test" )
+        //         })
+        // );
 
-        QuestManager.quests.Add( 
-            QuestName.ForbiddenLovers, 
-            new Quest( 
-                QuestName.ForbiddenLovers, 
-                new List<QuestName>{ QuestName.ThingsAreGettingSerious },
-                new List<( string hint, string image )> {
-                    ( "Talk to the Bank Manager at Morgan's Panley", "Images/test" )
-                })
-        );
+        // QuestManager.quests.Add( 
+        //     QuestName.ForbiddenLovers, 
+        //     new Quest( 
+        //         QuestName.ForbiddenLovers, 
+        //         new List<QuestName>{ QuestName.ThingsAreGettingSerious },
+        //         new List<( string hint, string image )> {
+        //             ( "Talk to the Bank Manager at Morgan's Panley", "Images/test" )
+        //         })
+        // );
 
-        QuestManager.quests.Add( 
-            QuestName.ForTheUnion, 
-            new Quest( 
-                QuestName.ForTheUnion, 
-                new List<QuestName>{ QuestName.ThingsAreGettingSerious },
-                new List<( string hint, string image )> {
-                    ( "Talk to the Bank Manager at Morgan's Panley", "Images/test" )
-                })
-        );
+        // QuestManager.quests.Add( 
+        //     QuestName.ForTheUnion, 
+        //     new Quest( 
+        //         QuestName.ForTheUnion, 
+        //         new List<QuestName>{ QuestName.ThingsAreGettingSerious },
+        //         new List<( string hint, string image )> {
+        //             ( "Talk to the Bank Manager at Morgan's Panley", "Images/test" )
+        //         })
+        // );
 
-        QuestManager.quests.Add( 
-            QuestName.TheEnd, 
-            new Quest( 
-                QuestName.TheEnd, 
-                new List<QuestName>{ QuestName.TheGreatWolf, QuestName.BjornAndMoose, QuestName.ForbiddenLovers, QuestName.ForTheUnion },
-                new List<( string hint, string image )> {
-                    ( "Talk to the Bank Manager at Morgan's Panley", "Images/test" )
-                },
-                3 )
-        );
+        // QuestManager.quests.Add( 
+        //     QuestName.TheEnd, 
+        //     new Quest( 
+        //         QuestName.TheEnd, 
+        //         new List<QuestName>{ QuestName.TheGreatWolf, QuestName.BjornAndMoose, QuestName.ForbiddenLovers, QuestName.ForTheUnion },
+        //         new List<( string hint, string image )> {
+        //             ( "Talk to the Bank Manager at Morgan's Panley", "Images/test" )
+        //         },
+        //         3 )
+        // );
     
     
     }

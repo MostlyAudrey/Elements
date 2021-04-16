@@ -29,7 +29,8 @@ public class NPC : MonoBehaviour
     // Which quests are currently active, and which are not.
     private bool[] activeInteractables;
 
-    public bool is_sitting = false;
+    public bool is_sitting_in_chair = false;
+    public bool is_sitting_on_ground = false;
     public bool is_typing = false;
     private FMOD.Studio.EventInstance sound;
 
@@ -51,7 +52,8 @@ public class NPC : MonoBehaviour
             sound.set3DAttributes(RuntimeUtils.To3DAttributes(transform.position));
             sound.start();
         }
-        else if( is_sitting ) anim.SetBool("sitting", true);
+        else if( is_sitting_in_chair ) anim.SetBool("sitting", true);
+        else if( is_sitting_on_ground ) anim.SetBool("sit on ground", true);
     }
 
     void Update()
@@ -146,7 +148,7 @@ public class NPC : MonoBehaviour
 		if (anim) {
 			AnimatorStateInfo astate = anim.GetCurrentAnimatorStateInfo (0);
 
-			if ( astate.IsName ("waving") || astate.IsName ("talking_happy") || astate.IsName ("Sitting and Talking") ) {
+			if ( astate.IsName ("waving") || anim.GetBool("talking_happy") ) {
 				float lookWeight = anim.GetFloat ("lookWeight");
                 
 				if (target) {

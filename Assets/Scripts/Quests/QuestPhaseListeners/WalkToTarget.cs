@@ -117,6 +117,7 @@ public class WalkToTarget : QuestPhaseListener
     // This function will be the action performed when the quest specified reaches the phase to listen for
     public override void _action()
     {
+        
         action = Action.Walking;
         anim.SetBool("walking", true);
         path.SetActive(true);

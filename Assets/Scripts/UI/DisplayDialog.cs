@@ -70,8 +70,11 @@ public class DisplayDialog : MonoBehaviour
                 if ( currTextTimer >= currString.time_per_char )
                 {
                     if (currString.text[currCharIndex++] == ' ') currCharIndex++;
-                    text.text = currString.text.Substring(0, currCharIndex);
-                    currTextTimer = 0f;
+                    if ( currCharIndex <= currString.text.Length )
+                    {
+                        text.text = currString.text.Substring(0, currCharIndex);
+                        currTextTimer = 0f;
+                    }
                 }
             }
             else 

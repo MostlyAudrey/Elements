@@ -22,6 +22,7 @@ public class ReturnItem : Interactable
             }
             disableTrigger();
             AdvanceQuest();
+            this.enabled = false;
         }
     }
 
