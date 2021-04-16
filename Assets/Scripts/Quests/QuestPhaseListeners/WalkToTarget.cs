@@ -10,6 +10,7 @@ public class WalkToTarget : QuestPhaseListener
 {
     private bool atTarget = false;
     public bool enabled = true;
+    public bool isNPC = false;
 
     public GameObject path;
     public GameObject[] waypoints;
@@ -35,7 +36,10 @@ public class WalkToTarget : QuestPhaseListener
             currWaypoint = (currWaypoint + 1) % waypoints.Length;
             if (currWaypoint == path.transform.childCount-1)
             {
-                anim.SetBool("walking", false);
+                if (!isNPC)
+                {
+                    anim.SetBool("walking", false);
+                }
                 action = Action.Idle;
             }
             else
@@ -62,7 +66,10 @@ public class WalkToTarget : QuestPhaseListener
                 case Action.Idle:
                     break;
                 case Action.Walking:
-                    anim.SetBool("walking", true);
+                    if (!isNPC)
+                    {
+                        anim.SetBool("walking", true);
+                    }
                     if (path)
                     {
                         waypoints = new GameObject[path.transform.childCount];
@@ -73,7 +80,10 @@ public class WalkToTarget : QuestPhaseListener
                     }
                     if (currWaypoint == path.transform.childCount - 1)
                     {
-                        anim.SetBool("walking", false);
+                        if (!isNPC)
+                        {
+                            anim.SetBool("walking", false);
+                        }
                         atTarget = true;
                         action = Action.Idle;
                         break;
@@ -108,8 +118,8 @@ public class WalkToTarget : QuestPhaseListener
                 {
                     setNextWaypoint();
                 }
-                anim.SetFloat("vely", navMeshAgent.velocity.magnitude / navMeshAgent.speed);
-                anim.SetFloat("velx", (prevVelocity.x - navMeshAgent.velocity.x) / navMeshAgent.speed);
+                anim.SetFloat("vely", (float)0.0); //navMeshAgent.velocity.magnitude / navMeshAgent.speed);
+                anim.SetFloat("velx", (float)0.7);//(prevVelocity.x - navMeshAgent.velocity.x) / navMeshAgent.speed);
             }
         }
     }
@@ -118,7 +128,10 @@ public class WalkToTarget : QuestPhaseListener
     public override void _action()
     {
         action = Action.Walking;
-        anim.SetBool("walking", true);
+        if (!isNPC)
+        {
+            anim.SetBool("walking", true);
+        }
         path.SetActive(true);
     }
 
