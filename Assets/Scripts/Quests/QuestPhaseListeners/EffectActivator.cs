@@ -5,6 +5,7 @@ using UnityEngine;
 public class EffectActivator : QuestPhaseListener
 {
     public GameObject effect;
+    public bool emit_only = false;
 
     public void Start()
     {
@@ -15,8 +16,12 @@ public class EffectActivator : QuestPhaseListener
     {
         if (effect)
         {
-            if (!effect.GetComponent<ParticleSystem>().isPlaying) 
+            if (!effect.GetComponent<ParticleSystem>().isPlaying)
+            { 
+                if(emit_only) effect.GetComponent<ParticleSystem>().loop = false;
+                
                 effect.GetComponent<ParticleSystem>().Play();
+            }
             // var emission = effect.GetComponent<ParticleSystem>().emission;
             // emission.enabled = true;
         }

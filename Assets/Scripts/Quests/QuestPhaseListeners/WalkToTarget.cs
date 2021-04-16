@@ -33,17 +33,19 @@ public class WalkToTarget : QuestPhaseListener
     {
         try
         {
-            currWaypoint = (currWaypoint + 1) % waypoints.Length;
             if (currWaypoint == path.transform.childCount-1)
             {
-                if (!isNPC)
-                {
-                    anim.SetBool("walking", false);
+                if (!isNPC) anim.SetBool("walking", false);
+                else {
+                    Debug.Log("Finished");
+                    anim.SetFloat("vely", 0);
+                    anim.SetFloat("velx", 0);
                 }
                 action = Action.Idle;
             }
             else
             {
+                currWaypoint = (currWaypoint + 1) % waypoints.Length;
                 navMeshAgent.SetDestination(waypoints[currWaypoint].transform.position);
             }            
         }
@@ -118,8 +120,13 @@ public class WalkToTarget : QuestPhaseListener
                 {
                     setNextWaypoint();
                 }
-                anim.SetFloat("vely", (float)0.0); //navMeshAgent.velocity.magnitude / navMeshAgent.speed);
-                anim.SetFloat("velx", (float)0.7);//(prevVelocity.x - navMeshAgent.velocity.x) / navMeshAgent.speed);
+                anim.SetFloat("vely", .7f);
+                anim.SetFloat("velx", 0f);
+            }
+            if (action == Action.Idle)
+            {
+                anim.SetFloat("vely", 0f);
+                anim.SetFloat("velx", 0f); 
             }
         }
     }

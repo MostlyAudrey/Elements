@@ -352,6 +352,19 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5958933192058759523, guid: 2eec696e8a6dfeb498e296a0fee6b37a,
+        type: 3}
+      propertyPath: m_Text
+      value: "Game Lead:\r\nAudrey Yarmowich\r\n\r\nWorld Design:\r\nCameron Gonzalez\r\nAkash
+        C\r\nOlena Buriakova \r\n\n3D Modelling:\nCarson\n\r\nGame Play and Scripting:\r\nAneet
+        Nadella\r\nLuka Derado\r\nMitchell Philipp\r\nCameron Gonzalez\r\n\r\nAudio
+        and Music:\r\nZachary Goddard\r\nRiley Voor\r\nVik Bathalalalala\r\n\r\nWriting
+        Team:\r\nNoura El Bayrouti \r\nMadeline King\r\nMitchell Philipp\r\nXander
+        Goebel\r\nBenjamin Lathrop\r\n\r\nVoice Actors:\r\nTom Speers\r\nAneet Nadella\r\nLuka
+        Derado\r\nEleanor Mather (Libby)\r\nBenjamin Lathrop\r\nNicole Harris\r\nNoura
+        El Bayrouti\r\nYoon Lee\r\nCameron Gonzalez\r\nTamjid Hossain\r\nBarry Grant\r\nJroo
+        Boosch\r\nMitchell Philipp\r\nTristan Gaskin"
+      objectReference: {fileID: 0}
     - target: {fileID: 5958933193651054296, guid: 2eec696e8a6dfeb498e296a0fee6b37a,
         type: 3}
       propertyPath: m_Pivot.x

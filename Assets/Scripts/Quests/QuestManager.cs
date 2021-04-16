@@ -134,6 +134,7 @@ public class QuestManager : MonoBehaviour
                     ( "Wait for the Shogun", "QuestImages/Shogun2" ),
                     ( "Step into the arena", "QuestImages/Arena" ),
                     ( "Prepare to fight", "Images/test" ),
+                    ( "Helga Scream", "Images/test" ),
                     ( "Defeat Helga", "Images/test" ),
                     ( "Defeat Musashi The Machine","Images/test" ),
                     ( "Defeat Stacy From Accounting", "Images/test" ),
