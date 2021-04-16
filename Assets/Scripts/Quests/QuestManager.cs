@@ -103,10 +103,10 @@ public class QuestManager : MonoBehaviour
                 new List<QuestName>{},
                 new List<( string hint, string image )> {
                     ( "Automatic", null ),
-                    ( "Turn on the first portal by hitting the button", "Images/test" ),
-                    ( "Go through the newly active portal and collect your weapon", "Images/test" ),
-                    ( "Return through the portal and destroy the box containing your tools", "Images/test" ),
-                    ( "Use your tools to fix the generator" , "Images/test" )
+                    ( "Turn on the first portal by hitting the button", "QuestImages/FirstButton" ),
+                    ( "Go through the newly active portal and collect your weapon", "QuestImages/SwordInStone" ),
+                    ( "Return through the portal and destroy the box containing your tools", "QuestImages/FirstBox" ),
+                    ( "Use your tools to fix the generator" , "QuestImages/BrokenGenerator" )
                 }) 
         );
 
@@ -119,7 +119,7 @@ public class QuestManager : MonoBehaviour
                     ( "Automatic", null ),
                     ( "Talk to the Bank Manager at Morgan's Panley", "Images/test" ),
                     ( "Talk to the Shogun of Bakufu", "Images/test" ),
-                    ( "Talk to the Chief of Fimbultoft", "Images/test" ),
+                    ( "Talk to the Chief of Fimbultoft", "QuestImages/VikingChief" ),
                 })
         );
 
@@ -146,15 +146,15 @@ public class QuestManager : MonoBehaviour
                 QuestName.WhateverFloatsYourBoat, 
                 new List<QuestName>{ QuestName.PerformDiagnostics },
                 new List<( string hint, string image )> {
-                    ( "Talk to Viking Chief", "Images/test" ),
-                    ( "Talk to Sven at the Docks", "Images/test" ),
-                    ( "Talk to Ormen at the Lumberyard", "Images/test" ),
-                    ( "Take a Stack of Planks back to Sven","Images/test" ),
-                    ( "Listen to Sven", "Images/test" ),
-                    ( "Find Sigrid in her home", "Images/test" ),
-                    ( "Take the sail back to Sven", "Images/test" ),
-                    ( "Listen to Sven", "Images/test" ),
-                    ( "Talk to the Viking Chief", "Images/test" )
+                    ( "Talk to Viking Chief", "QuestImages/VikingChief" ),
+                    ( "Talk to Sven at the Docks", "QuestImages/Sven" ),
+                    ( "Talk to Ormen at the Lumberyard", "QuestImages/Ormen" ),
+                    ( "Take a Stack of Planks back to Sven","QuestImages/WoodPlanks" ),
+                    ( "Listen to Sven", "QuestImages/Sven" ),
+                    ( "Find Sigrid in her home", "QuestImages/Sigrid" ),
+                    ( "Take the sail back to Sven", "QuestImages/Sigrid" ),
+                    ( "Listen to Sven", "QuestImages/Sven" ),
+                    ( "Talk to the Viking Chief", "QuestImages/VikingChief" )
                 })
         );
 
