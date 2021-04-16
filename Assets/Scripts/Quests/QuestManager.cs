@@ -131,7 +131,7 @@ public class QuestManager : MonoBehaviour
                 new List<( string hint, string image )> {
                     ( "Talk to the Shogun of Bakufu", "QuestImages/Shogun" ),
                     ( "Follow the Shogun", "QuestImages/Shogun2" ),
-                    ( "Wait for the Shogun", "QuestImages/Shogun2" )
+                    ( "Wait for the Shogun", "QuestImages/Shogun2" ),
                     ( "Step into the arena", "QuestImages/Arena" ),
                     ( "Prepare to fight", "Images/test" ),
                     ( "Defeat Helga", "Images/test" ),
