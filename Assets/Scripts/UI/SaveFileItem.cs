@@ -8,11 +8,15 @@ public class SaveFileItem : MonoBehaviour, IPointerClickHandler
 {
     public Text date;
     public Text time;
+    public System.DateTime dateTime;
 
-    private LoadFromSaveWidget loadWidget;
-    private System.DateTime dateTime;
+    private LoadFromSaveWidget loadWidget = null;
 
-    // Call after instantiation
+    /**
+     * Call after instantiation.
+     * @param dt Date and time of corresponding save file.
+     * @param loadWidget Owning widget.
+     */
     public void Init(System.DateTime dt, LoadFromSaveWidget loadWidget)
     {
         this.dateTime = dt;
@@ -24,6 +28,6 @@ public class SaveFileItem : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        loadWidget.OnSaveFileSelected(dateTime);
+        loadWidget.OnSaveFileSelected(this);
     }
 }
