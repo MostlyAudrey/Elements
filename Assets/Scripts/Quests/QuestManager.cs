@@ -131,6 +131,7 @@ public class QuestManager : MonoBehaviour
                 new List<( string hint, string image )> {
                     ( "Talk to the Shogun of Bakufu", "QuestImages/Shogun" ),
                     ( "Follow the Shogun", "QuestImages/Shogun2" ),
+                    ( "Wait for the Shogun", "QuestImages/Shogun2" )
                     ( "Step into the arena", "QuestImages/Arena" ),
                     ( "Prepare to fight", "Images/test" ),
                     ( "Defeat Helga", "Images/test" ),
@@ -180,9 +181,9 @@ public class QuestManager : MonoBehaviour
                 new List<QuestName>{ QuestName.WhateverFloatsYourBoat, QuestName.AnIdiotsLuggage },
                 new List<( string hint, string image )> {
                     ( "Talk to the Bank Manager, Eugene Pants", "QuestImages/Manager" ),
-                    ( "Go to Fimbultoft; Find Carl (maybe ask villager to tell you where he is)", "QuestImages/Carl" ),
-                    ( "Find Carl's home-made shield in the Fimbulwald (the forest)", "QuestImages/Shield" ),
-                    ( "Return Carl's Shield to him", "QuestImages/Carl" ),
+                    ( "Go to Fimbultoft; Find Carl (maybe ask villager to tell you where he is)", "QuestImages/Carl1" ),
+                    ( "Find Carl's home-made shield in the Fimbulwald (the forest)", "QuestImages/CarlsShield" ),
+                    ( "Return Carl's Shield to him", "QuestImages/Carl1" ),
                     ( "Return to the bank manager", "QuestImages/Manager" )
                 }) 
         );
