@@ -6,14 +6,17 @@ public class LoadFromSaveWidget : MonoBehaviour
 {
     public Transform saveListRoot;
     public GameObject saveListItemPrefab;
+    public string newGameText = "NEW GAME";
 
     // Populate list of save file items
     void Awake()
     {
+        CreateNewGameItem();
+
         List<string> saveFiles = SaveUtility.GetAllSaveFiles();
         if (saveFiles == null)
         {
-            Debug.LogError("LoadFromSaveWidget: No save files found");
+            Debug.Log("LoadFromSaveWidget: No save files found");
             return;
         }
 
@@ -31,24 +34,46 @@ public class LoadFromSaveWidget : MonoBehaviour
     }
 
     /**
-     * Load save file corresponding with given date & time.
-     * @param dt Date and time of save file to load.
+     * Load save file corresponding with given save file item.
      */
-    public void OnSaveFileSelected(System.DateTime dt)
+    public void OnSaveFileSelected(SaveFileItem saveFileItm)
     {
-        string saveFilePath = SaveUtility.GetSaveFilePath(dt, true);
+        // Close this widget
+        gameObject.SetActive(false);
+
+        // if saveFileItm is new-game item
+        if (saveFileItm.date.text.Equals(newGameText))
+        {
+            SceneLoader.Get().GoToWorld(World.GAME_WORLD);
+            return;
+        }
+
+        string saveFilePath = SaveUtility.GetSaveFilePath(saveFileItm.dateTime, true);
         Debug.Log("OnSaveFileSelected: " + saveFilePath);
         SceneLoader.Get().LoadGameWorldFromSave(saveFilePath);
     }
 
-    // Automatically go to game world if no save file items exist
-    void OnEnable()
+    // // Automatically go to game world if no save file items exist
+    // void OnEnable()
+    // {
+    //     if (saveListRoot.childCount == 0)
+    //     {
+    //         SceneLoader.Get().GoToWorld(World.GAME_WORLD);
+    //         // Close this widget
+    //         gameObject.SetActive(false);
+    //     }
+    // }
+
+    /**
+     * Helper function to create save file item that creates new game
+     * instead of loading from save file.
+     */
+    private void CreateNewGameItem()
     {
-        if (saveListRoot.childCount == 0)
-        {
-            SceneLoader.Get().GoToWorld(World.GAME_WORLD);
-            // Close this widget
-            gameObject.SetActive(false);
-        }
+        SaveFileItem newGameItm = Instantiate(saveListItemPrefab, saveListRoot).GetComponent<SaveFileItem>();
+        newGameItm.Init(System.DateTime.MinValue, this);
+        newGameItm.date.text = newGameText;
+        newGameItm.time.text = "";
+        newGameItm.time.gameObject.SetActive(false);
     }
 }
