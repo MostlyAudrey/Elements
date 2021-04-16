@@ -363,7 +363,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 522}
+  m_SizeDelta: {x: 500, y: 522}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4030895466112461389
 CanvasRenderer:
@@ -388,6 +388,7 @@ MonoBehaviour:
   saveListRoot: {fileID: 883574178535908452}
   saveListItemPrefab: {fileID: 3240770728389990524, guid: c001381eccc0ce84d8b13a003c7df2e6,
     type: 3}
+  newGameText: NEW GAME
 --- !u!114 &6749267523162232584
 MonoBehaviour:
   m_ObjectHideFlags: 0
