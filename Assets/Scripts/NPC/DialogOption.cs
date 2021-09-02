@@ -14,6 +14,7 @@ public class DialogOption : Interactable
     public string eventPath;
     public bool repeatable = false;
     public bool darkmode = false;
+    public bool dont_express_talk = false;
 
     private int currAudioClip = -1;
 
@@ -91,7 +92,7 @@ public class DialogOption : Interactable
         _stopWaving();
         _hideButtonHint();
         EventManager.instance.onActionButtonPressed += _stopTalking;
-        anim.SetBool( "talking_happy", true );
+        if ( !dont_express_talk ) anim.SetBool( "talking_happy", true );
         int index = 0;
         float time_per_char = 0f;
         foreach ( string message in messageText ) {

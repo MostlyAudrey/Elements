@@ -36,6 +36,7 @@ public class MobAI : MonoBehaviour
 	public float rootTurnSpeed = 1f;
 	public float fallSpeed = 1f;
 	public bool is_hostile = false;
+	public bool has_sword = true;
 
 	public int health = 100;
 	public bool isDead = false;
@@ -128,14 +129,14 @@ public class MobAI : MonoBehaviour
 		{
 			try
 			{
-				navMeshAgent.stoppingDistance = 5f;   // stops near the player
+				navMeshAgent.stoppingDistance = 1f;   // stops near the player
 				navMeshAgent.SetDestination(target.transform.position + velocityReporter.velocity);
 
 				float distance = Vector3.Distance(transform.position, player.transform.position);
 				// if distance between the mob and the player is _____, play the attack animation and reduce the player's health by ____. 
 				// (may have to adjust this later, so that the player can counter or dodge or something)
 				// also add logic for determining the distance at which the mob attacks (if it is ranged or close)
-				if (distance <= 4f)
+				if (distance <= 1f)
 				{
 					_attack();
 				}
@@ -257,13 +258,13 @@ public class MobAI : MonoBehaviour
 	{
 
 		swordInHand.SetActive(true);
-		sheathedSword.SetActive(false);
+		if (has_sword) sheathedSword.SetActive(false);
 	}
 
 	private void _sheath()
 	{
 		swordInHand.SetActive(false);
-		sheathedSword.SetActive(true);
+		if (has_sword) sheathedSword.SetActive(true);
 	}
 
 	void _die()

@@ -18,9 +18,8 @@ public class EffectActivator : QuestPhaseListener
         {
             if (!effect.GetComponent<ParticleSystem>().isPlaying)
             { 
-                if(emit_only) effect.GetComponent<ParticleSystem>().loop = false;
-                
                 effect.GetComponent<ParticleSystem>().Play();
+                if(emit_only) effect.GetComponent<ParticleSystem>().loop = false;
             }
             // var emission = effect.GetComponent<ParticleSystem>().emission;
             // emission.enabled = true;

@@ -135,8 +135,9 @@ public class QuestManager : MonoBehaviour
                     ( "Step into the arena", "QuestImages/Arena" ),
                     ( "Prepare to fight", "Images/test" ),
                     ( "Helga Scream", "Images/test" ),
+                    ( "Listen to A's Advice", "Images/test" ),
                     ( "Defeat Helga", "Images/test" ),
-                    ( "Defeat Musashi The Machine","Images/test" ),
+                    ( "Defeat Musashi  The Machine","Images/test" ),
                     ( "Defeat Stacy From Accounting", "Images/test" ),
                     ( "Talk to the shogun (automatic)", "QuestImages/Shogun" )
                 })

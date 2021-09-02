@@ -25,6 +25,7 @@ public class LoadFromSaveWidget : MonoBehaviour
         {
             dataObjs.Add(SaveUtility.LoadPlayerData(saveFiles[i], true));
         }
+        dataObjs.Sort((a,b) => a.CompareTo(b));
 
         foreach (PlayerData data in dataObjs)
         {

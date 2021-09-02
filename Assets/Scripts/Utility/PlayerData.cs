@@ -132,4 +132,9 @@ public class PlayerData
     {
         return System.DateTime.FromBinary(dateTime);
     }
+
+    public int CompareTo(PlayerData other)
+    {
+        return other.GetDateTime().CompareTo(this.GetDateTime());
+    }
 }
